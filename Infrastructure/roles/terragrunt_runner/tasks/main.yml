@@ -1,0 +1,25 @@
+---
+- name: Run terragrunt init for "{{ module_dependency }}"
+  command: terragrunt init
+  args:
+    chdir: "{{ module_dependency }}"
+
+- name: Check terragrunt confguration formatting for "{{ module_dependency }}"
+  command: terragrunt fmt
+  args:
+    chdir: "{{ module_dependency }}"
+
+- name: Validate terragrunt configuration for  "{{ module_dependency }}"
+  command: terragrunt validate
+  args:
+    chdir: "{{ module_dependency }}"
+
+- name: Run terragrunt plan for "{{ module_dependency }}"
+  command: terragrunt plan
+  args:
+    chdir: "{{ module_dependency }}"
+
+- name: Run terragrunt apply for "{{ module_dependency }}"
+  command: terragrunt apply --auto-approve
+  args:
+    chdir: "{{ module_dependency }}"
