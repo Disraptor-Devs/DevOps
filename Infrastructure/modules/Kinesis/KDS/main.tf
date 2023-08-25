@@ -1,18 +1,32 @@
-resource "aws_kinesis_stream" "test_stream" {
-  name             = "terraform-kinesis-test"
-  shard_count      = 1
-  retention_period = 48
+resource "aws_kms_key" "stream_kms_key" {
+  description             = "KMS key for ${var.kinesis_data_stream_name}"
+  deletion_window_in_days = 50
 
-  shard_level_metrics = [
-    "IncomingBytes",
-    "OutgoingBytes",
-  ]
+  tags = merge(var.kds_tags)
+}
+
+
+resource "aws_kinesis_stream" "kinesis_stream" {
+  name             = var.kinesis_data_stream_name
+  shard_count      = var.kinesis_shard_count
+  retention_period = var.kinesis_retention_period
+  
+  encryption_type = var.kinesis_encryption_type
+  kms_key_id      = aws_kms_key.stream_kms_key.id
+
+  shard_level_metrics = var.kinesis_shard_level_metrics
 
   stream_mode_details {
-    stream_mode = "PROVISIONED"
+    stream_mode = var.kinesis_stream_mode_details
   }
 
-  tags = {
-    Environment = "test"
-  }
+  tags = merge(var.kds_tags)
+}
+
+resource "aws_kinesis_stream_consumer" "stream_consumer" {
+  count      = var.is_kinesis_consumer ? 1 : 0
+  name       = var.kinesis_consumer_name
+  stream_arn = aws_kinesis_stream.kinesis_stream.arn
+
+  tags = merge(var.kds_tags)
 }

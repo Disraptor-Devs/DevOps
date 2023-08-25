@@ -8,6 +8,11 @@ output "s3_bucket_arn" {
   value = aws_s3_bucket.s3_bucket.arn
 }
 
+output "s3_bucket_endpoint" {
+  description = "Output of the S3 bucket name"
+  value       = aws_s3_bucket.s3_bucket.website_endpoint
+}
+
 output "s3_bucket_path" {
   description = "Output of the S3 bucket path to be used in other modules (if extended)"
   value = "s3://${aws_s3_bucket.s3_bucket.id}"
