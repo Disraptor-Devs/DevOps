@@ -5,7 +5,7 @@ variable "region" {
 }
 variable "sns_topic_name" {
   description = "Specifies the SNS topic name"
-  type        = string  
+  type        = string
 }
 
 variable "is_firehose_subscription" {
@@ -14,44 +14,50 @@ variable "is_firehose_subscription" {
   default     = false
 }
 
-variable "is_fifo_topic" {
-  description = "Specifies whether our SNS topic will be fifo" 
+variable "is_application_subscription" {
+  description = "Specifies whether we create an SNS subscription for an application"
   type        = bool
-  default     = false   
+  default     = false
+}
+
+variable "is_fifo_topic" {
+  description = "Specifies whether our SNS topic will be fifo"
+  type        = bool
+  default     = false
 }
 
 variable "is_content_based_deduplication" {
-  description = "Specifies whether our content based deduplication will be on" 
+  description = "Specifies whether our content based deduplication will be on"
   type        = bool
-  default     = false 
+  default     = false
 }
 
 variable "policy_identifiers" {
   description = "Specify the policy identifiers for the iam policy document"
   type        = list(string)
-  default     = [ "*" ]
+  default     = ["*"]
 }
 
 variable "policy_doc_actions" {
   description = "Specify what actions will be permitted in your iam policy document"
   type        = list(string)
-  defdefault  = [
-      "SNS:Subscribe",
-      "SNS:SetTopicAttributes",
-      "SNS:RemovePermission",
-      "SNS:Receive",
-      "SNS:Publish",
-      "SNS:ListSubscriptionsByTopic",
-      "SNS:GetTopicAttributes",
-      "SNS:DeleteTopic",
-      "SNS:AddPermission",
-    ] 
+  default = [
+    "SNS:Subscribe",
+    "SNS:SetTopicAttributes",
+    "SNS:RemovePermission",
+    "SNS:Receive",
+    "SNS:Publish",
+    "SNS:ListSubscriptionsByTopic",
+    "SNS:GetTopicAttributes",
+    "SNS:DeleteTopic",
+    "SNS:AddPermission",
+  ]
 }
 
 variable "delivery_policy" {
   description = "Delivery policy for SNS topic"
   type        = string
-  default = <<EOF
+  default     = <<EOF
 {
   "http": {
     "defaultHealthyRetryPolicy": {
@@ -72,11 +78,16 @@ variable "delivery_policy" {
 EOF
 }
 
+variable "subscription_policy_identifiers" {
+  description = "value"
+  type        = list(string)
+  default     = []
+}
 
 variable "kinesis_delivery_stream_arn" {
   description = "Specify the firehose delivery stream arn that points to kinesis stream"
   type        = string
-  default     = "" 
+  default     = ""
 }
 
 variable "sns_tags" {
@@ -93,6 +104,35 @@ variable "is_create_subscription_role" {
 variable "subscription_policy_doc_actions" {
   description = "Specify the actions to be used in the polic doc for the subscription role"
   type        = list(string)
-  default     = [ "" ]
-  
+  default     = [""]
+}
+
+variable "subscription_application_endpoint" {
+  description = "Specfies the application arn/endpoint that you want to attach to the subscription"
+  type        = string
+  default     = ""
+}
+
+variable "is_email_subscription" {
+  description = "Specify whether to create the sns topic subscription for an email"
+  type        = bool
+  default     = false
+}
+
+variable "subscription_email_endpoint" {
+  description = "Specify the email address as the endpoint"
+  type        = string
+  default     = ""
+}
+
+variable "is_lambda_subscription" {
+  description = "Specify whether to create the sns topic subscription for a lambda"
+  type        = bool
+  default     = false
+}
+
+variable "subscription_lambda_endpoint" {
+  description = "Specify the lambda arn as the endpoint"
+  type        = string
+  default     = ""
 }

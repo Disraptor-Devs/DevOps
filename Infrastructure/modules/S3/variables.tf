@@ -7,7 +7,6 @@ variable "region" {
 variable "s3_bucket_name" {
   description = "Specifies the name of the bucket being created"
   type        = string
-
 }
 
 variable "s3_bucket_versioning" {
@@ -24,7 +23,7 @@ variable "s3_bucket_acl" {
 
 variable "s3_tags" {
   description = "Specify the tags (key, value pairs) to be associated with the S3 bucket"
-  type        = map(string)
+  type        = map(string) 
 }
 
 variable "s3_policy_actions" {
@@ -35,38 +34,38 @@ variable "s3_policy_actions" {
 variable "is_logging_bucket" {
   description = "Specifies whether we need to create a logging bucket for the main bucket being created"
   type        = bool
-  default     = false
+  default     = false 
 }
 
 variable "target_prefix" {
   description = "Specifies the target prefix for the logging bucket"
-  type        = string
+  type        = string 
   default     = "log/"
 }
 
 variable "sns_topic_arn" {
   description = "Specifies the SNS topic arn if bucket notification is enabled"
   type        = string
-  default     = ""
+  default     = "" 
 }
 
 variable "s3_bucket_notification_events" {
   description = "Specifies the events we want to be notified off on the created S3 bucket"
   type        = list(string)
-  default     = []
+  default     = [ ]
 }
 
 
 variable "object_ownership" {
   description = "Specify the Object ownership for the S3 being created"
-  type        = string
+  type        = string 
   default     = "ObjectWriter"
 }
 
 variable "is_lifecycle_policy" {
   description = "Specify whether to create and attach a lifecycle policy to the S3 bucket"
   type        = bool
-  default     = false
+  default     = false 
 }
 
 variable "is_access_point" {
@@ -78,13 +77,13 @@ variable "is_access_point" {
 variable "lifecycle_name" {
   description = "Specify name for the lifecycle config for the S3 bucket"
   type        = string
-  default     = ""
+  default     = "" 
 }
 
 variable "lifecylce_status" {
   description = "Specify the status of the lifecycle "
   type        = string
-  default     = "Disabled"
+  default     = "Disabled" 
 }
 
 variable "lifecycle_transition_days" {
@@ -96,6 +95,5 @@ variable "lifecycle_transition_days" {
 variable "lifecycle_storage_class" {
   description = "Specify the storage class to transition to"
   type        = string
-  default     = ""
-
+  default     = "" 
 }

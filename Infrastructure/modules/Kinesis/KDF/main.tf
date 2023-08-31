@@ -3,7 +3,6 @@ locals {
     is_redshift_stream    = var.is_redshift_consumer ? 1 : 0
     is_create_s3_bucket   = !var.is_s3_existing_bucket ? 1 : 0
     is_kinesis_stream     = var.is_kinesis_consumer ? 1 : 0
-
 }
 
 data "aws_iam_policy_document" "firehose_assume_role" {
@@ -26,21 +25,22 @@ resource "aws_iam_role" "firehose_role" {
 
 
 module "s3_bucket" {
-  source = "../../S3"
-  count  = local.is_create_s3_bucket 
+  count = local.is_create_s3_bucket 
 
+  source            = "../../S3"
   s3_bucket_name    = var.s3_bucket_name
   s3_policy_actions = var.s3_policy_actions
   s3_tags           = merge(var.kdf_tags) 
-
 }
 
 data "aws_redshift_cluster" "redshift_cluster" {
+  count              = local.is_redshift_stream  
   cluster_identifier = var.redshift_cluster_identifier
 }
 
-data "aws_kinesis_stream" "kinesis_stream" {
-  name = var.kinesis_stream_name
+data "aws_kinesis_stream" "kinesis_source" {
+  count = local.is_kinesis_stream
+  name  = var.kinesis_stream_name
 }
 
 
@@ -53,15 +53,29 @@ resource "aws_kinesis_firehose_delivery_stream" "extended_s3_stream" {
     role_arn   = aws_iam_role.firehose_role.arn
     bucket_arn = local.is_create_s3_bucket ? module.s3_bucket[0].arn : var.passed_in_s3_bucket_arn 
 
+    buffering_size      = var.extended_s3_buffer_size
+    error_output_prefix = var.error_output_prefix
+
+    cloudwatch_logging_options {
+      Enabled         = var.is_cloudwatch_logging
+      log_group_name  = var.log_group_name
+      log_stream_name = var.log_stream_name 
+    }
+
+    kinesis_source_configuration {
+    kinesis_stream_arn  = data.aws_kinesis_stream.kinesis_source.arn
+    role_arn            = aws_iam_role.firehose_role.arn
+    }
+
     processing_configuration {
       enabled = var.s3_extended_processing_config
 
       processors {
-        type = "Lambda"
+        type = var.s3_processors
 
         parameters {
           parameter_name  = "LambdaArn"
-          parameter_value = "${aws_lambda_function.lambda_processor.arn}:$LATEST"
+          parameter_value = "${var.lambda_processor_arn}:$LATEST"
         }
       }
     }
@@ -77,19 +91,25 @@ resource "aws_kinesis_firehose_delivery_stream" "redshift_stream" {
 
   redshift_configuration {
     role_arn           = aws_iam_role.firehose_role.arn
-    cluster_jdbcurl    = "jdbc:redshift://${data.aws_redshift_cluster.redshift_cluster.endpoint}/${data.aws_redshift_cluster.redshift_cluster.database_name}"
-    username           = var.redshift_username
-    password           = var.redshift_password
-    data_table_name    = var.redshift_data_table_name
-    copy_options       = "delimiter '|'" # the default delimiter
-    data_table_columns = "test-col"
+    cluster_jdbcurl    = "jdbc:redshift://${data.aws_redshift_cluster.redshift_cluster[0].endpoint}/${data.aws_redshift_cluster.redshift_cluster[0].database_name}"
+    username           = data.aws_redshift_cluster.redshift_cluster.master_username
+    password           = var.redshift_passw
+    data_table_name    = data.aws_redshift_cluster.redshift_cluster.data
+    copy_options       = var.reshift_delimiter # the default delimiter
+    data_table_columns = var.redshift_data_table_columns
+
+    cloudwatch_logging_options {
+      Enabled         = var.is_cloudwatch_logging
+      log_group_name  = var.log_group_name
+      log_stream_name = var.log_stream_name 
+    }
 
     s3_configuration {
       role_arn           = aws_iam_role.firehose_role.arn
       bucket_arn         = local.is_create_s3_bucket ? module.s3_bucket[0].arn : var.passed_in_s3_bucket_arn 
-      buffering_size     = 10
-      buffering_interval = 400
-      compression_format = "GZIP"
+      buffering_size     = var.s3_buffering_size
+      buffering_interval = var.s3_buffering_interval
+      compression_format = var.s3_compression_format
     }
   
   }
@@ -97,32 +117,11 @@ resource "aws_kinesis_firehose_delivery_stream" "redshift_stream" {
   tags = merge(var.kdf_tags)
 }
 
-resource "aws_kinesis_firehose_delivery_stream" "kinesis_stream" {
-  count              = local.is_kinesis_stream
-  name               = var.firehose_delivery_stream_name
-  kinesis_stream_arn = aws_kinesis_stream.kinesis_stream.arn
-
-  delivery_start_config {
-    earliest = var.is_delivery_start_config_earliest
-  }
-
-  buffer_config {
-    buffer_size     = var.kinesis_stream_buffer_size
-    buffer_interval = var.kinesis_stream_buffer_interval
-  }
-
-  encryption_config {
-    enabled     = var.is_encryption_config
-    kms_key_arn = aws_kms_key.kms_key.arn
-  }
-
-  tags = merge(var.kdf_tags)
-}
 
 resource "aws_kms_key" "kms_key" {
   count                   = var.is_encryption_config ? 1 : 0 
   description             = "KMS key for ${var.firehose_delivery_stream_name}"
-  deletion_window_in_days = 50
+  enable_key_rotation     = true 
 
   tags = merge(var.kdf_tags)
 }

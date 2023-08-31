@@ -23,23 +23,25 @@ resource "aws_s3_bucket_versioning" "versioning" {
 }
 
 resource "aws_s3_bucket_ownership_controls" "owner" {
-  bucket = aws_s3_bucket.example.id
+  bucket = aws_s3_bucket.s3_bucket.id
   rule {
     object_ownership = var.object_ownership
   }
 }
 
-resource "aws_s3_bucket_public_access_block" "example" {
-  bucket = aws_s3_bucket.example.id
+# resource "aws_s3_bucket_public_access_block" "s3_public_access" {
+#   bucket = aws_s3_bucket.bucket.id
 
-  block_public_acls       = var.is_block_public_acls
-  block_public_policy     = var.is_block_public_policy
-  ignore_public_acls      = var.is_ignore_public_acls
-  restrict_public_buckets = var.is_restrict_public_buckets
-}
+#   block_public_acls       = var.is_block_public_acls
+#   block_public_policy     = var.is_block_public_policy
+#   ignore_public_acls      = var.is_ignore_public_acls
+#   restrict_public_buckets = var.is_restrict_public_buckets
+# }
 
 
 resource "aws_s3_bucket_acl" "aws_s3_bucket_acl" {
+  depends_on = [aws_s3_bucket_ownership_controls.owner]
+
   bucket = aws_s3_bucket.s3_bucket.id
   acl    = var.s3_bucket_acl
 }
@@ -53,7 +55,7 @@ data "aws_iam_policy_document" "bucket_policy_doc" {
       identifiers = [data.aws_caller_identity.current.account_id]
     }
 
-    actions = [var.s3_policy_actions]
+    actions = var.s3_policy_actions
 
     resources = [
       aws_s3_bucket.s3_bucket.arn,
@@ -68,8 +70,9 @@ resource "aws_s3_bucket_policy" "bucket_policy" {
 }
 
 resource "aws_kms_key" "bucket_kms_key" {
-  description             = "KMS key for ${var.s3_bucket_name}"
-  deletion_window_in_days = 50
+  description         = "KMS key for ${var.s3_bucket_name}"
+  enable_key_rotation = true
+  # auto renewal 
 
   tags = merge(var.s3_tags)
 }
@@ -99,7 +102,7 @@ resource "aws_s3_bucket_logging" "bucket_logging" {
 }
 
 resource "aws_s3_bucket_notification" "bucket_notification" {
-  count  = var.is_bucket_notification ? 1 : 0 
+  count  = var.is_bucket_notification ? 1 : 0
   bucket = aws_s3_bucket.s3_bucket.id
 
   topic {
@@ -109,19 +112,25 @@ resource "aws_s3_bucket_notification" "bucket_notification" {
   }
 }
 
-resource "aws_s3_access_point" "example" {
+resource "aws_s3_access_point" "access_point" {
+  count  = var.is_access_point ? 1 : 0
   bucket = aws_s3_bucket.s3_bucket.id
   name   = "${var.s3_bucket_name}-ap"
 }
 
-resource "aws_s3_bucket_lifecycle_configuration" "example_lifecycle" {
-  rule {
-    id      = var.lifecylce_name
-    status  = var.lifecylce_status
+resource "aws_s3_bucket_lifecycle_configuration" "s3_lifecycle" {
+  count = var.is_lifecycle_policy ? 1 : 0
 
-    transition {
-      days          = var.lifecycle_transition_days
-      storage_class = var.lifecycle_storage_clas  # The desired storage class
+  rule {
+    id     = var.lifecycle_name
+    status = var.lifecylce_status
+
+    dynamic "transition" {
+      for_each = var.lifecycle_storage_class
+      content {
+        days          = var.lifecycle_transition_days
+        storage_class = each.value
+      }
     }
   }
 
