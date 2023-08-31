@@ -1,0 +1,40 @@
+---
+- debug:
+    msg: "BEGIN - Deployment of {{ module_dependency }} started"
+
+- name: Run terragrunt init for "{{ module_dependency }}"
+  command: terragrunt init
+  args:
+    chdir: "{{ module_dependency }}"
+
+- name: Check terragrunt confguration formatting for "{{ module_dependency }}"
+  command: terragrunt fmt
+  args:
+    chdir: "{{ module_dependency }}"
+
+- name: Validate terragrunt configuration for  "{{ module_dependency }}"
+  command: terragrunt validate
+  args:
+    chdir: "{{ module_dependency }}"
+
+- name: Run terragrunt plan for "{{ module_dependency }}"
+  command: terragrunt plan
+  args:
+    chdir: "{{ module_dependency }}"
+  register: terragrunt_plan_output
+
+  debug:
+    var: terragrunt_plan_output.stdout_lines    
+
+- name: Run terragrunt apply for "{{ module_dependency }}"
+  command: terragrunt apply --auto-approve
+  args:
+    chdir: "{{ module_dependency }}"
+
+
+- name: Wait for "{{ module_dependency }}" to be up
+  pause:
+    seconds: 60
+
+- debug:
+    msg: "COMPLETED - Deployment of {{ module_dependency }} completed"

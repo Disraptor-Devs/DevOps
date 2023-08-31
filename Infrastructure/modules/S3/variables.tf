@@ -7,7 +7,6 @@ variable "region" {
 variable "s3_bucket_name" {
   description = "Specifies the name of the bucket being created"
   type        = string
-  
 }
 
 variable "s3_bucket_versioning" {
@@ -30,4 +29,71 @@ variable "s3_tags" {
 variable "s3_policy_actions" {
   description = "Specify a list of actions to attach to the s3 bucket policy"
   type        = list(string)
+}
+
+variable "is_logging_bucket" {
+  description = "Specifies whether we need to create a logging bucket for the main bucket being created"
+  type        = bool
+  default     = false 
+}
+
+variable "target_prefix" {
+  description = "Specifies the target prefix for the logging bucket"
+  type        = string 
+  default     = "log/"
+}
+
+variable "sns_topic_arn" {
+  description = "Specifies the SNS topic arn if bucket notification is enabled"
+  type        = string
+  default     = "" 
+}
+
+variable "s3_bucket_notification_events" {
+  description = "Specifies the events we want to be notified off on the created S3 bucket"
+  type        = list(string)
+  default     = [ ]
+}
+
+
+variable "object_ownership" {
+  description = "Specify the Object ownership for the S3 being created"
+  type        = string 
+  default     = "ObjectWriter"
+}
+
+variable "is_lifecycle_policy" {
+  description = "Specify whether to create and attach a lifecycle policy to the S3 bucket"
+  type        = bool
+  default     = false 
+}
+
+variable "is_access_point" {
+  description = "Specify whether we need to create an access point for our S3 bucket"
+  type        = bool
+  default     = false
+}
+
+variable "lifecycle_name" {
+  description = "Specify name for the lifecycle config for the S3 bucket"
+  type        = string
+  default     = "" 
+}
+
+variable "lifecylce_status" {
+  description = "Specify the status of the lifecycle "
+  type        = string
+  default     = "Disabled" 
+}
+
+variable "lifecycle_transition_days" {
+  description = "Specify the number of days to transition the bucket to a different class"
+  type        = number
+  default     = 0
+}
+
+variable "lifecycle_storage_class" {
+  description = "Specify the storage class to transition to"
+  type        = string
+  default     = "" 
 }
