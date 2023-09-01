@@ -35,14 +35,14 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_create_table_default_permissions"></a> [create\_table\_default\_permissions](#input\_create\_table\_default\_permissions) | Specify the default table permission | `string` | n/a | yes |
-| <a name="input_data_lake_principal_identifier"></a> [data\_lake\_principal\_identifier](#input\_data\_lake\_principal\_identifier) | Specify the Data Lake principal identifier | `string` | n/a | yes |
 | <a name="input_glue_catalog_db_name"></a> [glue\_catalog\_db\_name](#input\_glue\_catalog\_db\_name) | Specify the name of the Glue Catalog DB | `string` | n/a | yes |
 | <a name="input_glue_crawler_name"></a> [glue\_crawler\_name](#input\_glue\_crawler\_name) | Specify the name of the Glue Crawler | `string` | n/a | yes |
 | <a name="input_glue_iam_role_name"></a> [glue\_iam\_role\_name](#input\_glue\_iam\_role\_name) | Specify the name of the iam role created for Glue | `string` | n/a | yes |
 | <a name="input_glue_table_name"></a> [glue\_table\_name](#input\_glue\_table\_name) | Specify the name for the glue table being created | `string` | n/a | yes |
 | <a name="input_glue_tags"></a> [glue\_tags](#input\_glue\_tags) | Specify tags for Glue resources (Key,Value pairs) | `map(string)` | n/a | yes |
 | <a name="input_crawler_cron_schedule"></a> [crawler\_cron\_schedule](#input\_crawler\_cron\_schedule) | Specify the CRON schedule for the Glue crawler | `string` | `"cron(0 7 * * *)"` | no |
+| <a name="input_create_table_default_permissions"></a> [create\_table\_default\_permissions](#input\_create\_table\_default\_permissions) | Specify the default table permission | `string` | `"SELECT"` | no |
+| <a name="input_data_lake_principal_identifier"></a> [data\_lake\_principal\_identifier](#input\_data\_lake\_principal\_identifier) | Specify the Data Lake principal identifier | `string` | `"IAM_ALLOWED_PRINCIPALS"` | no |
 | <a name="input_glue_connection_jdbc_connection_url"></a> [glue\_connection\_jdbc\_connection\_url](#input\_glue\_connection\_jdbc\_connection\_url) | Specify the JDBC connection url for the Glue connection being created | `string` | `""` | no |
 | <a name="input_glue_connection_password"></a> [glue\_connection\_password](#input\_glue\_connection\_password) | Specify the password for the glue connection | `string` | `""` | no |
 | <a name="input_glue_connection_username"></a> [glue\_connection\_username](#input\_glue\_connection\_username) | Specify the username for the glue connection | `string` | `""` | no |
