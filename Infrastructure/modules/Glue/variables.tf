@@ -23,11 +23,13 @@ variable "glue_catalog_db_name" {
 variable "create_table_default_permissions" {
   description = "Specify the default table permission"
   type        = string
+  default     = "SELECT"
 }
 
 variable "data_lake_principal_identifier" {
   description = "Specify the Data Lake principal identifier"
   type        = string
+  default     = "IAM_ALLOWED_PRINCIPALS"
 }
 
 variable "glue_crawler_name" {

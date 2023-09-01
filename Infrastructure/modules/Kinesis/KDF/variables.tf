@@ -12,37 +12,37 @@ variable "firehose_role_name" {
 variable "is_s3_existing_bucket" {
   description = "Specfies whether we need to create an S3 bucket for the S3 or Redshift consumers or we just pass in values"
   type        = bool
-  default     = false 
+  default     = false
 }
 
 variable "is_s3_consumer" {
   description = "Specifies whether we need to create a stream to get data to our S3 consumer and if we need to just pass in the S3 values"
   type        = bool
-  default     = false  
+  default     = false
 }
 
 
 variable "is_redshift_consumer" {
   description = "Specifies whether we need to create a stream to get our data to our Redshift consumer"
-  type        = bool 
+  type        = bool
   default     = false
 }
 
 variable "is_kinesis_consumer" {
   description = "Specifies whether we need to create a stream to get our data to our Kinesis stream consumer"
-  type        = bool 
-  default     = false  
+  type        = bool
+  default     = false
 }
 
 variable "is_s3_extended_processing_config" {
   description = "Specifies whether we need to do further processing for the extended s3 consumer"
   type        = bool
-  default     = false 
+  default     = false
 }
 
 variable "firehose_delivery_stream_name" {
   description = "Specfies the name of the firehose delivery stream being created"
-  type        = string 
+  type        = string
 }
 
 variable "firehose_delivery_stream_destination" {
@@ -57,7 +57,7 @@ variable "kdf_tags" {
 
 variable "s3_bucket_name" {
   description = "Specifies name for the s3 bucket"
-  type        = string 
+  type        = string
   default     = ""
 }
 
@@ -65,14 +65,14 @@ variable "s3_bucket_name" {
 variable "s3_policy_actions" {
   description = "Specifies the policy actions for the S3 bucket being created"
   type        = list(string)
-  default     = [ "" ]   
+  default     = [""]
 }
 
 variable "passed_in_s3_bucket_arn" {
   description = "Specifies the arn of an existing S3 bucket that will be used by this module"
-  type        =  string
+  type        = string
   default     = ""
-  
+
 }
 
 variable "redshift_cluster_identifier" {
@@ -82,12 +82,12 @@ variable "redshift_cluster_identifier" {
 
 variable "redshift_data_table_columns" {
   description = "Specify the redshift data table columns"
-  type        = string 
+  type        = string
 }
 
 variable "redshift_data_table_name" {
   description = "Specify the redshift data table name"
-  
+
 }
 
 variable "redshift_delimiter" {
@@ -98,7 +98,7 @@ variable "redshift_delimiter" {
 
 variable "is_delivery_start_config_earliest" {
   description = "Specify if the delivery start time of the s"
-  type        =  bool
+  type        = bool
   default     = false
 }
 
@@ -112,13 +112,13 @@ variable "is_encryption_config" {
 variable "kinesis_stream_buffer_size" {
   description = "Specify the buffer size for the delivery stream for Kinesis in seconds"
   type        = number
-  default     = 0 
+  default     = 0
 }
 
 variable "kinesis_stream_buffer_interval" {
   description = "Specify the buffer interval for the delivery stream for Kinesis in seconds"
   type        = number
-  default     = 0 
+  default     = 0
 }
 
 variable "s3_buffering_size" {
@@ -136,30 +136,31 @@ variable "s3_buffering_interval" {
 variable "s3_compression_format" {
   description = "Specify the compression format for the S3 config for the redshift stream"
   type        = string
-  default     = "GZIP" 
+  default     = "GZIP"
 }
 
 variable "error_output_prefix" {
-  description = "Specify the Error"
+  description = "Specify the Error prefix for the extended S3 configuration"
   type        = string
   default     = "error-"
 }
 
 variable "extended_s3_buffer_size" {
-  description = ""
-  type        = number 
+  description = "Specify the buffer size for the extended S3 configuration"
+  type        = number
+  default     = 0
 }
 
 variable "is_cloudwatch_logging" {
   description = "Specify whether we enable cloud watch logging for the redshift and extended s3 streams"
   type        = bool
-  default     = false 
+  default     = false
 }
 
 variable "log_group_name" {
   description = "Specify the log group name if cloudwatch logging has been enabled"
-  type        = string 
-  default     = "" 
+  type        = string
+  default     = ""
 }
 
 variable "log_stream_name" {
