@@ -11,11 +11,11 @@ data "aws_iam_policy_document" "subscription_role_policy" {
 
     principals {
       type        = "Service"
-      identifiers = [var.subscription_policy_identifiers]
+      identifiers = var.subscription_policy_identifiers
     }
 
-    actions   = [var.subscription_policy_doc_actions]
-    resources = [var.kinesis_delivery_stream_arn]
+    actions   = var.subscription_policy_doc_actions
+    resources = var.kinesis_delivery_stream_arn
   }
 }
 
@@ -44,11 +44,11 @@ data "aws_iam_policy_document" "policy_doc" {
 
     principals {
       type        = "AWS"
-      identifiers = [var.policy_identifiers]
+      identifiers = var.policy_identifiers
     }
 
-    actions   = [var.policy_doc_actions]
-    resources = [aws_sns_topic.sns_topic.arn]
+    actions   = var.policy_doc_actions
+    resources = aws_sns_topic.sns_topic.arn
   }
 }
 
