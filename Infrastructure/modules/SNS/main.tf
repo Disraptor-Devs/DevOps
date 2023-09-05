@@ -18,7 +18,7 @@ data "aws_iam_policy_document" "subscription_role_policy" {
     }
 
     actions   = var.subscription_policy_doc_actions
-    resources = var.kinesis_delivery_stream_arn
+    resources = [var.kinesis_delivery_stream_arn]
   }
 }
 
