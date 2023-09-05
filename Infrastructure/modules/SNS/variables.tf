@@ -87,8 +87,8 @@ variable "subscription_policy_identifiers" {
 
 variable "kinesis_delivery_stream_arn" {
   description = "Specify the firehose delivery stream arn that points to kinesis stream"
-  type        = string
-  default     = ""
+  type        = set(string)
+  default     = []
 }
 
 variable "sns_tags" {
