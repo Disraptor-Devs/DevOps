@@ -3,9 +3,12 @@ locals {
   for_application = var.is_application_subscription ? 1 : 0
   for_email       = var.is_email_subscription ? 1 : 0
   for_lambda      = var.is_lambda_subscription ? 1 : 0
+  for_sub_role    = var.is_create_subscription_role ? 1 : 0
 }
 
 data "aws_iam_policy_document" "subscription_role_policy" {
+  count = local.for_sub_role
+  
   statement {
     effect = "Allow"
 
@@ -20,7 +23,7 @@ data "aws_iam_policy_document" "subscription_role_policy" {
 }
 
 resource "aws_iam_role" "subscription_role" {
-  count              = var.is_create_subscription_role
+  count              = local.for_sub_role
   name               = var.subscription_iam_name
   assume_role_policy = data.aws_iam_policy_document.subscription_role_policy.json
 
@@ -87,7 +90,7 @@ resource "aws_sns_topic_subscription" "subscription_for_lambda" {
 }
 
 resource "aws_kms_key" "sns_kms_key" {
-  description         = "KMS key for ${var.s3_bucket_name}"
+  description         = "KMS key for ${var.sns_topic_name}"
   enable_key_rotation = true
 
   tags = merge(var.sns_tags)
