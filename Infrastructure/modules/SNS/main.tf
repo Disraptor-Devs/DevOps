@@ -51,7 +51,7 @@ data "aws_iam_policy_document" "policy_doc" {
     }
 
     actions   = var.policy_doc_actions
-    resources = aws_sns_topic.sns_topic.arn
+    resources = [aws_sns_topic.sns_topic.arn]
   }
 }
 
