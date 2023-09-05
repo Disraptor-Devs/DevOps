@@ -137,3 +137,10 @@ variable "subscription_lambda_endpoint" {
   type        = string
   default     = ""
 }
+
+variable "subscription_iam_name" {
+  description = "Specify name for the subscription Iam role created for the firehose subscription"
+  type        = string
+  default     = "value" 
+  
+}
