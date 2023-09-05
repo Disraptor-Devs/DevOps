@@ -38,7 +38,7 @@ output "sns_email_subscription_arn" {
   value       = aws_sns_topic_subscription.subscription_for_email[0].arn
 }
 
-output "sns_application_subscription_endpoint" {
+output "sns_email_subscription_endpoint" {
   description = "Output the SNS email subscription endpoint"
   value       = aws_sns_topic_subscription.subscription_for_email[0].endpoint
 }
