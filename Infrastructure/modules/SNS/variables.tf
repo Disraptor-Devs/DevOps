@@ -34,13 +34,14 @@ variable "is_content_based_deduplication" {
 
 variable "policy_identifiers" {
   description = "Specify the policy identifiers for the iam policy document"
-  type        = list(string)
-  default     = ["*"]
+  type        = set(string)
+  default     = [ "*" ]
+
 }
 
 variable "policy_doc_actions" {
   description = "Specify what actions will be permitted in your iam policy document"
-  type        = list(string)
+  type        = set(string)
   default = [
     "SNS:Subscribe",
     "SNS:SetTopicAttributes",
@@ -80,7 +81,7 @@ EOF
 
 variable "subscription_policy_identifiers" {
   description = "value"
-  type        = list(string)
+  type        = set(string)
   default     = []
 }
 
@@ -103,8 +104,8 @@ variable "is_create_subscription_role" {
 
 variable "subscription_policy_doc_actions" {
   description = "Specify the actions to be used in the polic doc for the subscription role"
-  type        = list(string)
-  default     = [""]
+  type        = set(string)
+  default     = []
 }
 
 variable "subscription_application_endpoint" {

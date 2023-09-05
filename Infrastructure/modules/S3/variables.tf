@@ -28,7 +28,7 @@ variable "s3_tags" {
 
 variable "s3_policy_actions" {
   description = "Specify a list of actions to attach to the s3 bucket policy"
-  type        = list(string)
+  type        = set(string)
 }
 
 variable "is_logging_bucket" {
@@ -51,7 +51,7 @@ variable "sns_topic_arn" {
 
 variable "s3_bucket_notification_events" {
   description = "Specifies the events we want to be notified off on the created S3 bucket"
-  type        = list(string)
+  type        = set(string)
   default     = [ ]
 }
 
