@@ -23,6 +23,7 @@
     chdir: "{{ module_dependency }}"
   register: terragrunt_plan_output
 
+- name: Display terragrunt plan output
   debug:
     var: terragrunt_plan_output.stdout_lines    
 
