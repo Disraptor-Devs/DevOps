@@ -93,5 +93,5 @@ resource "aws_kms_key" "sns_kms_key" {
   description         = "KMS key for ${var.sns_topic_name}"
   enable_key_rotation = true
 
-  tags = merge(var.sns_tags)
+  # tags = merge(var.sns_tags)
 }

@@ -74,7 +74,7 @@ resource "aws_kms_key" "bucket_kms_key" {
   enable_key_rotation = true
   # auto renewal 
 
-  tags = merge(var.s3_tags)
+  # tags = merge(var.s3_tags)
 }
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "s3_bucket_encryption" {
