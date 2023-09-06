@@ -47,8 +47,6 @@ resource "aws_s3_bucket_acl" "aws_s3_bucket_acl" {
 }
 
 data "aws_iam_policy_document" "bucket_policy_doc" {
-  id = "${var.s3_bucket_name}-policy"
-
   statement {
     principals {
       type        = "AWS"

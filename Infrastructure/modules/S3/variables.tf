@@ -97,3 +97,10 @@ variable "lifecycle_storage_class" {
   type        = string
   default     = "" 
 }
+
+variable "is_bucket_notification" {
+  description = "Specify whether we enable bucket notification"
+  type        = bool
+  default     = false 
+  
+}
