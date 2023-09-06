@@ -94,8 +94,8 @@ variable "lifecycle_transition_days" {
 
 variable "lifecycle_storage_class" {
   description = "Specify the storage class to transition to"
-  type        = string
-  default     = "" 
+  type        = map(string)
+  default     = {} 
 }
 
 variable "is_bucket_notification" {
