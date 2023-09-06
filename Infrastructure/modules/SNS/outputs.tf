@@ -15,22 +15,21 @@ output "sns_topic_id" {
 
 output "sns_firehose_subscription_arn" {
   description = "Output the SNS firehose subscription arn"
-  value       = aws_sns_topic_subscription.subscription_for_firehose[0].arn
+  value       = local.for_firehose == 1 ? aws_sns_topic_subscription.subscription_for_firehose[0].arn : null
 }
 
 output "sns_application_subscription_arn" {
   description = "Output the SNS application subscription arn"
-  value       = aws_sns_topic_subscription.subscription_for_application[0].arn
+  value       = local.for_application == 1 ? aws_sns_topic_subscription.subscription_for_application[0].arn : null
 }
 
 output "sns_email_subscription_arn" {
   description = "Output the SNS email subscription arn"
-  value       = aws_sns_topic_subscription.subscription_for_email[0].arn
+  value       = local.for_email == 1 ? aws_sns_topic_subscription.subscription_for_email[0].arn : null
 }
-
 
 output "sns_lambda_subscription_arn" {
   description = "Output the SNS email subscription arn"
-  value       = aws_sns_topic_subscription.subscription_for_lambda[0].arn
+  value       = local.for_lambda == 1 ? aws_sns_topic_subscription.subscription_for_lambda[0].arn : null
 }
 
