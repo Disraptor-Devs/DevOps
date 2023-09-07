@@ -58,7 +58,7 @@ variable "s3_bucket_notification_events" {
 variable "s3_identifiers" {
   description = "Specifies the identifiers for the S3 bucket being created"
   type        = set(string)
-  defdefault = [ ] 
+  defdefault = ["*"] 
 }
 
 
