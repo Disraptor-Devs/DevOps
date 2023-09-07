@@ -55,6 +55,12 @@ variable "s3_bucket_notification_events" {
   default     = [ ]
 }
 
+variable "s3_identifiers" {
+  description = "Specifies the identifiers for the S3 bucket being created"
+  type        = set(string)
+  defdefault = [ ] 
+}
+
 
 variable "object_ownership" {
   description = "Specify the Object ownership for the S3 being created"

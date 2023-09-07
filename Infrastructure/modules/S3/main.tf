@@ -50,7 +50,7 @@ data "aws_iam_policy_document" "bucket_policy_doc" {
   statement {
     principals {
       type        = "AWS"
-      identifiers = [data.aws_caller_identity.current.account_id]
+      identifiers = var.s3_identifiers
     }
 
     actions = var.s3_policy_actions
