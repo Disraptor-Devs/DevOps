@@ -10,7 +10,7 @@ resource "aws_ssm_parameter" "secret" {
   type        = each.value["type"]
   value       = each.value["value"]
 
-  tags = merge(var.parameter_tags)
+  tags = merge(var.ssm_parameter_tags)
 }
 
 
