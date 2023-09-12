@@ -12,7 +12,6 @@ variable "parameter_configs" {
     type        = string
     value       = string
   }))
-  default     = [ { } ]
 }
 
 variable "parameter_values_to_get_by_name" {
