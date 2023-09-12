@@ -6,7 +6,7 @@ variable "region" {
 
 variable "parameter_configs" {
   description = "Specify the values that will be used to define the SSM parameter"
-  type        = list(object({
+  type        = map(object({
     name        = string
     description = string
     type        = string
