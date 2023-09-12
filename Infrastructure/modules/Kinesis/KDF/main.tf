@@ -57,7 +57,7 @@ resource "aws_kinesis_firehose_delivery_stream" "extended_s3_stream" {
     error_output_prefix = var.error_output_prefix
 
     cloudwatch_logging_options {
-      Enabled         = var.is_cloudwatch_logging
+      enabled         = var.is_cloudwatch_logging
       log_group_name  = var.log_group_name
       log_stream_name = var.log_stream_name
     }

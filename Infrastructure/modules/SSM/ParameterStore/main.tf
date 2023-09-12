@@ -1,5 +1,5 @@
 locals {
-  call_get_secret = var.is_existing_parameter ? 1 : 0
+  call_get_secret = var.is_existing_parameter
 }
 
 resource "aws_ssm_parameter" "secret" {
