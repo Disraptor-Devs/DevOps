@@ -39,7 +39,6 @@
 | <a name="input_kdf_tags"></a> [kdf\_tags](#input\_kdf\_tags) | Specify the tags to assign to the KDH delivery streams that are created | `map(string)` | n/a | yes |
 | <a name="input_redshift_cluster_identifier"></a> [redshift\_cluster\_identifier](#input\_redshift\_cluster\_identifier) | Specify the indentifier for an exisitng Redshift cluster that's been created | `string` | n/a | yes |
 | <a name="input_redshift_data_table_columns"></a> [redshift\_data\_table\_columns](#input\_redshift\_data\_table\_columns) | Specify the redshift data table columns | `string` | n/a | yes |
-| <a name="input_redshift_data_table_name"></a> [redshift\_data\_table\_name](#input\_redshift\_data\_table\_name) | Specify the redshift data table name | `any` | n/a | yes |
 | <a name="input_error_output_prefix"></a> [error\_output\_prefix](#input\_error\_output\_prefix) | Specify the Error prefix for the extended S3 configuration | `string` | `"error-"` | no |
 | <a name="input_extended_s3_buffer_size"></a> [extended\_s3\_buffer\_size](#input\_extended\_s3\_buffer\_size) | Specify the buffer size for the extended S3 configuration | `number` | `0` | no |
 | <a name="input_is_cloudwatch_logging"></a> [is\_cloudwatch\_logging](#input\_is\_cloudwatch\_logging) | Specify whether we enable cloud watch logging for the redshift and extended s3 streams | `bool` | `false` | no |
@@ -56,13 +55,14 @@
 | <a name="input_log_group_name"></a> [log\_group\_name](#input\_log\_group\_name) | Specify the log group name if cloudwatch logging has been enabled | `string` | `""` | no |
 | <a name="input_log_stream_name"></a> [log\_stream\_name](#input\_log\_stream\_name) | Specify the log stream name of the cloudwatch logging has been enabled | `string` | `""` | no |
 | <a name="input_passed_in_s3_bucket_arn"></a> [passed\_in\_s3\_bucket\_arn](#input\_passed\_in\_s3\_bucket\_arn) | Specifies the arn of an existing S3 bucket that will be used by this module | `string` | `""` | no |
+| <a name="input_redshift_data_table_name"></a> [redshift\_data\_table\_name](#input\_redshift\_data\_table\_name) | Specify the redshift data table name | `string` | `""` | no |
 | <a name="input_redshift_delimiter"></a> [redshift\_delimiter](#input\_redshift\_delimiter) | Specify the default delimiter | `string` | `"delimiter '|'"` | no |
 | <a name="input_region"></a> [region](#input\_region) | Specfies the region in which this resouce will be created in | `string` | `"af-south-1"` | no |
 | <a name="input_s3_bucket_name"></a> [s3\_bucket\_name](#input\_s3\_bucket\_name) | Specifies name for the s3 bucket | `string` | `""` | no |
 | <a name="input_s3_buffering_interval"></a> [s3\_buffering\_interval](#input\_s3\_buffering\_interval) | Specify the buffering interval for the S3 config for the redshift stream | `number` | `400` | no |
 | <a name="input_s3_buffering_size"></a> [s3\_buffering\_size](#input\_s3\_buffering\_size) | Specify the buffering size for the S3 config for the redshift stream | `number` | `10` | no |
 | <a name="input_s3_compression_format"></a> [s3\_compression\_format](#input\_s3\_compression\_format) | Specify the compression format for the S3 config for the redshift stream | `string` | `"GZIP"` | no |
-| <a name="input_s3_policy_actions"></a> [s3\_policy\_actions](#input\_s3\_policy\_actions) | Specifies the policy actions for the S3 bucket being created | `list(string)` | <pre>[<br>  ""<br>]</pre> | no |
+| <a name="input_s3_policy_actions"></a> [s3\_policy\_actions](#input\_s3\_policy\_actions) | Specifies the policy actions for the S3 bucket being created | `set(string)` | <pre>[<br>  ""<br>]</pre> | no |
 
 ## Outputs
 

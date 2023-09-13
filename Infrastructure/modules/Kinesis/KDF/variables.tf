@@ -64,7 +64,7 @@ variable "s3_bucket_name" {
 
 variable "s3_policy_actions" {
   description = "Specifies the policy actions for the S3 bucket being created"
-  type        = list(string)
+  type        = set(string)
   default     = [""]
 }
 
@@ -87,6 +87,8 @@ variable "redshift_data_table_columns" {
 
 variable "redshift_data_table_name" {
   description = "Specify the redshift data table name"
+  type        = string
+  default     = "" 
 
 }
 

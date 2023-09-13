@@ -45,26 +45,24 @@ No modules.
 | <a name="input_is_firehose_subscription"></a> [is\_firehose\_subscription](#input\_is\_firehose\_subscription) | Specifies whether we create an SNS subscription for a firehose delivery stream pointing to a kinesis stream | `bool` | `false` | no |
 | <a name="input_is_lambda_subscription"></a> [is\_lambda\_subscription](#input\_is\_lambda\_subscription) | Specify whether to create the sns topic subscription for a lambda | `bool` | `false` | no |
 | <a name="input_kinesis_delivery_stream_arn"></a> [kinesis\_delivery\_stream\_arn](#input\_kinesis\_delivery\_stream\_arn) | Specify the firehose delivery stream arn that points to kinesis stream | `string` | `""` | no |
-| <a name="input_policy_doc_actions"></a> [policy\_doc\_actions](#input\_policy\_doc\_actions) | Specify what actions will be permitted in your iam policy document | `list(string)` | <pre>[<br>  "SNS:Subscribe",<br>  "SNS:SetTopicAttributes",<br>  "SNS:RemovePermission",<br>  "SNS:Receive",<br>  "SNS:Publish",<br>  "SNS:ListSubscriptionsByTopic",<br>  "SNS:GetTopicAttributes",<br>  "SNS:DeleteTopic",<br>  "SNS:AddPermission"<br>]</pre> | no |
-| <a name="input_policy_identifiers"></a> [policy\_identifiers](#input\_policy\_identifiers) | Specify the policy identifiers for the iam policy document | `list(string)` | <pre>[<br>  "*"<br>]</pre> | no |
+| <a name="input_policy_doc_actions"></a> [policy\_doc\_actions](#input\_policy\_doc\_actions) | Specify what actions will be permitted in your iam policy document | `set(string)` | <pre>[<br>  "SNS:Subscribe",<br>  "SNS:SetTopicAttributes",<br>  "SNS:RemovePermission",<br>  "SNS:Receive",<br>  "SNS:Publish",<br>  "SNS:ListSubscriptionsByTopic",<br>  "SNS:GetTopicAttributes",<br>  "SNS:DeleteTopic",<br>  "SNS:AddPermission"<br>]</pre> | no |
+| <a name="input_policy_identifiers"></a> [policy\_identifiers](#input\_policy\_identifiers) | Specify the policy identifiers for the iam policy document | `set(string)` | <pre>[<br>  "*"<br>]</pre> | no |
 | <a name="input_region"></a> [region](#input\_region) | Specfies the region in which this resouce will be created in | `string` | `"af-south-1"` | no |
 | <a name="input_subscription_application_endpoint"></a> [subscription\_application\_endpoint](#input\_subscription\_application\_endpoint) | Specfies the application arn/endpoint that you want to attach to the subscription | `string` | `""` | no |
 | <a name="input_subscription_email_endpoint"></a> [subscription\_email\_endpoint](#input\_subscription\_email\_endpoint) | Specify the email address as the endpoint | `string` | `""` | no |
+| <a name="input_subscription_iam_name"></a> [subscription\_iam\_name](#input\_subscription\_iam\_name) | Specify name for the subscription Iam role created for the firehose subscription | `string` | `"value"` | no |
 | <a name="input_subscription_lambda_endpoint"></a> [subscription\_lambda\_endpoint](#input\_subscription\_lambda\_endpoint) | Specify the lambda arn as the endpoint | `string` | `""` | no |
-| <a name="input_subscription_policy_doc_actions"></a> [subscription\_policy\_doc\_actions](#input\_subscription\_policy\_doc\_actions) | Specify the actions to be used in the polic doc for the subscription role | `list(string)` | <pre>[<br>  ""<br>]</pre> | no |
-| <a name="input_subscription_policy_identifiers"></a> [subscription\_policy\_identifiers](#input\_subscription\_policy\_identifiers) | value | `list(string)` | `[]` | no |
+| <a name="input_subscription_policy_doc_actions"></a> [subscription\_policy\_doc\_actions](#input\_subscription\_policy\_doc\_actions) | Specify the actions to be used in the polic doc for the subscription role | `set(string)` | `[]` | no |
+| <a name="input_subscription_policy_identifiers"></a> [subscription\_policy\_identifiers](#input\_subscription\_policy\_identifiers) | value | `set(string)` | `[]` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
 | <a name="output_sns_application_subscription_arn"></a> [sns\_application\_subscription\_arn](#output\_sns\_application\_subscription\_arn) | Output the SNS application subscription arn |
-| <a name="output_sns_application_subscription_endpoint"></a> [sns\_application\_subscription\_endpoint](#output\_sns\_application\_subscription\_endpoint) | Output the SNS email subscription endpoint |
 | <a name="output_sns_email_subscription_arn"></a> [sns\_email\_subscription\_arn](#output\_sns\_email\_subscription\_arn) | Output the SNS email subscription arn |
 | <a name="output_sns_firehose_subscription_arn"></a> [sns\_firehose\_subscription\_arn](#output\_sns\_firehose\_subscription\_arn) | Output the SNS firehose subscription arn |
-| <a name="output_sns_firehose_subscription_endpoint"></a> [sns\_firehose\_subscription\_endpoint](#output\_sns\_firehose\_subscription\_endpoint) | Output the SNS firehose subscription endpoint |
 | <a name="output_sns_lambda_subscription_arn"></a> [sns\_lambda\_subscription\_arn](#output\_sns\_lambda\_subscription\_arn) | Output the SNS email subscription arn |
-| <a name="output_sns_lambda_subscription_endpoint"></a> [sns\_lambda\_subscription\_endpoint](#output\_sns\_lambda\_subscription\_endpoint) | Output the SNS lambda subscription endpoint |
 | <a name="output_sns_topic_arn"></a> [sns\_topic\_arn](#output\_sns\_topic\_arn) | Output the arn of the created SNS topic |
 | <a name="output_sns_topic_id"></a> [sns\_topic\_id](#output\_sns\_topic\_id) | Output the id of the created SNS topic |
 | <a name="output_sns_topic_name"></a> [sns\_topic\_name](#output\_sns\_topic\_name) | Output the name of the created SNS topic |
