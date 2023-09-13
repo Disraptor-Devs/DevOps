@@ -1,6 +1,9 @@
 output "ssm_paramater_arn" {
   description = "Output the SSM Parameter arn"
-  value       = aws_ssm_parameter.secret[0].arn
+  value = {
+    for key, ssm_parameter in aws_ssm_parameter.secret :
+    key => ssm_parameter.arn
+  }
 }
 
 output "ssm_paramter_value" {
