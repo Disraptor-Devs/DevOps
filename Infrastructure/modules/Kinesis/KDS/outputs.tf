@@ -15,10 +15,10 @@ output "stream_kms_key_arn" {
 
 output "stream_consumer_arn" {
   description = "Output of the Stream consumer arn"
-  value       = var.is_kinesis_consumer ? aws_kinesis_stream_consumer.stream_consumer.arn : null
+  value       = var.is_kinesis_consumer ? aws_kinesis_stream_consumer.stream_consumer[0].arn : null
 }
 
 output "stream_consumer_name" {
   description = "Output of the Stream consumer name"
-  value       = var.is_kinesis_consumer ? aws_kinesis_stream_consumer.stream_consumer.name : null
+  value       = var.is_kinesis_consumer ? aws_kinesis_stream_consumer.stream_consumer[0].name : null
 }
