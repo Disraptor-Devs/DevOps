@@ -99,7 +99,7 @@ resource "aws_kinesis_firehose_delivery_stream" "redshift_stream" {
     data_table_columns = var.redshift_data_table_columns
 
     cloudwatch_logging_options {
-      Enabled         = var.is_cloudwatch_logging
+      enabled         = var.is_cloudwatch_logging
       log_group_name  = var.log_group_name
       log_stream_name = var.log_stream_name
     }
