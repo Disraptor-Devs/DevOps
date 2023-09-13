@@ -23,6 +23,10 @@ resource "aws_iam_role" "firehose_role" {
   assume_role_policy = data.aws_iam_policy_document.firehose_assume_role.json
 }
 
+resource "aws_iam_role_policy_attachment" "firehose_policy_attachment" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonKinesisFullAccess"
+  role       = aws_iam_role.firehose_role.name
+}
 
 module "s3_bucket" {
   count = local.is_create_s3_bucket
