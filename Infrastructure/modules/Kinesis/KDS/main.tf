@@ -27,6 +27,4 @@ resource "aws_kinesis_stream_consumer" "stream_consumer" {
   count      = var.is_kinesis_consumer ? 1 : 0
   name       = var.kinesis_consumer_name
   stream_arn = aws_kinesis_stream.kinesis_stream.arn
-
-  tags = merge(var.kds_tags)
 }
