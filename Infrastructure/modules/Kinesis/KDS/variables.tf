@@ -40,6 +40,7 @@ variable "kds_tags" {
 variable "kinesis_consumer_name" {
   description = "Specify the name of the Kinesis stream consumer"
   type        = string
+  default     = ""
 }
 
 variable "kinesis_encryption_type" {

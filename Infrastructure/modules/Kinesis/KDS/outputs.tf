@@ -21,5 +21,4 @@ output "stream_consumer_arn" {
 output "stream_consumer_name" {
   description = "Output of the Stream consumer name"
   value       = aws_kinesis_stream_consumer.stream_consumer[0].name
-
 }
