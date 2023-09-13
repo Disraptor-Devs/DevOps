@@ -1,7 +1,3 @@
-locals {
-  call_get_secret = var.is_existing_parameter
-}
-
 resource "aws_ssm_parameter" "secret" {
   for_each = var.parameter_configs
 

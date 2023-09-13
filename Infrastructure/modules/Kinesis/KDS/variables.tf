@@ -21,7 +21,7 @@ variable "kinesis_retention_period" {
 
 variable "kinesis_shard_level_metrics" {
   description = "Specfies the shard level metrics for our shard"
-  type        = list(string)
+  type        = set(string)
   default     = ["IncomingBytes", "OutgoingBytes"]
 }
 
@@ -29,6 +29,7 @@ variable "kinesis_shard_level_metrics" {
 variable "kinesis_stream_mode_details" {
   description = "Specifies the stream mode for the kinesis stream being created"
   type        = string
+  default     = "PROVISIONED"
 }
 
 variable "kds_tags" {
@@ -44,6 +45,7 @@ variable "kinesis_consumer_name" {
 variable "kinesis_encryption_type" {
   description = "Specify the type of encryption to apply to the stream"
   type        = string
+  default     = "KMS"
 }
 
 variable "is_kinesis_consumer" {
