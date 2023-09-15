@@ -42,11 +42,6 @@ data "aws_redshift_cluster" "redshift_cluster" {
   cluster_identifier = var.redshift_cluster_identifier
 }
 
-data "aws_kinesis_stream" "kinesis_source" {
-  count = local.is_kinesis_stream
-  name  = var.kinesis_stream_name
-}
-
 
 resource "aws_kinesis_firehose_delivery_stream" "extended_s3_stream" {
   count       = local.is_s3_stream
