@@ -27,9 +27,10 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_parameter_configs"></a> [parameter\_configs](#input\_parameter\_configs) | Specify the values that will be used to define the SSM parameter | <pre>map(object({<br>    name        = string<br>    description = string<br>    type        = string<br>    value       = string<br>  }))</pre> | n/a | yes |
 | <a name="input_ssm_parameter_tags"></a> [ssm\_parameter\_tags](#input\_ssm\_parameter\_tags) | Specify the tags for the SSM Parameter being created | `map(string)` | n/a | yes |
-| <a name="input_is_existing_parameter"></a> [is\_existing\_parameter](#input\_is\_existing\_parameter) | Specify if we're dealing with an existing parameter or we're creating a new one from scratch | `bool` | `false` | no |
-| <a name="input_parameter_configs"></a> [parameter\_configs](#input\_parameter\_configs) | Specify the values that will be used to define the SSM parameter | `map(map(string))` | `{}` | no |
+| <a name="input_is_get_value"></a> [is\_get\_value](#input\_is\_get\_value) | Specify if we're dealing with an existing parameter and we just need to get the value | `bool` | `false` | no |
+| <a name="input_is_get_value_by_path"></a> [is\_get\_value\_by\_path](#input\_is\_get\_value\_by\_path) | Specify if we're dealing with an existing parameter and we just need to get the value by path | `bool` | `false` | no |
 | <a name="input_parameter_values_to_get_by_name"></a> [parameter\_values\_to\_get\_by\_name](#input\_parameter\_values\_to\_get\_by\_name) | Specifies the names we'll use to get the parameter value | `list(string)` | `[]` | no |
 | <a name="input_parameter_values_to_get_by_path"></a> [parameter\_values\_to\_get\_by\_path](#input\_parameter\_values\_to\_get\_by\_path) | Specifies the paths we'll use to get the parameter value | `list(string)` | `[]` | no |
 | <a name="input_region"></a> [region](#input\_region) | Specify Region in which the AWS resources will be deployed | `string` | `"af-south-1"` | no |

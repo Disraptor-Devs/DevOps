@@ -23,6 +23,10 @@ resource "aws_iam_role" "firehose_role" {
   assume_role_policy = data.aws_iam_policy_document.firehose_assume_role.json
 }
 
+resource "aws_iam_role_policy_attachment" "firehose_policy_attachment" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonKinesisFullAccess"
+  role       = aws_iam_role.firehose_role.name
+}
 
 module "s3_bucket" {
   count = local.is_create_s3_bucket
@@ -57,7 +61,7 @@ resource "aws_kinesis_firehose_delivery_stream" "extended_s3_stream" {
     error_output_prefix = var.error_output_prefix
 
     cloudwatch_logging_options {
-      Enabled         = var.is_cloudwatch_logging
+      enabled         = var.is_cloudwatch_logging
       log_group_name  = var.log_group_name
       log_stream_name = var.log_stream_name
     }
@@ -99,7 +103,7 @@ resource "aws_kinesis_firehose_delivery_stream" "redshift_stream" {
     data_table_columns = var.redshift_data_table_columns
 
     cloudwatch_logging_options {
-      Enabled         = var.is_cloudwatch_logging
+      enabled         = var.is_cloudwatch_logging
       log_group_name  = var.log_group_name
       log_stream_name = var.log_stream_name
     }

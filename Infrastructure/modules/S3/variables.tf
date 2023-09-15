@@ -55,6 +55,12 @@ variable "s3_bucket_notification_events" {
   default     = [ ]
 }
 
+variable "s3_identifiers" {
+  description = "Specifies the identifiers for the S3 bucket being created"
+  type        = set(string)
+  default = ["*"] 
+}
+
 
 variable "object_ownership" {
   description = "Specify the Object ownership for the S3 being created"
@@ -94,6 +100,13 @@ variable "lifecycle_transition_days" {
 
 variable "lifecycle_storage_class" {
   description = "Specify the storage class to transition to"
-  type        = string
-  default     = "" 
+  type        = map(string)
+  default     = {} 
+}
+
+variable "is_bucket_notification" {
+  description = "Specify whether we enable bucket notification"
+  type        = bool
+  default     = false 
+  
 }

@@ -27,15 +27,16 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_is_kinesis_consumer"></a> [is\_kinesis\_consumer](#input\_is\_kinesis\_consumer) | Specifies whether we'll create a Kinesis Consumer | `bool` | n/a | yes |
 | <a name="input_kds_tags"></a> [kds\_tags](#input\_kds\_tags) | Provide tags (key, value pairs) for the stream being created | `map(string)` | n/a | yes |
-| <a name="input_kinesis_consumer_name"></a> [kinesis\_consumer\_name](#input\_kinesis\_consumer\_name) | Specify the name of the Kinesis stream consumer | `string` | n/a | yes |
 | <a name="input_kinesis_data_stream_name"></a> [kinesis\_data\_stream\_name](#input\_kinesis\_data\_stream\_name) | Specfies the name for the kinesis stream that will be creatd | `string` | n/a | yes |
-| <a name="input_kinesis_encryption_type"></a> [kinesis\_encryption\_type](#input\_kinesis\_encryption\_type) | Specify the type of encryption to apply to the stream | `string` | n/a | yes |
 | <a name="input_kinesis_retention_period"></a> [kinesis\_retention\_period](#input\_kinesis\_retention\_period) | Specfies how long the data in the stream should be kept for | `number` | n/a | yes |
 | <a name="input_kinesis_shard_count"></a> [kinesis\_shard\_count](#input\_kinesis\_shard\_count) | Specfies the number of shards for the kinesis stream being created | `number` | n/a | yes |
-| <a name="input_kinesis_stream_mode_details"></a> [kinesis\_stream\_mode\_details](#input\_kinesis\_stream\_mode\_details) | Specifies the stream mode for the kinesis stream being created | `string` | n/a | yes |
-| <a name="input_kinesis_shard_level_metrics"></a> [kinesis\_shard\_level\_metrics](#input\_kinesis\_shard\_level\_metrics) | Specfies the shard level metrics for our shard | `list(string)` | <pre>[<br>  "IncomingBytes",<br>  "OutgoingBytes"<br>]</pre> | no |
+| <a name="input_enforce_consumer_deletion"></a> [enforce\_consumer\_deletion](#input\_enforce\_consumer\_deletion) | Specifies if registered consumers should be deregistered from the stream so that the stream can be destroyed. | `bool` | `false` | no |
+| <a name="input_is_kinesis_consumer"></a> [is\_kinesis\_consumer](#input\_is\_kinesis\_consumer) | Specifies whether we'll create a Kinesis Consumer | `bool` | `false` | no |
+| <a name="input_kinesis_consumer_name"></a> [kinesis\_consumer\_name](#input\_kinesis\_consumer\_name) | Specify the name of the Kinesis stream consumer | `string` | `""` | no |
+| <a name="input_kinesis_encryption_type"></a> [kinesis\_encryption\_type](#input\_kinesis\_encryption\_type) | Specify the type of encryption to apply to the stream | `string` | `"KMS"` | no |
+| <a name="input_kinesis_shard_level_metrics"></a> [kinesis\_shard\_level\_metrics](#input\_kinesis\_shard\_level\_metrics) | Specfies the shard level metrics for our shard | `set(string)` | <pre>[<br>  "IncomingBytes",<br>  "OutgoingBytes"<br>]</pre> | no |
+| <a name="input_kinesis_stream_mode_details"></a> [kinesis\_stream\_mode\_details](#input\_kinesis\_stream\_mode\_details) | Specifies the stream mode for the kinesis stream being created | `string` | `"PROVISIONED"` | no |
 | <a name="input_region"></a> [region](#input\_region) | Specfies the region in which this resouce will be created in | `string` | `"af-south-1"` | no |
 
 ## Outputs
