@@ -50,7 +50,7 @@ resource "aws_kinesis_firehose_delivery_stream" "extended_s3_stream" {
 
   extended_s3_configuration {
     role_arn   = aws_iam_role.firehose_role.arn
-    bucket_arn = local.is_create_s3_bucket ? module.s3_bucket[0].arn : var.passed_in_s3_bucket_arn
+    bucket_arn = local.is_create_s3_bucket ? module.s3_bucket[0].s3_bucket_arn : var.passed_in_s3_bucket_arn
 
     buffering_size      = var.extended_s3_buffer_size
     error_output_prefix = var.error_output_prefix
