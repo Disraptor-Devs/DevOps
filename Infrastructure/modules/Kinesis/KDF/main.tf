@@ -29,16 +29,11 @@ resource "aws_iam_role_policy_attachment" "firehose_policy_attachment" {
 }
 
 module "s3_bucket" {
-  source = "../../S3"
+  source = local.is_create_s3_bucket ? "../../S3" : null
   
-  dynamic "s3_config" {
-    for_each = local.is_create_s3_bucket
-    content {
-      s3_bucket_name    = var.s3_bucket_name
-      s3_policy_actions = var.s3_policy_actions
-      s3_tags           = merge(var.kdf_tags)
-    }
-  }
+  s3_bucket_name    = var.s3_bucket_name
+  s3_policy_actions = var.s3_policy_actions
+  s3_tags           = merge(var.kdf_tags)
 }
 
 data "aws_redshift_cluster" "redshift_cluster" {
