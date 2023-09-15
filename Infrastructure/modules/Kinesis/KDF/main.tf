@@ -67,7 +67,7 @@ resource "aws_kinesis_firehose_delivery_stream" "extended_s3_stream" {
     }
 
     kinesis_source_configuration {
-      kinesis_stream_arn = data.aws_kinesis_stream.kinesis_source.arn
+      kinesis_stream_arn = var.kinesis_stream_arn
       role_arn           = aws_iam_role.firehose_role.arn
     }
 

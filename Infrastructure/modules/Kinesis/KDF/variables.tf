@@ -176,3 +176,10 @@ variable "lambda_processor_arn" {
   type        = string
   default     = ""
 }
+
+variable "kinesis_stream_arn" {
+  description = "specify the kinesis stream arn to be procided in the extended s3 config"
+  type        = string
+  default     = "" 
+  
+}
