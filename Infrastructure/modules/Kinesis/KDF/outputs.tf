@@ -18,21 +18,6 @@ output "redshift_stream_name" {
   value       = aws_kinesis_firehose_delivery_stream.redshift_stream[0].name
 }
 
-output "created_s3_bucket_arn" {
-  description = "Output of the S3 bucket arn created from the extended S3 module"
-  value       = module.s3_bucket[0].s3_bucket_arn
-}
-
-output "created_s3_bucket_id" {
-  description = "Output of the S3 bucket id created from the extended S3 module"
-  value       = module.s3_bucket[0].s3_bucket_id
-}
-
-output "created_s3_bucket_path" {
-  description = "Output of the S3 bucket path created from the extended S3 module"
-  value       = module.s3_bucket[0].s3_bucket_path
-}
-
 output "kinesis_delivery_stream_arn" {
   description = "Output of the delivery stream arn for the kinesis stream"
   value       = aws_kinesis_firehose_delivery_stream.kinesis_stream[0].arn
