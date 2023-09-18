@@ -37,9 +37,6 @@ module "s3_bucket" {
   s3_tags           = merge(var.kdf_tags)
 }
 
-module "dummy_module" {
-  source = ""
-}
 
 data "aws_redshift_cluster" "redshift_cluster" {
   count              = local.is_redshift_stream
