@@ -28,16 +28,6 @@ resource "aws_iam_role_policy_attachment" "firehose_policy_attachment" {
   role       = aws_iam_role.firehose_role.name
 }
 
-module "s3_bucket" {
-  source = "../../S3"
-  count  = local.is_create_s3_bucket
-
-  s3_bucket_name    = var.s3_bucket_name
-  s3_policy_actions = var.s3_policy_actions
-  s3_tags           = merge(var.kdf_tags)
-}
-
-
 data "aws_redshift_cluster" "redshift_cluster" {
   count              = local.is_redshift_stream
   cluster_identifier = var.redshift_cluster_identifier
@@ -51,7 +41,7 @@ resource "aws_kinesis_firehose_delivery_stream" "extended_s3_stream" {
 
   extended_s3_configuration {
     role_arn   = aws_iam_role.firehose_role.arn
-    bucket_arn = local.is_create_s3_bucket ? module.s3_bucket[0].s3_bucket_arn : var.passed_in_s3_bucket_arn
+    bucket_arn = var.passed_in_s3_bucket_arn
 
     buffering_size      = var.extended_s3_buffer_size
     error_output_prefix = var.error_output_prefix
@@ -106,7 +96,7 @@ resource "aws_kinesis_firehose_delivery_stream" "redshift_stream" {
 
     s3_configuration {
       role_arn           = aws_iam_role.firehose_role.arn
-      bucket_arn         = local.is_create_s3_bucket ? module.s3_bucket[0].arn : var.passed_in_s3_bucket_arn
+      bucket_arn         = var.passed_in_s3_bucket_arn
       buffering_size     = var.s3_buffering_size
       buffering_interval = var.s3_buffering_interval
       compression_format = var.s3_compression_format
