@@ -1,7 +1,6 @@
 locals {
   is_s3_stream        = var.is_s3_consumer ? 1 : 0
   is_redshift_stream  = var.is_redshift_consumer ? 1 : 0
-  is_create_s3_bucket = !var.is_s3_existing_bucket ? 1 : 0
   is_kinesis_stream   = var.is_kinesis_consumer ? 1 : 0
 }
 
@@ -28,12 +27,6 @@ resource "aws_iam_role_policy_attachment" "firehose_policy_attachment" {
   role       = aws_iam_role.firehose_role.name
 }
 
-data "aws_redshift_cluster" "redshift_cluster" {
-  count              = local.is_redshift_stream
-  cluster_identifier = var.redshift_cluster_identifier
-}
-
-
 resource "aws_kinesis_firehose_delivery_stream" "extended_s3_stream" {
   count       = local.is_s3_stream
   name        = var.firehose_delivery_stream_name
@@ -58,7 +51,7 @@ resource "aws_kinesis_firehose_delivery_stream" "extended_s3_stream" {
     }
 
     processing_configuration {
-      enabled = var.s3_extended_processing_config
+      enabled = var.is_s3_extended_processing_config
 
       processors {
         type = var.s3_processors
@@ -81,11 +74,12 @@ resource "aws_kinesis_firehose_delivery_stream" "redshift_stream" {
 
   redshift_configuration {
     role_arn           = aws_iam_role.firehose_role.arn
-    cluster_jdbcurl    = "jdbc:redshift://${data.aws_redshift_cluster.redshift_cluster[0].endpoint}/${data.aws_redshift_cluster.redshift_cluster[0].database_name}"
-    username           = data.aws_redshift_cluster.redshift_cluster.master_username
+    # cluster_jdbcurl    = "jdbc:redshift://${data.aws_redshift_cluster.redshift_cluster.endpoint}/${data.aws_redshift_cluster.redshift_cluster.database_name}"
+    cluster_jdbcurl    = var.redhift_cluster_jdbc_url 
+    username           = var.redshift_usernmae
     password           = var.redshift_passw
-    data_table_name    = data.aws_redshift_cluster.redshift_cluster.data
-    copy_options       = var.reshift_delimiter # the default delimiter
+    data_table_name    = var.redshift_data_table_name
+    copy_options       = var.redshift_delimiter # the default delimiter
     data_table_columns = var.redshift_data_table_columns
 
     cloudwatch_logging_options {

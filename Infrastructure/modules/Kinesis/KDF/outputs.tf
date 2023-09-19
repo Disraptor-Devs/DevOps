@@ -17,13 +17,3 @@ output "redshift_stream_name" {
   description = "Output for the delivery stream name for the redshift stream"
   value       = aws_kinesis_firehose_delivery_stream.redshift_stream[0].name
 }
-
-output "kinesis_delivery_stream_arn" {
-  description = "Output of the delivery stream arn for the kinesis stream"
-  value       = aws_kinesis_firehose_delivery_stream.kinesis_stream[0].arn
-}
-
-output "kinesis_delivery_stream_name" {
-  description = "Output of the delivery stream name for the kinesis stream"
-  value       = aws_kinesis_firehose_delivery_stream.kinesis_stream[0].name
-}
