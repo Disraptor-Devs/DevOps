@@ -163,7 +163,7 @@ variable "kinesis_stream_arn" {
 variable "s3_processors" {
   description = "Specify the processor for the extended S3 config"
   type        = string
-  default     = "lambda" 
+  default     = "Lambda" 
 }
 
 variable "redshift_usernmae" {
