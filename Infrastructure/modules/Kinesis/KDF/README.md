@@ -19,6 +19,7 @@ No modules.
 
 | Name | Type |
 |------|------|
+| [aws_iam_policy_attachment.firehose_creation](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy_attachment) | resource |
 | [aws_iam_role.firehose_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role_policy_attachment.firehose_policy_attachment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_kinesis_firehose_delivery_stream.extended_s3_stream](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kinesis_firehose_delivery_stream) | resource |
@@ -60,7 +61,7 @@ No modules.
 | <a name="input_s3_buffering_interval"></a> [s3\_buffering\_interval](#input\_s3\_buffering\_interval) | Specify the buffering interval for the S3 config for the redshift stream | `number` | `400` | no |
 | <a name="input_s3_buffering_size"></a> [s3\_buffering\_size](#input\_s3\_buffering\_size) | Specify the buffering size for the S3 config for the redshift stream | `number` | `10` | no |
 | <a name="input_s3_compression_format"></a> [s3\_compression\_format](#input\_s3\_compression\_format) | Specify the compression format for the S3 config for the redshift stream | `string` | `"GZIP"` | no |
-| <a name="input_s3_processors"></a> [s3\_processors](#input\_s3\_processors) | Specify the processor for the extended S3 config | `string` | `"lambda"` | no |
+| <a name="input_s3_processors"></a> [s3\_processors](#input\_s3\_processors) | Specify the processor for the extended S3 config | `string` | `"Lambda"` | no |
 
 ## Outputs
 

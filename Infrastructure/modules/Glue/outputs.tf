@@ -49,20 +49,20 @@ output "glue_crawler_schedule" {
 
 output "glue_connection_arn" {
   description = "Output the name of the Glue Connection"
-  value       = aws_glue_connection.glue_connect[0].arn
+  value       = var.is_glue_connection ? aws_glue_connection.glue_connect[0].arn : null
 }
 
 output "glue_connection_name" {
   description = "Output the name of the Glue Connection"
-  value       = aws_glue_connection.glue_connect[0].name
+  value       = var.is_glue_connection ? aws_glue_connection.glue_connect[0].name : null
 }
 
 output "glue_dev_endpoint_arn" {
   description = "Specify the arn for the Glue dev endpoint"
-  value       = aws_glue_dev_endpoint.dev_endpoint[0].arn
+  value       = var.is_glue_dev_endpoint ? aws_glue_dev_endpoint.dev_endpoint[0].arn : null
 }
 
 output "glue_dev_endpoint_private_address" {
   description = "Specify the arn for the Glue dev endpoint"
-  value       = aws_glue_dev_endpoint.dev_endpoint[0].private_address
+  value       = var.is_glue_dev_endpoint ? aws_glue_dev_endpoint.dev_endpoint[0].private_address : null
 }

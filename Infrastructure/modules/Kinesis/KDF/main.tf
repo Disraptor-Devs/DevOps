@@ -38,11 +38,6 @@ resource "aws_kinesis_firehose_delivery_stream" "extended_s3_stream" {
   name        = var.firehose_delivery_stream_name
   destination = var.firehose_delivery_stream_destination
 
-  # kinesis_source_configuration {
-  #   kinesis_stream_arn = var.kinesis_stream_arn
-  #   role_arn           = aws_iam_role.firehose_role.arn
-  # }
-
   extended_s3_configuration {
     role_arn   = aws_iam_role.firehose_role.arn
     bucket_arn = var.passed_in_s3_bucket_arn
@@ -68,6 +63,11 @@ resource "aws_kinesis_firehose_delivery_stream" "extended_s3_stream" {
         }
       }
     }
+  }
+
+  kinesis_source_configuration {
+    kinesis_stream_arn = var.kinesis_stream_arn
+    role_arn           = aws_iam_role.firehose_role.arn
   }
 
   tags = merge(var.kdf_tags)

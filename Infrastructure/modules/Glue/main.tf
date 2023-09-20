@@ -46,7 +46,7 @@ resource "aws_glue_crawler" "glue_crawler" {
   }
 
   schema_change_policy {
-
+    delete_behavior = var.schema_change_delete_behavior
   }
 
   dynamic "s3_target" {
@@ -59,7 +59,7 @@ resource "aws_glue_crawler" "glue_crawler" {
   dynamic "jdbc_target" {
     count = var.is_jdbc_target ? 1 : 0
     content {
-      connection_name = var.crawler_jdbc_connection
+      connection_name = var.crawler_jdbc_connection_name
       path            = var.crawler_jdbc_path
     }
   }
@@ -75,7 +75,7 @@ resource "aws_glue_crawler" "glue_crawler" {
 
 resource "aws_glue_dev_endpoint" "dev_endpoint" {
   count    = var.is_glue_dev_endpoint ? 1 : 0
-  name     = var.glue_dev_endpoint
+  name     = var.glue_dev_endpoint_name
   role_arn = aws_iam_role.iamrole.arn
 }
 

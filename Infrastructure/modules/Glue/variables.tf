@@ -79,11 +79,17 @@ variable "glue_connection_username" {
   default     = ""
 }
 
+variable "glue_connection_name" {
+  description = "Specify the name for the glue connection"
+  type        = string
+  default     = "" 
+  
+}
+
 variable "recrawl_behavior" {
   description = "Specify the recrawl behaviour for the glue crawler"
   type        = string
   default     = "CRAWL_EVERYTHING"
-
 }
 
 variable "crawler_cron_schedule" {
@@ -122,8 +128,31 @@ variable "is_glue_dev_endpoint" {
   default     = false
 }
 
+variable "glue_dev_endpoint_name" {
+  description = "Specify the name of the Glue dev endpoint"
+  type        = string
+  default     = "" 
+}
+
 variable "glue_table_name" {
   description = "Specify the name for the glue table being created"
   type        = string
+}
 
+variable "crawler_jdbc_connection_name" {
+  description = "Specify the jdbc connection name if jdbc is chosen as the crawler target"
+  type        = string
+  default     = ""
+}
+
+variable "crawler_jdbc_path" {
+  description = "Specify the jdbc path if jdbc is chosen as the crawler target"
+  type        = string
+  default     = ""
+}
+
+variable "schema_change_delete_behavior" {
+  description = "Specify what should happen on the crawler's deletion behavior "
+  type        = string
+  default     = "LOG"
 }
