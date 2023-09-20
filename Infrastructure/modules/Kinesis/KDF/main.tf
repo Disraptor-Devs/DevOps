@@ -55,7 +55,7 @@ resource "aws_kinesis_firehose_delivery_stream" "extended_s3_stream" {
       enabled = var.is_s3_extended_processing_config
 
       dynamic "processors" {
-        for_each = var.is_lambda_processor ? 1 : 0
+        for_each = var.is_lambda_processor ? [1] : [0]
         content {
           type = var.s3_processors
 
