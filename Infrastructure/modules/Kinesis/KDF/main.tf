@@ -51,22 +51,22 @@ resource "aws_kinesis_firehose_delivery_stream" "extended_s3_stream" {
       log_stream_name = var.log_stream_name
     }
 
-    processing_configuration {
-      enabled = var.is_s3_extended_processing_config
+    dynamic "processing_configuration" {
+      for_each = var.is_lambda_processor ? [1] : []
+      content {
+        enabled = var.is_s3_extended_processing_config
 
-      dynamic "processors" {
-        for_each = var.is_lambda_processor ? [1] : [0]
-        content {
+        processors {
           type = var.s3_processors
 
-        parameters {
-          parameter_name  = "LambdaArn"
-          parameter_value = var.is_lambda_processor ? "${var.lambda_processor_arn}:$LATEST" : null
-        }
-      }
+          parameters {
+            parameter_name  = "LambdaArn"
+            parameter_value = var.is_lambda_processor ? "${var.lambda_processor_arn}:$LATEST" : null
+          }
+       }
+     }
     }
-   }
-  }
+  } 
 
   kinesis_source_configuration {
     kinesis_stream_arn = var.kinesis_stream_arn
