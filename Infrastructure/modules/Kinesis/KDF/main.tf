@@ -61,13 +61,13 @@ resource "aws_kinesis_firehose_delivery_stream" "extended_s3_stream" {
 
         parameters {
           parameter_name  = "LambdaArn"
-          parameter_value = "${var.lambda_processor_arn}:$LATEST"
+          parameter_value = var.is_lambda_processor ? "${var.lambda_processor_arn}:$LATEST" : null
         }
       }
     }
    }
   }
-  
+
   kinesis_source_configuration {
     kinesis_stream_arn = var.kinesis_stream_arn
     role_arn           = aws_iam_role.firehose_role.arn
