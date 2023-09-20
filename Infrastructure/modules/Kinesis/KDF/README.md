@@ -19,8 +19,8 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [aws_iam_policy_attachment.firehose_creation](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy_attachment) | resource |
 | [aws_iam_role.firehose_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
+| [aws_iam_role_policy_attachment.firehose_creation](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_iam_role_policy_attachment.firehose_policy_attachment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_kinesis_firehose_delivery_stream.extended_s3_stream](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kinesis_firehose_delivery_stream) | resource |
 | [aws_kinesis_firehose_delivery_stream.redshift_stream](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kinesis_firehose_delivery_stream) | resource |
@@ -41,7 +41,7 @@ No modules.
 | <a name="input_is_delivery_start_config_earliest"></a> [is\_delivery\_start\_config\_earliest](#input\_is\_delivery\_start\_config\_earliest) | Specify if the delivery start time of the s | `bool` | `false` | no |
 | <a name="input_is_encryption_config"></a> [is\_encryption\_config](#input\_is\_encryption\_config) | Specify if we will provide encryption for the delivery stream for Kinesis | `bool` | `false` | no |
 | <a name="input_is_kinesis_consumer"></a> [is\_kinesis\_consumer](#input\_is\_kinesis\_consumer) | Specifies whether we need to create a stream to get our data to our Kinesis stream consumer | `bool` | `false` | no |
-| <a name="input_is_lambda_processor"></a> [is\_lambda\_processor](#input\_is\_lambda\_processor) | Specify whether we'll use Lambda for our processing of data on the extended S3 config | `string` | `"false"` | no |
+| <a name="input_is_lambda_processor"></a> [is\_lambda\_processor](#input\_is\_lambda\_processor) | Specify whether we'll use Lambda for our processing of data on the extended S3 config | `bool` | `"false"` | no |
 | <a name="input_is_redshift_consumer"></a> [is\_redshift\_consumer](#input\_is\_redshift\_consumer) | Specifies whether we need to create a stream to get our data to our Redshift consumer | `bool` | `false` | no |
 | <a name="input_is_s3_consumer"></a> [is\_s3\_consumer](#input\_is\_s3\_consumer) | Specifies whether we need to create a stream to get data to our S3 consumer and if we need to just pass in the S3 values | `bool` | `false` | no |
 | <a name="input_is_s3_extended_processing_config"></a> [is\_s3\_extended\_processing\_config](#input\_is\_s3\_extended\_processing\_config) | Specifies whether we need to do further processing for the extended s3 consumer | `bool` | `false` | no |

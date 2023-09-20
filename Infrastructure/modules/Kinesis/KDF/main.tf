@@ -27,8 +27,8 @@ resource "aws_iam_role_policy_attachment" "firehose_policy_attachment" {
   role       = aws_iam_role.firehose_role.name
 }
 
-resource "aws_iam_policy_attachment" "firehose_creation" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonKinesisFullAccess"
+resource "aws_iam_role_policy_attachment" "firehose_creation" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
   role       = aws_iam_role.firehose_role.name
   
 }

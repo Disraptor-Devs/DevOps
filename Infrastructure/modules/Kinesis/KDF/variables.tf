@@ -186,6 +186,6 @@ variable "redhift_cluster_jdbc_url" {
 
 variable "is_lambda_processor" {
   description = "Specify whether we'll use Lambda for our processing of data on the extended S3 config"
-  type        = string
+  type        = bool
   default     = "false"  
 }
