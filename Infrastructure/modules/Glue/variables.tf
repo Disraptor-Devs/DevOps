@@ -4,12 +4,6 @@ variable "region" {
   default     = "af-south-1"
 }
 
-variable "is_existing_S3_bucket" {
-  description = "Specifies whether we need to create an S3 or not"
-  type        = bool
-  default     = false
-}
-
 variable "glue_iam_role_name" {
   description = "Specify the name of the iam role created for Glue"
   type        = string
@@ -55,8 +49,8 @@ variable "is_catalog_target" {
   default     = false
 }
 
-variable "s3_bucket_id" {
-  description = "Specifies the S3 bucket id if it's an existing S3 bucket"
+variable "s3_bucket_path" {
+  description = "Specifies the S3 bucket path of an S3 bucket"
   type        = string
   default     = ""
 }
