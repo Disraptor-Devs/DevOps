@@ -30,7 +30,6 @@ resource "aws_iam_role_policy_attachment" "firehose_policy_attachment" {
 resource "aws_iam_role_policy_attachment" "firehose_creation" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
   role       = aws_iam_role.firehose_role.name
-  
 }
 
 resource "aws_kinesis_firehose_delivery_stream" "extended_s3_stream" {
