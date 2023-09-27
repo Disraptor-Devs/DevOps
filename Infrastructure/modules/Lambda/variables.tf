@@ -40,6 +40,7 @@ variable "function_name" {
 variable "lambda_variables" {
   description = "Specify variables for our lambda function"
   type        = map(string) 
+  default     = {}
 }
 
 variable "lambda_alias_name" {

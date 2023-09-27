@@ -47,7 +47,6 @@ No modules.
 | <a name="input_lambda_handler"></a> [lambda\_handler](#input\_lambda\_handler) | Specify entry point of your function | `string` | n/a | yes |
 | <a name="input_lambda_iam_role_name"></a> [lambda\_iam\_role\_name](#input\_lambda\_iam\_role\_name) | Specify the name for the Iam role that will be created for the lambda function | `string` | n/a | yes |
 | <a name="input_lambda_tags"></a> [lambda\_tags](#input\_lambda\_tags) | Specifies the tags (Key, Value pairs) to be associated to the lambda resources | `map(string)` | n/a | yes |
-| <a name="input_lambda_variables"></a> [lambda\_variables](#input\_lambda\_variables) | Specify variables for our lambda function | `map(string)` | n/a | yes |
 | <a name="input_archive_type"></a> [archive\_type](#input\_archive\_type) | Specify the Archive type to be used for the file/code you're referencing | `string` | `"ZIP"` | no |
 | <a name="input_cloudwatch_arn"></a> [cloudwatch\_arn](#input\_cloudwatch\_arn) | Specify the Cloudwatch arn you want to give permission to perform an action on the lambda function | `string` | `""` | no |
 | <a name="input_concurrent_excutions"></a> [concurrent\_excutions](#input\_concurrent\_excutions) | Amount of capacity to allocate | `number` | `1` | no |
@@ -71,6 +70,7 @@ No modules.
 | <a name="input_lambda_function_url_cors_max_age"></a> [lambda\_function\_url\_cors\_max\_age](#input\_lambda\_function\_url\_cors\_max\_age) | The maximum amount of time, in seconds, that web browsers can cache results of a preflight request. | `number` | `0` | no |
 | <a name="input_lambda_permission_action"></a> [lambda\_permission\_action](#input\_lambda\_permission\_action) | Specify the action that will be allowed on the lambda function (to be used in aws lambda permission) | `string` | `"lambda:InvokeFunction"` | no |
 | <a name="input_lambda_permission_statement_id"></a> [lambda\_permission\_statement\_id](#input\_lambda\_permission\_statement\_id) | Specify the statement id for the aws lambda permission | `string` | `""` | no |
+| <a name="input_lambda_variables"></a> [lambda\_variables](#input\_lambda\_variables) | Specify variables for our lambda function | `map(string)` | `{}` | no |
 | <a name="input_managed_kafka_consumer_group_id"></a> [managed\_kafka\_consumer\_group\_id](#input\_managed\_kafka\_consumer\_group\_id) | Specify the consumer group id for the amazon\_managed\_kafka\_event\_source\_config | `string` | `""` | no |
 | <a name="input_msk_cluster_arn"></a> [msk\_cluster\_arn](#input\_msk\_cluster\_arn) | Specify the msk cluster arn to be used in the event source mapping | `string` | `""` | no |
 | <a name="input_msk_topics"></a> [msk\_topics](#input\_msk\_topics) | Specify the topics used in the msk cluster | `set(string)` | `[]` | no |
