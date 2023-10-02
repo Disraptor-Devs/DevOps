@@ -79,7 +79,6 @@ resource "aws_lambda_alias" "lambda_alias" {
 #      }
 #   } 
 
-  tags = merge(var.lambda_tags)
 }
 
 # still undecided on whether this feature will be added or not 
