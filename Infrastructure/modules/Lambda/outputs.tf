@@ -20,12 +20,12 @@ output "lambda_function_arn" {
 
 output "lambda_function_id" {
   description = "Output the Lambda Function id"
-  value       = aws_lambda_function.lambda_function.id  
+  value       = aws_lambda_function.lambda_function.id 
 }
 
 output "lambda_function_name" {
   description = "Output the Lambda Function name"
-  value       = aws_lambda_function.lambda_function.name   
+  value       = aws_lambda_function.lambda_function.function_name   
 }
 
 output "event_source_kinesis_state" {
