@@ -28,7 +28,7 @@ resource "aws_iam_role_policy_attachment" "laambda_s3_policy" {
   role       = aws_iam_role.iam_for_lambda.name
 }
 
-resource "aws_iam_role_policy_attachment" "laambda_s3_policy" {
+resource "aws_iam_role_policy_attachment" "laambda_sns_policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonSNSFullAccess"
   role       = aws_iam_role.iam_for_lambda.name
 }
