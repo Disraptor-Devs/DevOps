@@ -34,7 +34,7 @@ resource "aws_iam_role_policy_attachment" "laambda_s3_policy" {
 }
 
 data "archive_file" "lambda" {
-  count = var.is_deployment_package_on_s3 ? 1 : 0 
+  count = var.is_deployment_package_local ? 1 : 0 
 
   type        = var.archive_type
   source_file = var.path_to_code
