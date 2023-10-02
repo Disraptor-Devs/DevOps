@@ -255,3 +255,10 @@ variable "lambda_function_url_cors_max_age" {
   type        = number
   default     = 0 
 }
+
+variable "is_function_variables" {
+  description = "Specify whether we'll pass in environment variables for our lambda function"
+  type        = bool
+  default     = false 
+  
+}

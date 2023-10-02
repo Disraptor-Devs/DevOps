@@ -55,6 +55,7 @@ No modules.
 | <a name="input_is_allow_s3_action_on_lambda"></a> [is\_allow\_s3\_action\_on\_lambda](#input\_is\_allow\_s3\_action\_on\_lambda) | Specify whether we'll allow S3 an action on the lambda function | `bool` | `false` | no |
 | <a name="input_is_allow_sns_action_on_lambda"></a> [is\_allow\_sns\_action\_on\_lambda](#input\_is\_allow\_sns\_action\_on\_lambda) | Specify whether we'll allow SNS an action on the lambda function | `bool` | `false` | no |
 | <a name="input_is_deployment_package_local"></a> [is\_deployment\_package\_local](#input\_is\_deployment\_package\_local) | Specify whether the zip file with the code for the lambda function is stored on S3. | `bool` | `false` | no |
+| <a name="input_is_function_variables"></a> [is\_function\_variables](#input\_is\_function\_variables) | Specify whether we'll pass in environment variables for our lambda function | `bool` | `false` | no |
 | <a name="input_is_kafka_event_source_config"></a> [is\_kafka\_event\_source\_config](#input\_is\_kafka\_event\_source\_config) | Specify whether to add in the kafka event source config block for the msk event source mapping | `bool` | `false` | no |
 | <a name="input_is_kinesis_event_source"></a> [is\_kinesis\_event\_source](#input\_is\_kinesis\_event\_source) | Specify whether to create the event source mapping for a kinesis stream | `bool` | `false` | no |
 | <a name="input_is_lambda_function_url"></a> [is\_lambda\_function\_url](#input\_is\_lambda\_function\_url) | Specify whether we'll create a url for our lambda function | `bool` | `false` | no |
