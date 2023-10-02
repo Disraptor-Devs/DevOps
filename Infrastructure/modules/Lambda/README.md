@@ -40,6 +40,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_function_description"></a> [function\_description](#input\_function\_description) | Specify the description for the lambda function | `string` | n/a | yes |
 | <a name="input_function_name"></a> [function\_name](#input\_function\_name) | Specify the name of the lambda function being created | `string` | n/a | yes |
 | <a name="input_lambda_alias_description"></a> [lambda\_alias\_description](#input\_lambda\_alias\_description) | Specify the description for the lambda alias. | `string` | n/a | yes |
 | <a name="input_lambda_alias_function_version"></a> [lambda\_alias\_function\_version](#input\_lambda\_alias\_function\_version) | Specify the version for the lambda function being associated to the alias. | `string` | n/a | yes |

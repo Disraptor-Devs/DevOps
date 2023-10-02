@@ -37,6 +37,12 @@ variable "function_name" {
   type        = string 
 }
 
+variable "function_description" {
+  description = "Specify the description for the lambda function"
+  type        = string  
+  
+}
+
 variable "lambda_variables" {
   description = "Specify variables for our lambda function"
   type        = map(string) 
