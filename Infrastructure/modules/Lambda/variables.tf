@@ -17,7 +17,7 @@ variable "lambda_iam_role_name" {
 variable "archive_type" {
   description = "Specify the Archive type to be used for the file/code you're referencing"
   type        = string
-  default     = "ZIP" 
+  default     = "zip" 
 }
 
 variable "path_to_code" {
