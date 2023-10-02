@@ -84,6 +84,7 @@ variable "lambda_function_runtime" {
 variable "lambda_handler" {
   description = "Specify entry point of your function"
   type        = string 
+  default     = null
 }
 
 variable "kinesis_stream_arn" {

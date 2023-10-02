@@ -44,7 +44,6 @@ No modules.
 | <a name="input_lambda_alias_function_version"></a> [lambda\_alias\_function\_version](#input\_lambda\_alias\_function\_version) | Specify the version for the lambda function being associated to the alias. | `string` | n/a | yes |
 | <a name="input_lambda_alias_name"></a> [lambda\_alias\_name](#input\_lambda\_alias\_name) | Specify the name to use for the lambda alias being created. | `string` | n/a | yes |
 | <a name="input_lambda_function_runtime"></a> [lambda\_function\_runtime](#input\_lambda\_function\_runtime) | Specify the runtime for the lambda function | `string` | n/a | yes |
-| <a name="input_lambda_handler"></a> [lambda\_handler](#input\_lambda\_handler) | Specify entry point of your function | `string` | n/a | yes |
 | <a name="input_lambda_iam_role_name"></a> [lambda\_iam\_role\_name](#input\_lambda\_iam\_role\_name) | Specify the name for the Iam role that will be created for the lambda function | `string` | n/a | yes |
 | <a name="input_lambda_tags"></a> [lambda\_tags](#input\_lambda\_tags) | Specifies the tags (Key, Value pairs) to be associated to the lambda resources | `map(string)` | n/a | yes |
 | <a name="input_archive_type"></a> [archive\_type](#input\_archive\_type) | Specify the Archive type to be used for the file/code you're referencing | `string` | `"ZIP"` | no |
@@ -68,6 +67,7 @@ No modules.
 | <a name="input_lambda_function_url_cors_allow_origins"></a> [lambda\_function\_url\_cors\_allow\_origins](#input\_lambda\_function\_url\_cors\_allow\_origins) | The origins that can access the function URL. | `set(string)` | <pre>[<br>  "*"<br>]</pre> | no |
 | <a name="input_lambda_function_url_cors_expose_headers"></a> [lambda\_function\_url\_cors\_expose\_headers](#input\_lambda\_function\_url\_cors\_expose\_headers) | The HTTP headers in your function response that you want to expose to origins that call the function URL. | `set(string)` | <pre>[<br>  "keep-alive",<br>  "date"<br>]</pre> | no |
 | <a name="input_lambda_function_url_cors_max_age"></a> [lambda\_function\_url\_cors\_max\_age](#input\_lambda\_function\_url\_cors\_max\_age) | The maximum amount of time, in seconds, that web browsers can cache results of a preflight request. | `number` | `0` | no |
+| <a name="input_lambda_handler"></a> [lambda\_handler](#input\_lambda\_handler) | Specify entry point of your function | `string` | `null` | no |
 | <a name="input_lambda_permission_action"></a> [lambda\_permission\_action](#input\_lambda\_permission\_action) | Specify the action that will be allowed on the lambda function (to be used in aws lambda permission) | `string` | `"lambda:InvokeFunction"` | no |
 | <a name="input_lambda_permission_statement_id"></a> [lambda\_permission\_statement\_id](#input\_lambda\_permission\_statement\_id) | Specify the statement id for the aws lambda permission | `string` | `""` | no |
 | <a name="input_lambda_variables"></a> [lambda\_variables](#input\_lambda\_variables) | Specify variables for our lambda function | `map(string)` | `{}` | no |
