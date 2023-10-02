@@ -2,7 +2,7 @@ provider "aws" {
   region = var.region
 
   default_tags {
-    tags = var.glue_tags
+    tags = var.lambda_tags
   }
 
   ignore_tags {
