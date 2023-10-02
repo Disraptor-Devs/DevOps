@@ -1,3 +1,8 @@
+locals {
+  is_code_lives_on_s3 = (!var.is_deployment_package_local && var.s3_bucket_for_lambda != null)
+}
+
+
 data "aws_iam_policy_document" "assume_role" {
   statement {
     effect = "Allow"
@@ -50,8 +55,8 @@ resource "aws_lambda_function" "lambda_function" {
   role          = aws_iam_role.iam_for_lambda.arn
   handler       = var.lambda_handler 
   
-  s3_bucket = !var.is_deployment_package_local ? var.s3_bucket_for_lambda : null
-  s3_key    = !var.is_deployment_package_local ? var.s3_key_to_code_for_lambda : null
+  s3_bucket = local.is_code_lives_on_s3 ? var.s3_bucket_for_lambda : null
+  s3_key    = local.is_code_lives_on_s3 ? var.s3_key_to_code_for_lambda : null
 
   source_code_hash = var.is_deployment_package_local ? data.archive_file.lambda[0].output_base64sha256 : null
 
