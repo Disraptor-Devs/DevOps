@@ -53,19 +53,19 @@ variable "kdf_tags" {
 variable "passed_in_s3_bucket_arn" {
   description = "Specifies the arn of an existing S3 bucket that will be used by this module"
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "redshift_data_table_columns" {
   description = "Specify the redshift data table columns"
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "redshift_data_table_name" {
   description = "Specify the redshift data table name"
   type        = string
-  default     = "" 
+  default     = null 
 
 }
 
@@ -139,25 +139,25 @@ variable "is_cloudwatch_logging" {
 variable "log_group_name" {
   description = "Specify the log group name if cloudwatch logging has been enabled"
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "log_stream_name" {
   description = "Specify the log stream name of the cloudwatch logging has been enabled"
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "lambda_processor_arn" {
   description = "Specify The lambda processor arn for the extended S3 configuration if process configuration has been enabled"
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "kinesis_stream_arn" {
   description = "specify the kinesis stream arn to be procided in the extended s3 config"
   type        = string
-  default     = "" 
+  default     = null 
 }
 
 variable "s3_processors" {
@@ -169,19 +169,19 @@ variable "s3_processors" {
 variable "redshift_usernmae" {
   description = "Specify the value of the redshift username for the reshift config"
   type        = string
-  default     = "" 
+  default     = null 
 }
 
 variable "redshift_passw" {
   description = "Specify the value of the redshift password to be used for the redshift config"
   type        = string
-  default     = "" 
+  default     = null 
 }
 
 variable "redhift_cluster_jdbc_url" {
   description = "Specify the Redshift cluster jdbc url for the redshift firehose delivery stream"
   type        = string
-  default     = "" 
+  default     = null 
 }
 
 variable "is_lambda_processor" {

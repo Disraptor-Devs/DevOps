@@ -1,5 +1,5 @@
 locals {
-  is_code_lives_on_s3 = (!var.is_deployment_package_local && var.s3_bucket_for_lambda != null)
+  is_code_lives_on_s3 = var.s3_bucket_for_lambda != null 
 }
 
 

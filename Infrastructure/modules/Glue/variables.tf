@@ -52,7 +52,7 @@ variable "is_catalog_target" {
 variable "s3_bucket_path" {
   description = "Specifies the S3 bucket path of an S3 bucket"
   type        = string
-  default     = ""
+  default     = null
 }
 
 
@@ -64,25 +64,25 @@ variable "glue_tags" {
 variable "glue_connection_jdbc_connection_url" {
   description = "Specify the JDBC connection url for the Glue connection being created"
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "glue_connection_password" {
   description = "Specify the password for the glue connection"
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "glue_connection_username" {
   description = "Specify the username for the glue connection"
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "glue_connection_name" {
   description = "Specify the name for the glue connection"
   type        = string
-  default     = "" 
+  default     = null 
   
 }
 
@@ -107,19 +107,19 @@ variable "is_glue_connection" {
 variable "physical_conn_availability_zone" {
   description = "Specify the physical connection requirements availability zone"
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "physical_conn_security_group_id" {
   description = "Specify the physical connection requirements security group ids"
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "physical_conn_subnet_id" {
   description = "Specify the physical connection requirements subnet id"
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "is_glue_dev_endpoint" {
@@ -131,7 +131,7 @@ variable "is_glue_dev_endpoint" {
 variable "glue_dev_endpoint_name" {
   description = "Specify the name of the Glue dev endpoint"
   type        = string
-  default     = "" 
+  default     = null 
 }
 
 variable "glue_table_name" {
@@ -142,13 +142,13 @@ variable "glue_table_name" {
 variable "crawler_jdbc_connection_name" {
   description = "Specify the jdbc connection name if jdbc is chosen as the crawler target"
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "crawler_jdbc_path" {
   description = "Specify the jdbc path if jdbc is chosen as the crawler target"
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "schema_change_delete_behavior" {

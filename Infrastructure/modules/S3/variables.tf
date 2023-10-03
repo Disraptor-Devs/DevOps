@@ -46,7 +46,7 @@ variable "target_prefix" {
 variable "sns_topic_arn" {
   description = "Specifies the SNS topic arn if bucket notification is enabled"
   type        = string
-  default     = "" 
+  default     = null 
 }
 
 variable "s3_bucket_notification_events" {
@@ -83,7 +83,7 @@ variable "is_access_point" {
 variable "lifecycle_name" {
   description = "Specify name for the lifecycle config for the S3 bucket"
   type        = string
-  default     = "" 
+  default     = null 
 }
 
 variable "lifecylce_status" {

@@ -23,13 +23,13 @@ variable "archive_type" {
 variable "path_to_code" {
   description = "Specify the path to where your file/code is located"
   type        = string
-  default     = "" 
+  default     = null 
 }
 
 variable "output_path" {
   description = "Specify the output name of the zipped file/code"
   type        = string
-  default     = ""  
+  default     = null  
 }
 
 variable "function_name" {
@@ -73,13 +73,13 @@ variable "is_deployment_package_local" {
 variable "s3_bucket_for_lambda" {
   description = "Specify the S3 bucket where your code for the lambda function lives."
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "s3_key_to_code_for_lambda" {
   description = "Specify the S3 key to your code for the lambda function."
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "lambda_function_runtime" {
@@ -96,7 +96,7 @@ variable "lambda_handler" {
 variable "kinesis_stream_arn" {
   description = "Specify the kinesis stream arn to be used in the event source mapping"
   type        = string 
-  default     = "" 
+  default     = null 
 }
 
 variable "event_starting_position" {
@@ -108,19 +108,19 @@ variable "event_starting_position" {
 variable "starting_pos_timestamp" {
   description = "Specify the starting position timestamp only if event_starting_position is set to AT_TIMESTAMP"
   type        = string 
-  default     = "" 
+  default     = null 
 }
 
 variable "sns_failure_topic_arn" {
   description = "Specify the arn for the sns topic that will be used for failures "
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "msk_cluster_arn" {
   description = "Specify the msk cluster arn to be used in the event source mapping"
   type        = string 
-  default     = ""  
+  default     = null  
 }
 
 variable "msk_topics" {
@@ -150,7 +150,7 @@ variable "is_msk_cluster_event_source" {
 variable "managed_kafka_consumer_group_id" {
   description = "Specify the consumer group id for the amazon_managed_kafka_event_source_config" 
   type        =  string
-  default     = ""
+  default     = null
 }
 
 variable "lambda_permission_action" {
@@ -162,25 +162,25 @@ variable "lambda_permission_action" {
 variable "lambda_permission_statement_id" {
   description = "Specify the statement id for the aws lambda permission"
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "s3_bucket_arn" {
   description = "Specify the S3 bucket arn you want to give permission to perform an action on the lambda function"
   type        = string
-  default     = "" 
+  default     = null 
 }
 
 variable "cloudwatch_arn" {
   description = "Specify the Cloudwatch arn you want to give permission to perform an action on the lambda function"
   type        = string
-  default     = "" 
+  default     = null 
 }
 
 variable "sns_arn" {
   description = "Specify the SNS arn you want to give permission to perform an action on the lambda function"
   type        = string
-  default     = "" 
+  default     = null 
 }
 
 variable "is_allow_s3_action_on_lambda" {

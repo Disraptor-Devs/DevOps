@@ -88,7 +88,7 @@ variable "subscription_policy_identifiers" {
 variable "kinesis_delivery_stream_arn" {
   description = "Specify the firehose delivery stream arn that points to kinesis stream"
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "sns_tags" {
@@ -111,7 +111,7 @@ variable "subscription_policy_doc_actions" {
 variable "subscription_application_endpoint" {
   description = "Specfies the application arn/endpoint that you want to attach to the subscription"
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "is_email_subscription" {
@@ -123,7 +123,7 @@ variable "is_email_subscription" {
 variable "subscription_email_endpoint" {
   description = "Specify the email address as the endpoint"
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "is_lambda_subscription" {
@@ -135,7 +135,7 @@ variable "is_lambda_subscription" {
 variable "subscription_lambda_endpoint" {
   description = "Specify the lambda arn as the endpoint"
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "subscription_iam_name" {
