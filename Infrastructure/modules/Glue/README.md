@@ -13,9 +13,7 @@
 
 ## Modules
 
-| Name | Source | Version |
-|------|--------|---------|
-| <a name="module_s3_bucket"></a> [s3\_bucket](#module\_s3\_bucket) | ../S3 | n/a |
+No modules.
 
 ## Resources
 
@@ -29,7 +27,6 @@
 | [aws_iam_role.iamrole](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role_policy_attachment.glue_glueServiceRole_Attachement](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_iam_policy_document.glue_iamrole](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
-| [aws_s3_bucket.existing_bucket](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/s3_bucket) | data source |
 
 ## Inputs
 
@@ -41,23 +38,27 @@
 | <a name="input_glue_table_name"></a> [glue\_table\_name](#input\_glue\_table\_name) | Specify the name for the glue table being created | `string` | n/a | yes |
 | <a name="input_glue_tags"></a> [glue\_tags](#input\_glue\_tags) | Specify tags for Glue resources (Key,Value pairs) | `map(string)` | n/a | yes |
 | <a name="input_crawler_cron_schedule"></a> [crawler\_cron\_schedule](#input\_crawler\_cron\_schedule) | Specify the CRON schedule for the Glue crawler | `string` | `"cron(0 7 * * *)"` | no |
+| <a name="input_crawler_jdbc_connection_name"></a> [crawler\_jdbc\_connection\_name](#input\_crawler\_jdbc\_connection\_name) | Specify the jdbc connection name if jdbc is chosen as the crawler target | `string` | `null` | no |
+| <a name="input_crawler_jdbc_path"></a> [crawler\_jdbc\_path](#input\_crawler\_jdbc\_path) | Specify the jdbc path if jdbc is chosen as the crawler target | `string` | `null` | no |
 | <a name="input_create_table_default_permissions"></a> [create\_table\_default\_permissions](#input\_create\_table\_default\_permissions) | Specify the default table permission | `string` | `"SELECT"` | no |
 | <a name="input_data_lake_principal_identifier"></a> [data\_lake\_principal\_identifier](#input\_data\_lake\_principal\_identifier) | Specify the Data Lake principal identifier | `string` | `"IAM_ALLOWED_PRINCIPALS"` | no |
-| <a name="input_glue_connection_jdbc_connection_url"></a> [glue\_connection\_jdbc\_connection\_url](#input\_glue\_connection\_jdbc\_connection\_url) | Specify the JDBC connection url for the Glue connection being created | `string` | `""` | no |
-| <a name="input_glue_connection_password"></a> [glue\_connection\_password](#input\_glue\_connection\_password) | Specify the password for the glue connection | `string` | `""` | no |
-| <a name="input_glue_connection_username"></a> [glue\_connection\_username](#input\_glue\_connection\_username) | Specify the username for the glue connection | `string` | `""` | no |
+| <a name="input_glue_connection_jdbc_connection_url"></a> [glue\_connection\_jdbc\_connection\_url](#input\_glue\_connection\_jdbc\_connection\_url) | Specify the JDBC connection url for the Glue connection being created | `string` | `null` | no |
+| <a name="input_glue_connection_name"></a> [glue\_connection\_name](#input\_glue\_connection\_name) | Specify the name for the glue connection | `string` | `null` | no |
+| <a name="input_glue_connection_password"></a> [glue\_connection\_password](#input\_glue\_connection\_password) | Specify the password for the glue connection | `string` | `null` | no |
+| <a name="input_glue_connection_username"></a> [glue\_connection\_username](#input\_glue\_connection\_username) | Specify the username for the glue connection | `string` | `null` | no |
+| <a name="input_glue_dev_endpoint_name"></a> [glue\_dev\_endpoint\_name](#input\_glue\_dev\_endpoint\_name) | Specify the name of the Glue dev endpoint | `string` | `null` | no |
 | <a name="input_is_catalog_target"></a> [is\_catalog\_target](#input\_is\_catalog\_target) | Specify if the target for the Glue Crawler is going to be a Glue catalog | `bool` | `false` | no |
-| <a name="input_is_existing_S3_bucket"></a> [is\_existing\_S3\_bucket](#input\_is\_existing\_S3\_bucket) | Specifies whether we need to create an S3 or not | `bool` | `false` | no |
 | <a name="input_is_glue_connection"></a> [is\_glue\_connection](#input\_is\_glue\_connection) | Specify whether to create a glue connection | `bool` | `false` | no |
 | <a name="input_is_glue_dev_endpoint"></a> [is\_glue\_dev\_endpoint](#input\_is\_glue\_dev\_endpoint) | Specify if we we should create a dev endpoint | `bool` | `false` | no |
 | <a name="input_is_jdbc_target"></a> [is\_jdbc\_target](#input\_is\_jdbc\_target) | Specifies whether the target of the crawler is an S3 target | `bool` | `false` | no |
 | <a name="input_is_s3_target"></a> [is\_s3\_target](#input\_is\_s3\_target) | Specifies whether the target of the crawler is an S3 target | `bool` | `false` | no |
-| <a name="input_physical_conn_availability_zone"></a> [physical\_conn\_availability\_zone](#input\_physical\_conn\_availability\_zone) | Specify the physical connection requirements availability zone | `string` | `""` | no |
-| <a name="input_physical_conn_security_group_id"></a> [physical\_conn\_security\_group\_id](#input\_physical\_conn\_security\_group\_id) | Specify the physical connection requirements security group ids | `string` | `""` | no |
-| <a name="input_physical_conn_subnet_id"></a> [physical\_conn\_subnet\_id](#input\_physical\_conn\_subnet\_id) | Specify the physical connection requirements subnet id | `string` | `""` | no |
+| <a name="input_physical_conn_availability_zone"></a> [physical\_conn\_availability\_zone](#input\_physical\_conn\_availability\_zone) | Specify the physical connection requirements availability zone | `string` | `null` | no |
+| <a name="input_physical_conn_security_group_id"></a> [physical\_conn\_security\_group\_id](#input\_physical\_conn\_security\_group\_id) | Specify the physical connection requirements security group ids | `string` | `null` | no |
+| <a name="input_physical_conn_subnet_id"></a> [physical\_conn\_subnet\_id](#input\_physical\_conn\_subnet\_id) | Specify the physical connection requirements subnet id | `string` | `null` | no |
 | <a name="input_recrawl_behavior"></a> [recrawl\_behavior](#input\_recrawl\_behavior) | Specify the recrawl behaviour for the glue crawler | `string` | `"CRAWL_EVERYTHING"` | no |
 | <a name="input_region"></a> [region](#input\_region) | Specfies the region in which this resouce will be created in | `string` | `"af-south-1"` | no |
-| <a name="input_s3_bucket_id"></a> [s3\_bucket\_id](#input\_s3\_bucket\_id) | Specifies the S3 bucket id if it's an existing S3 bucket | `string` | `""` | no |
+| <a name="input_s3_bucket_path"></a> [s3\_bucket\_path](#input\_s3\_bucket\_path) | Specifies the S3 bucket path of an S3 bucket | `string` | `null` | no |
+| <a name="input_schema_change_delete_behavior"></a> [schema\_change\_delete\_behavior](#input\_schema\_change\_delete\_behavior) | Specify what should happen on the crawler's deletion behavior | `string` | `"LOG"` | no |
 
 ## Outputs
 

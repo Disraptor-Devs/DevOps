@@ -9,12 +9,6 @@ variable "firehose_role_name" {
   type        = string
 }
 
-variable "is_s3_existing_bucket" {
-  description = "Specfies whether we need to create an S3 bucket for the S3 or Redshift consumers or we just pass in values"
-  type        = bool
-  default     = false
-}
-
 variable "is_s3_consumer" {
   description = "Specifies whether we need to create a stream to get data to our S3 consumer and if we need to just pass in the S3 values"
   type        = bool
@@ -55,40 +49,23 @@ variable "kdf_tags" {
   type        = map(string)
 }
 
-variable "s3_bucket_name" {
-  description = "Specifies name for the s3 bucket"
-  type        = string
-  default     = ""
-}
-
-
-variable "s3_policy_actions" {
-  description = "Specifies the policy actions for the S3 bucket being created"
-  type        = set(string)
-  default     = [""]
-}
 
 variable "passed_in_s3_bucket_arn" {
   description = "Specifies the arn of an existing S3 bucket that will be used by this module"
   type        = string
-  default     = ""
-
-}
-
-variable "redshift_cluster_identifier" {
-  description = "Specify the indentifier for an exisitng Redshift cluster that's been created"
-  type        = string
+  default     = null
 }
 
 variable "redshift_data_table_columns" {
   description = "Specify the redshift data table columns"
   type        = string
+  default     = null
 }
 
 variable "redshift_data_table_name" {
   description = "Specify the redshift data table name"
   type        = string
-  default     = "" 
+  default     = null
 
 }
 
@@ -162,17 +139,53 @@ variable "is_cloudwatch_logging" {
 variable "log_group_name" {
   description = "Specify the log group name if cloudwatch logging has been enabled"
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "log_stream_name" {
   description = "Specify the log stream name of the cloudwatch logging has been enabled"
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "lambda_processor_arn" {
   description = "Specify The lambda processor arn for the extended S3 configuration if process configuration has been enabled"
   type        = string
-  default     = ""
+  default     = null
+}
+
+variable "kinesis_stream_arn" {
+  description = "specify the kinesis stream arn to be procided in the extended s3 config"
+  type        = string
+  default     = null
+}
+
+variable "s3_processors" {
+  description = "Specify the processor for the extended S3 config"
+  type        = string
+  default     = "Lambda"
+}
+
+variable "redshift_usernmae" {
+  description = "Specify the value of the redshift username for the reshift config"
+  type        = string
+  default     = null
+}
+
+variable "redshift_passw" {
+  description = "Specify the value of the redshift password to be used for the redshift config"
+  type        = string
+  default     = null
+}
+
+variable "redhift_cluster_jdbc_url" {
+  description = "Specify the Redshift cluster jdbc url for the redshift firehose delivery stream"
+  type        = string
+  default     = null
+}
+
+variable "is_lambda_processor" {
+  description = "Specify whether we'll use Lambda for our processing of data on the extended S3 config"
+  type        = bool
+  default     = "false"
 }

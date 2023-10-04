@@ -46,7 +46,7 @@ No modules.
 | <a name="input_is_bucket_notification"></a> [is\_bucket\_notification](#input\_is\_bucket\_notification) | Specify whether we enable bucket notification | `bool` | `false` | no |
 | <a name="input_is_lifecycle_policy"></a> [is\_lifecycle\_policy](#input\_is\_lifecycle\_policy) | Specify whether to create and attach a lifecycle policy to the S3 bucket | `bool` | `false` | no |
 | <a name="input_is_logging_bucket"></a> [is\_logging\_bucket](#input\_is\_logging\_bucket) | Specifies whether we need to create a logging bucket for the main bucket being created | `bool` | `false` | no |
-| <a name="input_lifecycle_name"></a> [lifecycle\_name](#input\_lifecycle\_name) | Specify name for the lifecycle config for the S3 bucket | `string` | `""` | no |
+| <a name="input_lifecycle_name"></a> [lifecycle\_name](#input\_lifecycle\_name) | Specify name for the lifecycle config for the S3 bucket | `string` | `null` | no |
 | <a name="input_lifecycle_storage_class"></a> [lifecycle\_storage\_class](#input\_lifecycle\_storage\_class) | Specify the storage class to transition to | `map(string)` | `{}` | no |
 | <a name="input_lifecycle_transition_days"></a> [lifecycle\_transition\_days](#input\_lifecycle\_transition\_days) | Specify the number of days to transition the bucket to a different class | `number` | `0` | no |
 | <a name="input_lifecylce_status"></a> [lifecylce\_status](#input\_lifecylce\_status) | Specify the status of the lifecycle | `string` | `"Disabled"` | no |
@@ -56,7 +56,7 @@ No modules.
 | <a name="input_s3_bucket_notification_events"></a> [s3\_bucket\_notification\_events](#input\_s3\_bucket\_notification\_events) | Specifies the events we want to be notified off on the created S3 bucket | `set(string)` | `[]` | no |
 | <a name="input_s3_bucket_versioning"></a> [s3\_bucket\_versioning](#input\_s3\_bucket\_versioning) | Specifies whether bucket versioning will be enabled or not | `string` | `"Enabled"` | no |
 | <a name="input_s3_identifiers"></a> [s3\_identifiers](#input\_s3\_identifiers) | Specifies the identifiers for the S3 bucket being created | `set(string)` | <pre>[<br>  "*"<br>]</pre> | no |
-| <a name="input_sns_topic_arn"></a> [sns\_topic\_arn](#input\_sns\_topic\_arn) | Specifies the SNS topic arn if bucket notification is enabled | `string` | `""` | no |
+| <a name="input_sns_topic_arn"></a> [sns\_topic\_arn](#input\_sns\_topic\_arn) | Specifies the SNS topic arn if bucket notification is enabled | `string` | `null` | no |
 | <a name="input_target_prefix"></a> [target\_prefix](#input\_target\_prefix) | Specifies the target prefix for the logging bucket | `string` | `"log/"` | no |
 
 ## Outputs

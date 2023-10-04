@@ -1,8 +1,7 @@
 locals {
-  is_s3_stream        = var.is_s3_consumer ? 1 : 0
-  is_redshift_stream  = var.is_redshift_consumer ? 1 : 0
-  is_create_s3_bucket = !var.is_s3_existing_bucket ? 1 : 0
-  is_kinesis_stream   = var.is_kinesis_consumer ? 1 : 0
+  is_s3_stream       = var.is_s3_consumer ? 1 : 0
+  is_redshift_stream = var.is_redshift_consumer ? 1 : 0
+  is_kinesis_stream  = var.is_kinesis_consumer ? 1 : 0
 }
 
 data "aws_iam_policy_document" "firehose_assume_role" {
@@ -28,25 +27,10 @@ resource "aws_iam_role_policy_attachment" "firehose_policy_attachment" {
   role       = aws_iam_role.firehose_role.name
 }
 
-module "s3_bucket" {
-  count = local.is_create_s3_bucket
-
-  source            = "../../S3"
-  s3_bucket_name    = var.s3_bucket_name
-  s3_policy_actions = var.s3_policy_actions
-  s3_tags           = merge(var.kdf_tags)
+resource "aws_iam_role_policy_attachment" "firehose_creation" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+  role       = aws_iam_role.firehose_role.name
 }
-
-data "aws_redshift_cluster" "redshift_cluster" {
-  count              = local.is_redshift_stream
-  cluster_identifier = var.redshift_cluster_identifier
-}
-
-data "aws_kinesis_stream" "kinesis_source" {
-  count = local.is_kinesis_stream
-  name  = var.kinesis_stream_name
-}
-
 
 resource "aws_kinesis_firehose_delivery_stream" "extended_s3_stream" {
   count       = local.is_s3_stream
@@ -55,7 +39,7 @@ resource "aws_kinesis_firehose_delivery_stream" "extended_s3_stream" {
 
   extended_s3_configuration {
     role_arn   = aws_iam_role.firehose_role.arn
-    bucket_arn = local.is_create_s3_bucket ? module.s3_bucket[0].arn : var.passed_in_s3_bucket_arn
+    bucket_arn = var.passed_in_s3_bucket_arn
 
     buffering_size      = var.extended_s3_buffer_size
     error_output_prefix = var.error_output_prefix
@@ -66,23 +50,26 @@ resource "aws_kinesis_firehose_delivery_stream" "extended_s3_stream" {
       log_stream_name = var.log_stream_name
     }
 
-    kinesis_source_configuration {
-      kinesis_stream_arn = data.aws_kinesis_stream.kinesis_source.arn
-      role_arn           = aws_iam_role.firehose_role.arn
-    }
+    dynamic "processing_configuration" {
+      for_each = var.is_lambda_processor ? [1] : []
+      content {
+        enabled = var.is_s3_extended_processing_config
 
-    processing_configuration {
-      enabled = var.s3_extended_processing_config
+        processors {
+          type = var.s3_processors
 
-      processors {
-        type = var.s3_processors
-
-        parameters {
-          parameter_name  = "LambdaArn"
-          parameter_value = "${var.lambda_processor_arn}:$LATEST"
+          parameters {
+            parameter_name  = "LambdaArn"
+            parameter_value = var.is_lambda_processor ? "${var.lambda_processor_arn}:$LATEST" : null
+          }
         }
       }
     }
+  }
+
+  kinesis_source_configuration {
+    kinesis_stream_arn = var.kinesis_stream_arn
+    role_arn           = aws_iam_role.firehose_role.arn
   }
 
   tags = merge(var.kdf_tags)
@@ -94,12 +81,13 @@ resource "aws_kinesis_firehose_delivery_stream" "redshift_stream" {
   destination = var.firehose_delivery_stream_destination
 
   redshift_configuration {
-    role_arn           = aws_iam_role.firehose_role.arn
-    cluster_jdbcurl    = "jdbc:redshift://${data.aws_redshift_cluster.redshift_cluster[0].endpoint}/${data.aws_redshift_cluster.redshift_cluster[0].database_name}"
-    username           = data.aws_redshift_cluster.redshift_cluster.master_username
+    role_arn = aws_iam_role.firehose_role.arn
+    # cluster_jdbcurl    = "jdbc:redshift://${data.aws_redshift_cluster.redshift_cluster.endpoint}/${data.aws_redshift_cluster.redshift_cluster.database_name}"
+    cluster_jdbcurl    = var.redhift_cluster_jdbc_url
+    username           = var.redshift_usernmae
     password           = var.redshift_passw
-    data_table_name    = data.aws_redshift_cluster.redshift_cluster.data
-    copy_options       = var.reshift_delimiter # the default delimiter
+    data_table_name    = var.redshift_data_table_name
+    copy_options       = var.redshift_delimiter # the default delimiter
     data_table_columns = var.redshift_data_table_columns
 
     cloudwatch_logging_options {
@@ -110,7 +98,7 @@ resource "aws_kinesis_firehose_delivery_stream" "redshift_stream" {
 
     s3_configuration {
       role_arn           = aws_iam_role.firehose_role.arn
-      bucket_arn         = local.is_create_s3_bucket ? module.s3_bucket[0].arn : var.passed_in_s3_bucket_arn
+      bucket_arn         = var.passed_in_s3_bucket_arn
       buffering_size     = var.s3_buffering_size
       buffering_interval = var.s3_buffering_interval
       compression_format = var.s3_compression_format

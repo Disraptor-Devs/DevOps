@@ -1,22 +1,3 @@
-locals {
-  is_s3_bucket = !var.is_existing_S3_bucket ? 1 : 0
-}
-
-
-module "s3_bucket" {
-  count  = local.is_s3_bucket
-  source = "../S3"
-
-  s3_bucket_name    = var.s3_bucket_name
-  s3_policy_actions = var.s3_policy_actions
-  s3_tags           = merge(var.glue_tags)
-}
-
-data "aws_s3_bucket" "existing_bucket" {
-  count = var.is_existing_S3_bucket
-  id    = var.s3_bucket_id
-}
-
 data "aws_iam_policy_document" "glue_iamrole" {
   statement {
     effect  = "Allow"
@@ -65,20 +46,20 @@ resource "aws_glue_crawler" "glue_crawler" {
   }
 
   schema_change_policy {
-
+    delete_behavior = var.schema_change_delete_behavior
   }
 
   dynamic "s3_target" {
     count = var.is_s3_target ? 1 : 0
     content {
-      path = var.is_existing_S3_bucket ? "s3://${data.aws_s3_bucket.existing_bucket[0].id}" : module.s3_bucket[0].s3_bucket_path
+      path = var.s3_bucket_path
     }
   }
 
   dynamic "jdbc_target" {
     count = var.is_jdbc_target ? 1 : 0
     content {
-      connection_name = var.crawler_jdbc_connection
+      connection_name = var.crawler_jdbc_connection_name
       path            = var.crawler_jdbc_path
     }
   }
@@ -94,7 +75,7 @@ resource "aws_glue_crawler" "glue_crawler" {
 
 resource "aws_glue_dev_endpoint" "dev_endpoint" {
   count    = var.is_glue_dev_endpoint ? 1 : 0
-  name     = var.glue_dev_endpoint
+  name     = var.glue_dev_endpoint_name
   role_arn = aws_iam_role.iamrole.arn
 }
 

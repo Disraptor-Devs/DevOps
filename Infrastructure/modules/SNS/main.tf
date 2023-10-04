@@ -8,7 +8,7 @@ locals {
 
 data "aws_iam_policy_document" "subscription_role_policy" {
   count = local.for_sub_role
-  
+
   statement {
     effect = "Allow"
 
