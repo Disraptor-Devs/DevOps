@@ -11,63 +11,63 @@ variable "lambda_tags" {
 
 variable "lambda_iam_role_name" {
   description = "Specify the name for the Iam role that will be created for the lambda function"
-  type        = string  
+  type        = string
 }
 
 variable "archive_type" {
   description = "Specify the Archive type to be used for the file/code you're referencing"
   type        = string
-  default     = "zip" 
+  default     = "zip"
 }
 
 variable "path_to_code" {
   description = "Specify the path to where your file/code is located"
   type        = string
-  default     = null 
+  default     = null
 }
 
 variable "output_path" {
   description = "Specify the output name of the zipped file/code"
   type        = string
-  default     = null  
+  default     = null
 }
 
 variable "function_name" {
   description = "Specify the name of the lambda function being created"
-  type        = string 
+  type        = string
 }
 
 variable "function_description" {
   description = "Specify the description for the lambda function"
-  type        = string  
-  
+  type        = string
+
 }
 
 variable "lambda_variables" {
   description = "Specify variables for our lambda function"
-  type        = map(string) 
+  type        = map(string)
   default     = {}
 }
 
 variable "lambda_alias_name" {
   description = "Specify the name to use for the lambda alias being created."
-  type        = string 
+  type        = string
 }
 
 variable "lambda_alias_description" {
   description = "Specify the description for the lambda alias."
-  type        = string  
+  type        = string
 }
 
 variable "lambda_alias_function_version" {
   description = "Specify the version for the lambda function being associated to the alias."
-  type        = string  
+  type        = string
 }
 
 variable "is_deployment_package_local" {
   description = "Specify whether the zip file with the code for the lambda function is stored on S3."
   type        = bool
-  default     = false 
+  default     = false
 }
 
 variable "s3_bucket_for_lambda" {
@@ -84,31 +84,31 @@ variable "s3_key_to_code_for_lambda" {
 
 variable "lambda_function_runtime" {
   description = "Specify the runtime for the lambda function"
-  type        = string  
+  type        = string
 }
 
 variable "lambda_handler" {
   description = "Specify entry point of your function"
-  type        = string 
+  type        = string
   default     = null
 }
 
 variable "kinesis_stream_arn" {
   description = "Specify the kinesis stream arn to be used in the event source mapping"
-  type        = string 
-  default     = null 
+  type        = string
+  default     = null
 }
 
 variable "event_starting_position" {
   description = "Specify the starting position for the event source mapping"
-  type        = string 
-  default     = "LATEST" 
+  type        = string
+  default     = "LATEST"
 }
 
 variable "starting_pos_timestamp" {
   description = "Specify the starting position timestamp only if event_starting_position is set to AT_TIMESTAMP"
-  type        = string 
-  default     = null 
+  type        = string
+  default     = null
 }
 
 variable "sns_failure_topic_arn" {
@@ -119,37 +119,37 @@ variable "sns_failure_topic_arn" {
 
 variable "msk_cluster_arn" {
   description = "Specify the msk cluster arn to be used in the event source mapping"
-  type        = string 
-  default     = null  
+  type        = string
+  default     = null
 }
 
 variable "msk_topics" {
   description = "Specify the topics used in the msk cluster"
   type        = set(string)
-  default     = [] 
+  default     = []
 }
 
 variable "is_kafka_event_source_config" {
   description = "Specify whether to add in the kafka event source config block for the msk event source mapping"
   type        = bool
-  default     = false 
+  default     = false
 }
 
 variable "is_kinesis_event_source" {
   description = "Specify whether to create the event source mapping for a kinesis stream"
   type        = bool
-  default     = false   
+  default     = false
 }
 
 variable "is_msk_cluster_event_source" {
   description = "Specify whether to create the event source mapping for msk"
   type        = bool
-  default     = false 
+  default     = false
 }
 
 variable "managed_kafka_consumer_group_id" {
-  description = "Specify the consumer group id for the amazon_managed_kafka_event_source_config" 
-  type        =  string
+  description = "Specify the consumer group id for the amazon_managed_kafka_event_source_config"
+  type        = string
   default     = null
 }
 
@@ -168,19 +168,19 @@ variable "lambda_permission_statement_id" {
 variable "s3_bucket_arn" {
   description = "Specify the S3 bucket arn you want to give permission to perform an action on the lambda function"
   type        = string
-  default     = null 
+  default     = null
 }
 
 variable "cloudwatch_arn" {
   description = "Specify the Cloudwatch arn you want to give permission to perform an action on the lambda function"
   type        = string
-  default     = null 
+  default     = null
 }
 
 variable "sns_arn" {
   description = "Specify the SNS arn you want to give permission to perform an action on the lambda function"
   type        = string
-  default     = null 
+  default     = null
 }
 
 variable "is_allow_s3_action_on_lambda" {
@@ -192,13 +192,13 @@ variable "is_allow_s3_action_on_lambda" {
 variable "is_allow_cloudwatch_action_on_lambda" {
   description = "Specify whether we'll allow Cloudwatch an action on the lambda function"
   type        = bool
-  default     = false 
+  default     = false
 }
 
 variable "is_allow_sns_action_on_lambda" {
   description = "Specify whether we'll allow SNS an action on the lambda function"
   type        = bool
-  default     = false 
+  default     = false
 }
 
 variable "is_lambda_provisioned_concurrency" {
@@ -216,7 +216,7 @@ variable "concurrent_excutions" {
 variable "is_lambda_function_url" {
   description = "Specify whether we'll create a url for our lambda function"
   type        = bool
-  default     = false  
+  default     = false
 }
 
 variable "lambda_function_url_auth_type" {
@@ -228,8 +228,8 @@ variable "lambda_function_url_auth_type" {
 variable "lambda_function_url_cors_allow_credentials" {
   description = "Whether to allow cookies or other credentials in requests to the function URL."
   type        = bool
-  default     = false 
-  
+  default     = false
+
 }
 
 variable "lambda_function_url_cors_allow_origins" {
@@ -259,12 +259,12 @@ variable "lambda_function_url_cors_expose_headers" {
 variable "lambda_function_url_cors_max_age" {
   description = "The maximum amount of time, in seconds, that web browsers can cache results of a preflight request."
   type        = number
-  default     = 0 
+  default     = 0
 }
 
 variable "is_function_variables" {
   description = "Specify whether we'll pass in environment variables for our lambda function"
   type        = bool
-  default     = false 
-  
+  default     = false
+
 }

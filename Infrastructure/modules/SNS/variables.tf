@@ -35,7 +35,7 @@ variable "is_content_based_deduplication" {
 variable "policy_identifiers" {
   description = "Specify the policy identifiers for the iam policy document"
   type        = set(string)
-  default     = [ "*" ]
+  default     = ["*"]
 
 }
 
@@ -141,6 +141,6 @@ variable "subscription_lambda_endpoint" {
 variable "subscription_iam_name" {
   description = "Specify name for the subscription Iam role created for the firehose subscription"
   type        = string
-  default     = "value" 
-  
+  default     = "value"
+
 }

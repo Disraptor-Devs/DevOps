@@ -1,7 +1,7 @@
 locals {
-  is_s3_stream        = var.is_s3_consumer ? 1 : 0
-  is_redshift_stream  = var.is_redshift_consumer ? 1 : 0
-  is_kinesis_stream   = var.is_kinesis_consumer ? 1 : 0
+  is_s3_stream       = var.is_s3_consumer ? 1 : 0
+  is_redshift_stream = var.is_redshift_consumer ? 1 : 0
+  is_kinesis_stream  = var.is_kinesis_consumer ? 1 : 0
 }
 
 data "aws_iam_policy_document" "firehose_assume_role" {
@@ -62,10 +62,10 @@ resource "aws_kinesis_firehose_delivery_stream" "extended_s3_stream" {
             parameter_name  = "LambdaArn"
             parameter_value = var.is_lambda_processor ? "${var.lambda_processor_arn}:$LATEST" : null
           }
-       }
-     }
+        }
+      }
     }
-  } 
+  }
 
   kinesis_source_configuration {
     kinesis_stream_arn = var.kinesis_stream_arn
@@ -81,9 +81,9 @@ resource "aws_kinesis_firehose_delivery_stream" "redshift_stream" {
   destination = var.firehose_delivery_stream_destination
 
   redshift_configuration {
-    role_arn           = aws_iam_role.firehose_role.arn
+    role_arn = aws_iam_role.firehose_role.arn
     # cluster_jdbcurl    = "jdbc:redshift://${data.aws_redshift_cluster.redshift_cluster.endpoint}/${data.aws_redshift_cluster.redshift_cluster.database_name}"
-    cluster_jdbcurl    = var.redhift_cluster_jdbc_url 
+    cluster_jdbcurl    = var.redhift_cluster_jdbc_url
     username           = var.redshift_usernmae
     password           = var.redshift_passw
     data_table_name    = var.redshift_data_table_name

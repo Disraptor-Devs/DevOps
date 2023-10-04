@@ -58,5 +58,5 @@ variable "is_kinesis_consumer" {
 variable "enforce_consumer_deletion" {
   description = "Specifies if registered consumers should be deregistered from the stream so that the stream can be destroyed."
   type        = bool
-  default     = false 
+  default     = false
 } 

@@ -65,7 +65,7 @@ variable "redshift_data_table_columns" {
 variable "redshift_data_table_name" {
   description = "Specify the redshift data table name"
   type        = string
-  default     = null 
+  default     = null
 
 }
 
@@ -157,35 +157,35 @@ variable "lambda_processor_arn" {
 variable "kinesis_stream_arn" {
   description = "specify the kinesis stream arn to be procided in the extended s3 config"
   type        = string
-  default     = null 
+  default     = null
 }
 
 variable "s3_processors" {
   description = "Specify the processor for the extended S3 config"
   type        = string
-  default     = "Lambda" 
+  default     = "Lambda"
 }
 
 variable "redshift_usernmae" {
   description = "Specify the value of the redshift username for the reshift config"
   type        = string
-  default     = null 
+  default     = null
 }
 
 variable "redshift_passw" {
   description = "Specify the value of the redshift password to be used for the redshift config"
   type        = string
-  default     = null 
+  default     = null
 }
 
 variable "redhift_cluster_jdbc_url" {
   description = "Specify the Redshift cluster jdbc url for the redshift firehose delivery stream"
   type        = string
-  default     = null 
+  default     = null
 }
 
 variable "is_lambda_processor" {
   description = "Specify whether we'll use Lambda for our processing of data on the extended S3 config"
   type        = bool
-  default     = "false"  
+  default     = "false"
 }

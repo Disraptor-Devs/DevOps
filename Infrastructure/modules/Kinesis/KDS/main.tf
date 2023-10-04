@@ -1,6 +1,6 @@
 resource "aws_kms_key" "stream_kms_key" {
-  description             = "KMS key for ${var.kinesis_data_stream_name}"
-  enable_key_rotation     = true 
+  description         = "KMS key for ${var.kinesis_data_stream_name}"
+  enable_key_rotation = true
 
   tags = merge(var.kds_tags)
 }

@@ -82,8 +82,8 @@ variable "glue_connection_username" {
 variable "glue_connection_name" {
   description = "Specify the name for the glue connection"
   type        = string
-  default     = null 
-  
+  default     = null
+
 }
 
 variable "recrawl_behavior" {
@@ -131,7 +131,7 @@ variable "is_glue_dev_endpoint" {
 variable "glue_dev_endpoint_name" {
   description = "Specify the name of the Glue dev endpoint"
   type        = string
-  default     = null 
+  default     = null
 }
 
 variable "glue_table_name" {

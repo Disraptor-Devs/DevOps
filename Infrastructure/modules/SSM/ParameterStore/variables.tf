@@ -6,7 +6,7 @@ variable "region" {
 
 variable "parameter_configs" {
   description = "Specify the values that will be used to define the SSM parameter"
-  type        = map(object({
+  type = map(object({
     name        = string
     description = string
     type        = string
@@ -35,7 +35,7 @@ variable "is_get_value" {
 variable "is_get_value_by_path" {
   description = "Specify if we're dealing with an existing parameter and we just need to get the value by path"
   type        = bool
-  default     = false  
+  default     = false
 }
 
 variable "ssm_parameter_tags" {
