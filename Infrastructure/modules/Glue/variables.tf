@@ -95,7 +95,7 @@ variable "recrawl_behavior" {
 variable "crawler_cron_schedule" {
   description = "Specify the CRON schedule for the Glue crawler "
   type        = string
-  default     = "cron(0 7 * * *)"
+  default     = null
 }
 
 variable "is_glue_connection" {

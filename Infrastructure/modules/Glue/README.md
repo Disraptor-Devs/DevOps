@@ -26,6 +26,8 @@ No modules.
 | [aws_glue_dev_endpoint.dev_endpoint](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/glue_dev_endpoint) | resource |
 | [aws_iam_role.iamrole](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role_policy_attachment.glue_glueServiceRole_Attachement](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_iam_role_policy_attachment.glue_kinesis_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_iam_role_policy_attachment.glue_s3_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_iam_policy_document.glue_iamrole](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 
 ## Inputs
@@ -37,7 +39,7 @@ No modules.
 | <a name="input_glue_iam_role_name"></a> [glue\_iam\_role\_name](#input\_glue\_iam\_role\_name) | Specify the name of the iam role created for Glue | `string` | n/a | yes |
 | <a name="input_glue_table_name"></a> [glue\_table\_name](#input\_glue\_table\_name) | Specify the name for the glue table being created | `string` | n/a | yes |
 | <a name="input_glue_tags"></a> [glue\_tags](#input\_glue\_tags) | Specify tags for Glue resources (Key,Value pairs) | `map(string)` | n/a | yes |
-| <a name="input_crawler_cron_schedule"></a> [crawler\_cron\_schedule](#input\_crawler\_cron\_schedule) | Specify the CRON schedule for the Glue crawler | `string` | `"cron(0 7 * * *)"` | no |
+| <a name="input_crawler_cron_schedule"></a> [crawler\_cron\_schedule](#input\_crawler\_cron\_schedule) | Specify the CRON schedule for the Glue crawler | `string` | `null` | no |
 | <a name="input_crawler_jdbc_connection_name"></a> [crawler\_jdbc\_connection\_name](#input\_crawler\_jdbc\_connection\_name) | Specify the jdbc connection name if jdbc is chosen as the crawler target | `string` | `null` | no |
 | <a name="input_crawler_jdbc_path"></a> [crawler\_jdbc\_path](#input\_crawler\_jdbc\_path) | Specify the jdbc path if jdbc is chosen as the crawler target | `string` | `null` | no |
 | <a name="input_create_table_default_permissions"></a> [create\_table\_default\_permissions](#input\_create\_table\_default\_permissions) | Specify the default table permission | `string` | `"SELECT"` | no |

@@ -20,6 +20,16 @@ resource "aws_iam_role_policy_attachment" "glue_glueServiceRole_Attachement" {
   role       = aws_iam_role.iamrole.name
 }
 
+resource "aws_iam_role_policy_attachment" "glue_kinesis_policy" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonKinesisFullAccess"
+  role       = aws_iam_role.iamrole.name
+}
+
+resource "aws_iam_role_policy_attachment" "glue_s3_policy" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+  role       = aws_iam_role.iamrole.name
+}
+
 resource "aws_glue_catalog_database" "catalog_db" {
   name = var.glue_catalog_db_name
   create_table_default_permission {
@@ -50,14 +60,14 @@ resource "aws_glue_crawler" "glue_crawler" {
   }
 
   dynamic "s3_target" {
-    count = var.is_s3_target ? 1 : 0
+    for_each = var.is_s3_target ? [1] : []
     content {
       path = var.s3_bucket_path
     }
   }
 
   dynamic "jdbc_target" {
-    count = var.is_jdbc_target ? 1 : 0
+    for_each = var.is_jdbc_target ? [1] : []
     content {
       connection_name = var.crawler_jdbc_connection_name
       path            = var.crawler_jdbc_path
@@ -65,7 +75,7 @@ resource "aws_glue_crawler" "glue_crawler" {
   }
 
   dynamic "catalog_target" {
-    count = var.is_catalog_target ? 1 : 0
+    for_each = var.is_catalog_target ? [1] : []
     content {
       database_name = aws_glue_catalog_database.catalog_db.name
       tables        = [aws_glue_catalog_table.catalog_table.name]
