@@ -60,7 +60,7 @@ resource "aws_glue_crawler" "glue_crawler" {
   }
 
   dynamic "s3_target" {
-    for_each = var.is_s3_target ? [1]: []
+    for_each = var.is_s3_target ? [1] : []
     content {
       path = var.s3_bucket_path
     }
