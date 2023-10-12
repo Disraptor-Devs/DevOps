@@ -2,9 +2,9 @@ name: Terraform Format and Validate
 on:
   push:
     branches:
-      - dev
-    paths:
-      - 'Infrastructure/modules/**'
+      - local_dev-DevOps_branch
+    # paths:
+    #   - 'Infrastructure/modules/**'
 jobs:
   terraform:
     runs-on: ubuntu-latest
