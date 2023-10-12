@@ -1,18 +1,39 @@
 #!/bin/bash
 
+# Owner: Jino Rigney
+# Contact: jino.rigney@disraptor.co.za
+
+# The purpose of this script is to validate the deployment of the resources created by the terragrunt_runner role. 
+# This script is called by the ansible script (terragrunt_runner.yml) and is passed the module_dependency variable.
+
+# ==============================================================================================================================================
+
+# Check current resource being provisioned based on the variable passed in from ansible script.
+IS_S3 = $(grep -i "s3" $1)
+IS_GLUE = $(grep -i "glue" $1)
+IS_SNS = $(grep -i "sns" $1)
+IS_KDS = $(grep -i "kds" $1)
+IS_LAMBDA = $(grep -i "lambda" $1)
+IS_REDSHIFT = $(grep -i "redshift" $1)
+IS_CLOUDWATCH = $(grep -i "cloudwatch" $1)
+IS_MSK = $(grep -i "msk" $1)
+
+
+# ==============================================================================================================================================
+
 # S3 bucket arn
 S3_BUCKET_ARN=$(terragrunt output s3_bucket_arn)
 
 # kdf arn's 
+Extended_S3_Stream_ARN=$(terragrunt output extended_s3_stream_arn) #need to check 
+Redshift_Stream_ARN=$(terragrunt output redshift_stream_arn)
+
+#glue arns
 Glue_Catalog_DB_ARN=$(terragrunt output glue_catalog_db_arn)
 Glue_Catalog_Table_ARN=$(terragrunt output glue_catalog_table_arn)
 Glue_Crawler_ARN=$(terragrunt output glue_crawler_arn)
 Glue_Connection_ARN=$(terragrunt output glue_connection_arn)
 Glue_Dev_Endpoint_ARN=$(terragrunt output glue_dev_endpoint_arn)
-Extended_S3_Stream_ARN=$(terragrunt output extended_s3_stream_arn) #need to check 
-Redshift_Stream_ARN=$(terragrunt output redshift_stream_arn)
-Created_S3_Bucket_ARN=$(terragrunt output created_s3_bucket_arn) #need to check 
-Kinesis_Delivery_Stream_ARN=$(terragrunt output kinesis_delivery_stream_arn)
 
 #kds arns
 stream_arn=$(terragrunt output stream_arn) #need to check 
@@ -20,73 +41,87 @@ stream_kms_key_arn=$(terragrunt output stream_kms_key_arn) #need to check
 stream_consumer_arn=$(terragrunt output stream_consumer_arn)
 
 #sns arns
-
 SNS_Topic_ARN=$(terragrunt output sns_topic_arn)
 SNS_Firehose_Subscription_ARN=$(terragrunt output sns_firehose_subscription_arn)
 SNS_Application_Subscription_ARN=$(terragrunt output sns_application_subscription_arn) #need to check 
 SNS_Email_Subscription_ARN=$(terragrunt output sns_email_subscription_arn) #need to check 
 SNS_Lambda_Subscription_ARN=$(terragrunt output sns_lambda_subscription_arn)
 
-# Verify S3 bucket existence
-if aws s3 ls "s3://$S3_BUCKET_ARN" 2>/dev/null; then
-    echo "S3 bucket deployment verified. The S3 bucket $S3_BUCKET_ARN exists."
-else
-    echo "S3 bucket deployment verification failed. The S3 bucket $S3_BUCKET_ARN does not exist."
-    exit 1 # Fail the script
+#lambda arns
+
+
+
+# ==============================================================================================================================================
+
+# Verify S3 bucket existence. This will only run if the module_dependency variable contains the string "s3".
+# If not, it means the value of IS_S3 is empty and the check will not run.
+
+if [ -z $IS_S3 ]; then
+    if aws s3 ls "s3://$S3_BUCKET_ARN" 2>/dev/null; then
+        echo "S3 bucket deployment verified. The S3 bucket $S3_BUCKET_ARN exists."
+        exit 0
+    else
+        echo "S3 bucket deployment verification failed. The S3 bucket $S3_BUCKET_ARN does not exist."
+        exit 1 # Fail the script
+    fi
 fi
 
 #verify glue catalog db
-if aws glue get-database --name "$Glue_Catalog_DB_ARN">/dev/null; then
-    echo "Glue Catalog DB deployment verified."
 
-else 
-    echo "Glue Catalog DB deployment verification failed"
-    exit 1 # Fail the script
+if [ -z $IS_GLUE ]; then
+    if aws glue get-database --name "$Glue_Catalog_DB_ARN">/dev/null; then
+        echo "Glue Catalog DB deployment verified."
+    else 
+        echo "Glue Catalog DB deployment verification failed"
+        exit 1 # Fail the script
+    fi    
 
-fi         
-#verify glue table 
-if aws glue get-table --name "$Glue_Catalog_Table_ARN">/dev/null; then
-    echo "Glue catalog table deployment verified."
+    #verify glue table 
+    if aws glue get-table --name "$Glue_Catalog_Table_ARN">/dev/null; then
+        echo "Glue catalog table deployment verified."
+    else
+        echo "Glue catalog table deployment failed"
+        exit 1 # Fail the script 
+    fi
+
+    #verify glue crawler 
+
+    if aws get-crawler --name "$Glue_Crawler_ARN">/dev/null; then
+        echo "Glue crawler deployment verified."
+    else
+        echo "Glue crawler deployment failed"
+        exit 1 # Fail the script 
+    fi
+
+    #verify glue connection 
+
+    if [ -z !$Glue_Connection_ARN ]; then 
+        if aws glue get-connection --name "$Glue_Connection_ARN">/dev/null; then 
+            echo "Glue connection deployment verified."
+        else 
+            echo "Glue connection deployment failed"
+            exit 1 # Fail the script 
+        fi
+    else 
+        echo "Glue connection not needed"          
+    fi
+
+    #glue dev endpoint verification 
+
+    if [ -z ! $Glue_Dev_Endpoint_ARN ]; then 
+        if aws glue get-dev-endpoint --enpoint-name "$Glue_Dev_Endpoint_ARN">/dev/null; then 
+            echo "glue dev endpoint deployment verified"
+        else 
+            echo "glue dev endpoint deployment failed"
+            exit 1 # Fail the script 
+        fi 
+    else 
+        echo "Glue Dev Enpoint not needed"
+    fi
     
-
-else
-    echo "Glue catalog table deployment failed"
-    exit 1 # Fail the script 
+    exit 0
 
 fi
-
-#verify glue crawler 
-
-if aws get-crawler --name "$Glue_Crawler_ARN">/dev/null; then
-    echo "Glue crawler deployment verified."
-
-else
-    echo "Glue crawler deployment failed"
-    exit 1 # Fail the script 
-
-fi
-
-#verify glue connection 
-
-if aws glue get-connection --name "$Glue_Connection_ARN">/dev/null; then 
-    echo "Glue connection deployment verified."
-
-else 
-    echo "Glue connection deployment failed"
-    exit 1 # Fail the script 
-
-fi  
-
-#glue dev endpoint verification 
-
-if aws glue get-dev-endpoint --enpoint-name "$Glue_Dev_Endpoint_ARN">/dev/null; then 
-    echo "glue dev endpoint deployment verified"
-
-else 
-   echo "glue dev endpoint deployment failed"
-   exit 1 # Fail the script 
-
-fi      
 
 #verify kinesis delivery stream
 
@@ -138,10 +173,5 @@ else
     exit 1 #fail the script 
 
 fi        
-
-
-
-
-
 
 # Add more verification checks for other resources as needed
