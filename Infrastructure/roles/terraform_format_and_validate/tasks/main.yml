@@ -1,11 +1,13 @@
+---
+# - debug:
+#     msg: "BEGIN - Formatting and Validation process"
 
-# - name: Include external variables
-#   include_vars:
-#     file: ../vars/main.yml
+- name: Include external variables
+  include_vars:
+    file: ../vars/main.yml
 
-#   tasks:
-# - name: Run terraform fmt on directories
-#   command: terraform fmt "{{terraform_module}}"
-#   with_items: "{{ terraform_modules }}"
-#   loop_control:
-#     loop_var: terraform_module
+- name: Run terraform fmt on directories
+  command: terraform fmt "{{terraform_module}}"
+  with_items: "{{ terraform_modules }}"
+  loop_control:
+    loop_var: terraform_module
