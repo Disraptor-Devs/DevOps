@@ -1,6 +1,6 @@
 ---
-# - debug:
-#     msg: "BEGIN - Formatting and Validation process"
+- debug:
+    msg: "BEGIN - Formatting and Validation process"
 
 - name: Include external variables
   include_vars:
