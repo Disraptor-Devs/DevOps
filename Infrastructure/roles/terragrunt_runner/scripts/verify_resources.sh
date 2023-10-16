@@ -22,7 +22,7 @@ IS_MSK = $(grep -i "msk" $1)
 # ==============================================================================================================================================
 
 # S3 bucket arn
-S3_BUCKET_ARN=$(terragrunt output s3_bucket_arn)
+S3_BUCKET_PATH=$(terragrunt output s3_bucket_path)
 
 # kdf arn's 
 Extended_S3_Stream_ARN=$(terragrunt output extended_s3_stream_arn) #need to check 
@@ -61,9 +61,9 @@ Redshift_Cluster_ARN=$(terragrunt output redshift_cluster_arn)
 # Verify S3 bucket existence. This will only run if the module_dependency variable contains the string "s3".
 # If not, it means the value of IS_S3 is empty and the check will not run.
 
-if [ ! -z $IS_S3 ]; then
-    if aws s3 ls "s3://$S3_BUCKET_ARN" 2>/dev/null; then
-        echo "S3 bucket deployment verified. The S3 bucket $S3_BUCKET_ARN exists."
+if [ ! -z "$IS_S3" ]; then
+    if aws s3 ls "$S3_BUCKET_PATH" 2>/dev/null; then
+        echo "S3 bucket deployment verified. The S3 bucket $S3_BUCKET_PATH exists."
         exit 0
     else
         echo "S3 bucket deployment verification failed. The S3 bucket $S3_BUCKET_ARN does not exist."
@@ -72,7 +72,7 @@ if [ ! -z $IS_S3 ]; then
 fi
 
 #verify glue catalog db
-if [ ! -z $IS_GLUE ]; then
+if [ ! -z "$IS_GLUE" ]; then
     if aws glue get-database --name "$Glue_Catalog_DB_ARN">/dev/null; then
         echo "Glue Catalog DB deployment verified."
     else 
@@ -99,7 +99,7 @@ if [ ! -z $IS_GLUE ]; then
 
     #verify glue connection 
 
-    if [ ! -z $Glue_Connection_ARN ]; then 
+    if [ ! -z "$Glue_Connection_ARN" ]; then 
         if aws glue get-connection --name "$Glue_Connection_ARN">/dev/null; then 
             echo "Glue connection deployment verified."
         else 
@@ -112,7 +112,7 @@ if [ ! -z $IS_GLUE ]; then
 
     #glue dev endpoint verification 
 
-    if [ ! -z $Glue_Dev_Endpoint_ARN ]; then 
+    if [ ! -z "$Glue_Dev_Endpoint_ARN "]; then 
         if aws glue get-dev-endpoint --enpoint-name "$Glue_Dev_Endpoint_ARN">/dev/null; then 
             echo "glue dev endpoint deployment verified"
         else 
@@ -127,7 +127,7 @@ if [ ! -z $IS_GLUE ]; then
 fi
 
 # verify kinesis delivery stream
-if [ ! -z $IS_KDF ]; then 
+if [ ! -z "$IS_KDF" ]; then 
     if aws kinesis describe-delivery-stream --delivery-stream-name "$Extended_S3_Stream_ARN">/dev/null; then 
         echo "Kinesis delivery stream deployment verified"
     else 
@@ -149,7 +149,7 @@ fi
 
 # verify kinesis stream consumer 
 
-if [ ! -z $IS_KDS ]; then 
+if [ ! -z "$IS_KDS" ]; then 
 
     if aws kinesis describe-stream --stream-arn "$stream_arn">/dev/null; then 
         echo "Kinesis Stream deployment verified"
@@ -171,7 +171,7 @@ fi
 
 # verify sns topic 
 
-if [ ! -z $IS_SNS ] then; 
+if [ ! -z "$IS_SNS" ] then; 
     if aws sns get-topic-attributes --topic-arn "$SNS_Topic_ARN">/dev/null; then 
         echo "SNS topic deployment verified"
     else 
@@ -180,7 +180,7 @@ if [ ! -z $IS_SNS ] then;
     fi
 
     # verify sns firehose subscription 
-    if [! -z $SNS_Firehose_Subscription_ARN ]; then 
+    if [ ! -z "$SNS_Firehose_Subscription_ARN" ]; then 
         if aws sns get-endpoint-attributes --endpoint-arn "$SNS_Firehose_Subscription_ARN">/dev/null; then 
             echo "Sns firehose subscription deployment verified"
         else 
@@ -192,7 +192,7 @@ if [ ! -z $IS_SNS ] then;
     fi
 
     # verify sns email subscription
-    if [! -z $SNS_Email_Subscription_ARN ]; then 
+    if [ ! -z "$SNS_Email_Subscription_ARN" ]; then 
         if aws sns get-endpoint-attributes --endpoint-arn "$SNS_Email_Subscription_ARN">/dev/null; then 
             echo "SNS Email Subscription deployment verified"
         else 
@@ -204,7 +204,7 @@ if [ ! -z $IS_SNS ] then;
     fi
 
     # verify sns lambda subscription
-    if [! -z $SNS_Lambda_Subscription_ARN ]; then 
+    if [ ! -z "$SNS_Lambda_Subscription_ARN" ]; then 
         if aws sns get-endpoint-attributes --endpoint-arn "$SNS_Lambda_Subscription_ARN">/dev/null; then 
             echo "SNS Lambda Subscription deployment verified"
         else 
@@ -216,7 +216,7 @@ if [ ! -z $IS_SNS ] then;
     fi      
 
     # verify sns application subscription
-    if [! -z $SNS_Application_Subscription_ARN ]; then
+    if [ ! -z "$SNS_Application_Subscription_ARN" ]; then
         if aws sns get-endpoint-attributes --endpoint-arn "$SNS_Application_Subscription_ARN">/dev/null; then 
             echo "SNS Application Subscription deployment verified"
         else 
@@ -231,7 +231,7 @@ if [ ! -z $IS_SNS ] then;
 fi
 
 # verify lambda function
-if [ ! -z $IS_LAMBDA ] then;
+if [ ! -z "$IS_LAMBDA" ] then;
     if aws lambda get-function --function-name "$LAMBDA_function_arn">/dev/null; then 
         echo "Lambda function deployment verified"
     else 
@@ -251,7 +251,7 @@ fi
             
 
 # verify redshift cluster
-if [ ! -z $IS_REDSHIFT ] then;
+if [ ! -z "$IS_REDSHIFT" ] then;
     if aws redshift describe-clusters --cluster-identifier "$Redshift_Cluster_ARN">/dev/null; then 
         echo "Redshift cluster deployment verified"
     else 
