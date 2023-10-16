@@ -48,9 +48,14 @@ SNS_Email_Subscription_ARN=$(terragrunt output sns_email_subscription_arn) #need
 SNS_Lambda_Subscription_ARN=$(terragrunt output sns_lambda_subscription_arn)
 
 #lambda arns
+LAMBDA_function_arn=$(terragrunt output lambda_function_arn)
+LAMBDA_function_alias_name=$(terragrunt output lambda_alias_name)
 
+#msk arns
+MSK_cluster_arn=$(terragrunt output msk_cluster_arn)
 
-
+#redshift arns
+Redshift_Cluster_ARN=$(terragrunt output redshift_cluster_arn)
 # ==============================================================================================================================================
 
 # Verify S3 bucket existence. This will only run if the module_dependency variable contains the string "s3".
@@ -67,7 +72,6 @@ if [ ! -z $IS_S3 ]; then
 fi
 
 #verify glue catalog db
-
 if [ ! -z $IS_GLUE ]; then
     if aws glue get-database --name "$Glue_Catalog_DB_ARN">/dev/null; then
         echo "Glue Catalog DB deployment verified."
@@ -111,7 +115,6 @@ if [ ! -z $IS_GLUE ]; then
     if [ ! -z $Glue_Dev_Endpoint_ARN ]; then 
         if aws glue get-dev-endpoint --enpoint-name "$Glue_Dev_Endpoint_ARN">/dev/null; then 
             echo "glue dev endpoint deployment verified"
-            exit 0
         else 
             echo "glue dev endpoint deployment failed"
             exit 1 # Fail the script 
@@ -120,10 +123,10 @@ if [ ! -z $IS_GLUE ]; then
         echo "Glue Dev Enpoint not needed"
     fi
 
+    exit 0
 fi
 
-#verify kinesis delivery stream
-
+# verify kinesis delivery stream
 if [ ! -z $IS_KDF ]; then 
     if aws kinesis describe-delivery-stream --delivery-stream-name "$Extended_S3_Stream_ARN">/dev/null; then 
         echo "Kinesis delivery stream deployment verified"
@@ -144,14 +147,14 @@ if [ ! -z $IS_KDF ]; then
 fi
 
 
-#verify kinesis stream consumer 
+# verify kinesis stream consumer 
 
 if [ ! -z $IS_KDS ]; then 
 
-    if aws kinesis describe-stream-consumer --stream-arn "$stream_consumer_arn">/dev/null; then 
-        echo "Stream Consumer deployment verified"
+    if aws kinesis describe-stream --stream-arn "$stream_arn">/dev/null; then 
+        echo "Kinesis Stream deployment verified"
     else 
-        echo "Stream Consumer deployment failed"
+        echo "Kinesis Stream deployment failed"
         exit 1 #Fail the script 
     fi
 
@@ -161,10 +164,12 @@ if [ ! -z $IS_KDS ]; then
         echo "Stream Consumer deployment failed"
         exit 1 #Fail the script 
     fi
+
+    exit 0
 fi
     
 
-#verify sns topic 
+# verify sns topic 
 
 if [ ! -z $IS_SNS ] then; 
     if aws sns get-topic-attributes --topic-arn "$SNS_Topic_ARN">/dev/null; then 
@@ -174,9 +179,9 @@ if [ ! -z $IS_SNS ] then;
         exit 1 # Fail the script 
     fi
 
-    #verify sns firehose subscription 
+    # verify sns firehose subscription 
     if [! -z $SNS_Firehose_Subscription_ARN ]; then 
-        if aws firehose describe-delivery-stream --delivery-stream-name "$SNS_Firehose_Subscription_ARN">/dev/null; then 
+        if aws sns get-endpoint-attributes --endpoint-arn "$SNS_Firehose_Subscription_ARN">/dev/null; then 
             echo "Sns firehose subscription deployment verified"
         else 
             echo "SNS Firehose subscription deployment failed"
@@ -186,11 +191,21 @@ if [ ! -z $IS_SNS ] then;
         echo "SNS Firehose subscription not needed"
     fi
 
+    # verify sns email subscription
+    if [! -z $SNS_Email_Subscription_ARN ]; then 
+        if aws sns get-endpoint-attributes --endpoint-arn "$SNS_Email_Subscription_ARN">/dev/null; then 
+            echo "SNS Email Subscription deployment verified"
+        else 
+            echo "SNS Email Subscription deployment failed"
+            exit 1 # Fail the script 
+        fi
+    else 
+        echo "SNS Email Subscription not needed"
+    fi
 
-    #verify sns lambda subscription
-
+    # verify sns lambda subscription
     if [! -z $SNS_Lambda_Subscription_ARN ]; then 
-        if aws lambda get-function --function-name "$SNS_Lambda_Subscription_ARN">/dev/null; then 
+        if aws sns get-endpoint-attributes --endpoint-arn "$SNS_Lambda_Subscription_ARN">/dev/null; then 
             echo "SNS Lambda Subscription deployment verified"
         else 
             echo "SNS Lambda Subscription deployment failed"
@@ -200,11 +215,52 @@ if [ ! -z $IS_SNS ] then;
         echo "SNS Lambda Subscription not needed"
     fi      
 
+    # verify sns application subscription
+    if [! -z $SNS_Application_Subscription_ARN ]; then
+        if aws sns get-endpoint-attributes --endpoint-arn "$SNS_Application_Subscription_ARN">/dev/null; then 
+            echo "SNS Application Subscription deployment verified"
+        else 
+            echo "SNS Application Subscription deployment failed"
+            exit 1 # Fail the script 
+        fi
+    else 
+        echo "SNS Application Subscription not needed"
+    fi
+
+    exit 0
+fi
+
+# verify lambda function
+if [ ! -z $IS_LAMBDA ] then;
+    if aws lambda get-function --function-name "$LAMBDA_function_arn">/dev/null; then 
+        echo "Lambda function deployment verified"
+    else 
+        echo "Lambda function deployment failed"
+        exit 1 # Fail the script 
+    fi
+
+    if aws lambda get-alias --function-name "$LAMBDA_function_arn" --name "$LAMBDA_function_alias_name">/dev/null; then 
+        echo "Lambda alias deployment verified"
+    else 
+        echo "Lambda alias deployment failed"
+        exit 1 # Fail the script 
+    fi
+
+    exit 0
+fi  
+            
+
+# verify redshift cluster
+if [ ! -z $IS_REDSHIFT ] then;
+    if aws redshift describe-clusters --cluster-identifier "$Redshift_Cluster_ARN">/dev/null; then 
+        echo "Redshift cluster deployment verified"
+    else 
+        echo "Redshift cluster deployment failed"
+        exit 1 # Fail the script 
+    fi
+
     exit 0
 
 fi
-
-
-            
 
 # Add more verification checks for other resources as needed
