@@ -25,6 +25,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_tags"></a> [tags](#input\_tags) | A map of tags to apply to the MSK cluster. | `map(string)` | n/a | yes |
 | <a name="input_client_subnets"></a> [client\_subnets](#input\_client\_subnets) | List of client subnets for the broker nodes. | `list(string)` | `[]` | no |
 | <a name="input_cloudwatch_log_group_name"></a> [cloudwatch\_log\_group\_name](#input\_cloudwatch\_log\_group\_name) | The name of the CloudWatch Log Group for MSK logs. | `string` | `"msk-logs"` | no |
 | <a name="input_cloudwatch_logs_enabled"></a> [cloudwatch\_logs\_enabled](#input\_cloudwatch\_logs\_enabled) | Enable CloudWatch Logs for MSK logs. | `bool` | `null` | no |
@@ -40,12 +41,12 @@ No modules.
 | <a name="input_s3_bucket_name"></a> [s3\_bucket\_name](#input\_s3\_bucket\_name) | The name of the S3 bucket for MSK logs. | `string` | `null` | no |
 | <a name="input_s3_logs_enabled"></a> [s3\_logs\_enabled](#input\_s3\_logs\_enabled) | Enable S3 bucket for MSK logs. | `bool` | `null` | no |
 | <a name="input_security_group_id"></a> [security\_group\_id](#input\_security\_group\_id) | The ID of the security group for the MSK cluster. | `list(string)` | `[]` | no |
-| <a name="input_tags"></a> [tags](#input\_tags) | A map of tags to apply to the MSK cluster. | `map(string)` | n/a | yes |
 | <a name="input_volume_size"></a> [volume\_size](#input\_volume\_size) | The EBS volume size for broker nodes. | `number` | `2` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
+| <a name="output_MSK_arn"></a> [MSK\_arn](#output\_MSK\_arn) | The arn for the MSK cluster |
 | <a name="output_bootstrap_brokers_tls"></a> [bootstrap\_brokers\_tls](#output\_bootstrap\_brokers\_tls) | TLS connection host:port pairs |
-| <a name="output_zookeeper_connect_string"></a> [zookeeper\_connect\_string](#output\_zookeeper\_connect\_string) | n/a |
+| <a name="output_zookeeper_connect_string"></a> [zookeeper\_connect\_string](#output\_zookeeper\_connect\_string) | Zookeeper connection string |

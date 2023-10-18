@@ -13,7 +13,7 @@ resource "aws_msk_cluster" "this" {
       }
     }
 
-   security_groups = []
+    security_groups = []
   }
 
   encryption_info {

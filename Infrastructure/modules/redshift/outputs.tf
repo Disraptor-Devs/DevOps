@@ -16,4 +16,8 @@ output "redshift_master_password" {
   sensitive   = true
 }
 
+output "redshift_cluster_arn" {
+  description = "The arn for the Redshift cluster"
+  value       = aws_redshift_cluster.redshift.arn
+}
 
