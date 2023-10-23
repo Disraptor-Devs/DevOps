@@ -1,3 +1,13 @@
+
+resource "aws_kms_key" "kms_key" {
+  description         = "KMS key for ${var.s3_bucket_name}"
+  enable_key_rotation = true
+  # auto renewal 
+
+  tags = merge(var.tags)
+}
+
+
 resource "aws_msk_cluster" "this" {
   cluster_name           = var.cluster_name
   kafka_version          = var.kafka_version
@@ -17,7 +27,7 @@ resource "aws_msk_cluster" "this" {
   }
 
   encryption_info {
-    encryption_at_rest_kms_key_arn = var.kms_key_arn
+    encryption_at_rest_kms_key_arn = data.aws_kms_key.kms_key.arn
   }
 
   open_monitoring {

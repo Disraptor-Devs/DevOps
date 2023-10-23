@@ -19,6 +19,7 @@ No modules.
 
 | Name | Type |
 |------|------|
+| [aws_kms_key.kms_key](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kms_key) | resource |
 | [aws_msk_cluster.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/msk_cluster) | resource |
 
 ## Inputs
@@ -47,6 +48,7 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_MSK_arn"></a> [MSK\_arn](#output\_MSK\_arn) | The arn for the MSK cluster |
 | <a name="output_bootstrap_brokers_tls"></a> [bootstrap\_brokers\_tls](#output\_bootstrap\_brokers\_tls) | TLS connection host:port pairs |
+| <a name="output_msk_cluster_arn"></a> [msk\_cluster\_arn](#output\_msk\_cluster\_arn) | The arn for the MSK cluster |
+| <a name="output_msk_cluster_name"></a> [msk\_cluster\_name](#output\_msk\_cluster\_name) | The name of the MSK cluster |
 | <a name="output_zookeeper_connect_string"></a> [zookeeper\_connect\_string](#output\_zookeeper\_connect\_string) | Zookeeper connection string |

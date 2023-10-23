@@ -12,4 +12,8 @@ output "msk_cluster_arn" {
   description = "The arn for the MSK cluster"
   value       = aws_msk_cluster.this.arn
 }
-  
+
+output "msk_cluster_name" {
+  description = "The name of the MSK cluster"
+  value       = aws_msk_cluster.this.name
+}
