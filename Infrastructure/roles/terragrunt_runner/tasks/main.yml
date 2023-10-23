@@ -47,7 +47,8 @@
     seconds: 60
 
 - name: validate resources
-  shell: ../scripts/verify_resources.sh "{{ terragrunt_outputs.stdout_lines | quote}}"
+  script: verify_resources.sh "{{ module_dependency }}"
+  retries: 3
 
 - debug:
     msg: "COMPLETED - Deployment of {{ module_dependency }} completed"

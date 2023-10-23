@@ -79,4 +79,5 @@ No modules.
 | <a name="output_glue_crawler_name"></a> [glue\_crawler\_name](#output\_glue\_crawler\_name) | Output the name for the Glue Crawler |
 | <a name="output_glue_crawler_schedule"></a> [glue\_crawler\_schedule](#output\_glue\_crawler\_schedule) | Output the schedule for the Glue Crawler |
 | <a name="output_glue_dev_endpoint_arn"></a> [glue\_dev\_endpoint\_arn](#output\_glue\_dev\_endpoint\_arn) | Specify the arn for the Glue dev endpoint |
+| <a name="output_glue_dev_endpoint_name"></a> [glue\_dev\_endpoint\_name](#output\_glue\_dev\_endpoint\_name) | The name of the Glue dev endpoint |
 | <a name="output_glue_dev_endpoint_private_address"></a> [glue\_dev\_endpoint\_private\_address](#output\_glue\_dev\_endpoint\_private\_address) | Specify the arn for the Glue dev endpoint |

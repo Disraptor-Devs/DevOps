@@ -66,3 +66,9 @@ output "glue_dev_endpoint_private_address" {
   description = "Specify the arn for the Glue dev endpoint"
   value       = var.is_glue_dev_endpoint ? aws_glue_dev_endpoint.dev_endpoint[0].private_address : null
 }
+
+output "glue_dev_endpoint_name" {
+  description = "The name of the Glue dev endpoint"
+  value       = var.is_glue_dev_endpoint ? aws_glue_dev_endpoint.dev_endpoint[0].name : null
+}
+  
