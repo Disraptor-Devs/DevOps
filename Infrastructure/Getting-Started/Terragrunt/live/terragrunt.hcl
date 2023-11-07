@@ -3,40 +3,38 @@ locals {
   base_vars = read_terragrunt_config(find_in_parent_folders("base_details.hcl"))
 
   # extracting variables for access
-  aws_default_region    = local.base_vars.locals.region
-  environment           = local.base_vars.locals.environment
-  environment_prefix    = local.base_vars.locals.environment_prefix
-  application_namespace = local.base_vars.locals.application_namespace
-  company_name          = local.base_vars.locals.company_name
-  company_identifier    = local.base_vars.locals.company_abbreviation
-
-  project_name = "terraform-state"
+  aws_default_region = local.base_vars.locals.region
+  environment        = local.base_vars.locals.environment
+  application        = local.base_vars.locals.application
+  resource           = local.base_vars.locals.resource
+  owner              = local.base_vars.locals.owner
+  project-name       = local.base_vars.locals.project-name
 }
 
 # Configure Terragrunt to automatically store tfstate files in an S3 bucket
 remote_state {
   backend = "s3"
   config = {
-    bucket         = "${local.application_namespace}-${local.environment_prefix}-terraform-state"
+    bucket         = "${local.project-name}-${local.application}-${local.environment}-terraform-state"
     key            = "${path_relative_to_include()}/terraform.tfstate"
     region         = local.aws_default_region
     encrypt        = true
     dynamodb_table = "terraform-${local.environment_prefix}-locks"
     s3_bucket_tags = {
-      "${local.company_identifier}:environment"          = "${local.environment}"
-      "${local.company_identifier}:automation"           = "terragrunt"
-      "${local.company_identifier}:project-name"         = "${local.project_name}"
-      "${local.company_identifier}:owner"                = "${local.company_name}"
-      "${local.company_identifier}:application-services" = "s3:dynamodb"
-      Name                                               = "${local.application_namespace}-${local.environment_prefix}-${local.project_name}"
+      "environment"  = "${local.environment}"
+      "automation"   = "terragrunt"
+      "project-name" = "${local.project-name}"
+      "owner"        = "${local.owner}"
+      "application"  = "s3:dynamodb"
+      Name           = "${local.application}-${local.environment}-${local.project-name}"
     }
     dynamodb_table_tags = {
-      "${local.company_identifier}:environment"          = "${local.environment}"
-      "${local.company_identifier}:automation"           = "terragrunt"
-      "${local.company_identifier}:project-name"         = "${local.project_name}"
-      "${local.company_identifier}:owner"                = "${local.company_name}"
-      "${local.company_identifier}:application-services" = "s3:dynamodb"
-      Name                                               = "${local.application_namespace}-${local.environment_prefix}-${local.project_name}-lock"
+      "environment"  = "${local.environment}"
+      "automation"   = "terragrunt"
+      "project-name" = "${local.project_name}"
+      "owner"        = "${local.company_name}"
+      "application"  = "s3:dynamodb"
+      Name           = "${local.application}-${local.environment}-${local.project-name}-lock"
     }
   }
 }

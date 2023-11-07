@@ -93,3 +93,9 @@ variable "redshift_iam_role_name" {
   description = "The name of the IAM role for MSK."
   type        = string
 }
+
+variable "region" {
+  description = "Specfies the region in which this resouce will be created in"
+  type        = string
+  default     = "af-south-1"
+}
