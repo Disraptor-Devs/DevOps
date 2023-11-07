@@ -8,24 +8,26 @@ locals {
   # load account vars
   base_vars = read_terragrunt_config(find_in_parent_folders("base_details.hcl"))
 
-  aws_region            = local.base_vars.locals.region
-  account_owner         = local.base_vars.locals.company_name
-  company_identifier    = local.base_vars.locals.company_abbreviation
-  environment           = local.base_vars.locals.environment
-  environment_prefix    = local.base_vars.locals.environment_prefix
-  application_namespace = local.base_vars.locals.application_namespace
+  aws_region   = local.base_vars.locals.region
+  owner        = local.base_vars.locals.owner
+  resource     = local.base_vars.locals.resource
+  environment  = local.base_vars.locals.environment
+  application  = local.base_vars.locals.application
+  purpose      = local.base_vars.locals.purpose
+  project-name = local.base_vars.locals.project-name
 
-  project      = "${local.account_owner}-S3-for-KDF"
-  name_prefix  = "${local.application_namespace}-${local.environment_prefix}-${local.project}"
+  project      = "${local.project-name}-S3"
+  name_prefix  = "${local.application}-${local.environment}-${local.project-name}"
   default_tags = local.base_vars.locals.default_tags
 
 
-
   s3_tags = merge(local.default_tags, {
-    "${local.company_identifier}:project-name"         = local.project
-    "${local.company_identifier}:owner"                = local.account_owner
-    "${local.company_identifier}:application-services" = "S3"
-    "${local.company_identifier}:purpose"              = ""
+    "project-name" = local.project
+    "owner"        = local.account_owner
+    "application"  = local.application
+    "environment"  = local.environment
+    "resource"     = local.resource
+    "purpose"      = ""
   })
 
 

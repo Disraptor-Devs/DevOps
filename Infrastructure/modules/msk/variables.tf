@@ -98,3 +98,9 @@ variable "tags" {
   description = "A map of tags to apply to the MSK cluster."
   type        = map(string)
 }
+
+variable "region" {
+  description = "Specfies the region in which this resouce will be created in"
+  type        = string
+  default     = "af-south-1"
+}
