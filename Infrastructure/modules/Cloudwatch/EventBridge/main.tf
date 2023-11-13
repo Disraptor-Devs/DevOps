@@ -41,7 +41,7 @@ resource "aws_iam_role_policy_attachment" "eventBridge_sns_policy" {
   role       = aws_iam_role.eventBridge_rule_role.name
 }
 
-resource "aws_iam_role_policy_attachment" "eventBridge_sns_policy" {
+resource "aws_iam_role_policy_attachment" "eventBridge_Lambda_policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonLambdaFullAccess"
   role       = aws_iam_role.eventBridge_rule_role.name
 }
