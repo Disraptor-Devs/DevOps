@@ -8,7 +8,7 @@ variable "metric_stream_iam_role_name" {
   description = "Specify the name for the Iam role that will be created for the metric stream"
   type        = string
 }
-  
+
 variable "metric_alarm_name" {
   description = "Specifies the name of the metric alarm"
   type        = string
@@ -26,7 +26,7 @@ variable "metric_alarm_comparison_operator" {
 
 variable "metric_alarm_evaluation_periods" {
   description = "Specifies the number of periods over which data is compared to the specified threshold."
-  type        = number  
+  type        = number
 }
 
 variable "metric_name" {
@@ -50,7 +50,7 @@ variable "metric_alarm_period" {
 variable "metric_alarm_statistic" {
   description = "Specify the statistic to apply to the alarm's associated metric. Either of the following is supported: SampleCount, Average, Sum, Minimum, Maximum"
   type        = string
-  default     = null    
+  default     = null
 }
 
 variable "metric_alarm_threshold" {
@@ -69,7 +69,7 @@ variable "metric_stream_name" {
   description = "Specify the name of the metric stream"
   type        = string
 }
-  
+
 variable "firehose_delivery_stream_arn" {
   description = "Specify the arn of the firehose delivery stream to use for this metric stream"
   type        = string
@@ -77,7 +77,7 @@ variable "firehose_delivery_stream_arn" {
 
 variable "metric_stream_filters" {
   description = "Specify the filters for the metric stream"
-  type        = map(string, set(string))
+  type        = map(set(string))
 }
 
 
@@ -95,7 +95,7 @@ variable "metric_stream_output_format" {
 variable "is_create_composite_alarm" {
   description = "Specify whether to create a composite alarm"
   type        = bool
-  default     = false  
+  default     = false
 }
 
 variable "composite_alarm_name" {

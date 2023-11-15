@@ -1,6 +1,6 @@
 
 module "redshift_cluster" {
-  source = "../module" 
+  source = "../module"
 
   cluster_identifier                  = "test"
   database_name                       = "mydb"
@@ -42,7 +42,7 @@ data "aws_subnet" "default_us_east_2b" {
 }
 
 resource "aws_redshift_subnet_group" "foo" {
-  name       = "foo"
+  name = "foo"
   subnet_ids = [
     data.aws_subnet.default_us_east_2a.id,
     data.aws_subnet.default_us_east_2b.id

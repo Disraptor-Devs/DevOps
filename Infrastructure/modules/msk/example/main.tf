@@ -9,7 +9,7 @@ resource "aws_msk_cluster" "this" {
     client_subnets = [
       aws_subnet.subnet_az1.id,
       aws_subnet.subnet_az2.id,
-      
+
     ]
     storage_info {
       ebs_storage_info {

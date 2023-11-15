@@ -123,6 +123,7 @@ resource "aws_cloudwatch_event_connection" "eventBridge_connection" {
   }
 }
 
+
 resource "aws_cloudwatch_event_api_destination" "api_dest" {
   count = var.is_eventBridge_api_destination ? 1 : 0
 
