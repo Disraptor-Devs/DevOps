@@ -77,7 +77,7 @@ variable "firehose_delivery_stream_arn" {
 
 variable "metric_stream_filters" {
   description = "Specify the filters for the metric stream"
-  type        = map(string, set(string))
+  type        = map(set(string))
 }
 
 
