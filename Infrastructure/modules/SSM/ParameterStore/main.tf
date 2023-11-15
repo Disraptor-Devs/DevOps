@@ -18,5 +18,4 @@ data "aws_ssm_parameter" "getSecret" {
 data "aws_ssm_parameters_by_path" "getSecretByPath" {
   for_each = toset(var.parameter_values_to_get_by_path)
   path     = each.key
-  tags     = merge(var.ssm_parameter_tags)
 }
