@@ -47,5 +47,5 @@ output "event_source_msk_state" {
 output "lambda_layer_arn" {
   description = "Output the Lambda Layer arn"
   value       = aws_lambda_layer_version.lambda_layer.layer_arn
-  
+
 }

@@ -43,7 +43,7 @@ variable "integration_request_parameters" {
   description = "Request parameters for the API Gateway"
   type        = map(string)
   default     = null
-  
+
 }
 
 variable "lambda_tags" {

@@ -276,7 +276,7 @@ variable "lambda_layer_name" {
 variable "lambda_layer_description" {
   description = "Specify the description for the lambda layer"
   type        = string
-  default     = null 
+  default     = null
 }
 
 variable "lambda_layer_compatible_runtimes" {
@@ -291,7 +291,7 @@ variable "lambda_layer_file" {
   default     = null
 }
 
-variable "is_lambda_layer" { 
+variable "is_lambda_layer" {
   description = "Specify whether we'll create a lambda layer"
   type        = bool
   default     = false

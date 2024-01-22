@@ -11,10 +11,10 @@ resource "aws_api_gateway_resource" "api_gateway_resource" {
 }
 
 resource "aws_api_gateway_method" "api_gateway_method" {
-  rest_api_id   = aws_api_gateway_rest_api.api_gateway.id
-  resource_id   = aws_api_gateway_resource.api_gateway_resource.id
-  http_method   = var.api_gateway_method_http_method
-  authorization = var.api_gateway_method_auth
+  rest_api_id        = aws_api_gateway_rest_api.api_gateway.id
+  resource_id        = aws_api_gateway_resource.api_gateway_resource.id
+  http_method        = var.api_gateway_method_http_method
+  authorization      = var.api_gateway_method_auth
   request_parameters = var.method_request_parameters
 }
 

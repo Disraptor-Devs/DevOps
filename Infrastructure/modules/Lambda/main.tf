@@ -197,8 +197,8 @@ resource "aws_lambda_function_url" "lambda_url" {
 }
 
 resource "aws_lambda_layer_version" "lambda_layer" {
-  count = var.is_lambda_layer ? 1 : 0
-  filename = var.lambda_layer_file
-  layer_name = var.lambda_layer_name
+  count               = var.is_lambda_layer ? 1 : 0
+  filename            = var.lambda_layer_file
+  layer_name          = var.lambda_layer_name
   compatible_runtimes = var.lambda_layer_compatible_runtimes
 }
