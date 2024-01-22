@@ -33,10 +33,16 @@ resource "aws_iam_role_policy_attachment" "lambda_s3_policy" {
   role       = aws_iam_role.iam_for_lambda.name
 }
 
-resource "aws_iam_role_policy_attachment" "lambda_sns_policy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonSNSFullAccess"
+resource "aws_iam_role_policy_attachment" "lambda_codeCommit_policy" {
+  policy_arn = "arn:aws:iam::aws:policy/AWSCodeCommitFullAccess"
   role       = aws_iam_role.iam_for_lambda.name
 }
+
+resource "aws_iam_role_policy_attachment" "lambda_sns_policy" {
+  policy_arn = "arn:aws:iam::aws:policy/AWSCodeCommitFullAccess"
+  role       = aws_iam_role.iam_for_lambda.name
+}
+
 
 data "archive_file" "lambda" {
   count = var.is_deployment_package_local ? 1 : 0
@@ -188,4 +194,11 @@ resource "aws_lambda_function_url" "lambda_url" {
     expose_headers    = var.lambda_function_url_cors_expose_headers
     max_age           = var.lambda_function_url_cors_max_age
   }
+}
+
+resource "aws_lambda_layer_version" "lambda_layer" {
+  count = var.is_lambda_layer ? 1 : 0
+  filename = var.lambda_layer_file
+  layer_name = var.lambda_layer_name
+  compatible_runtimes = var.lambda_layer_compatible_runtimes
 }

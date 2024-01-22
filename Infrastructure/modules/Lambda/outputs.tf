@@ -18,6 +18,11 @@ output "lambda_function_arn" {
   value       = aws_lambda_function.lambda_function.arn
 }
 
+output "lambda_function_invoke_arn" {
+  description = "Output the Lambda Function invoke arn"
+  value       = aws_lambda_function.lambda_function.invoke_arn
+}
+
 output "lambda_function_id" {
   description = "Output the Lambda Function id"
   value       = aws_lambda_function.lambda_function.id
@@ -36,4 +41,11 @@ output "event_source_kinesis_state" {
 output "event_source_msk_state" {
   description = "Output the event source mapping for MSK's current state"
   value       = var.is_msk_cluster_event_source ? aws_lambda_event_source_mapping.event_source_msk[0].state : null
+}
+
+
+output "lambda_layer_arn" {
+  description = "Output the Lambda Layer arn"
+  value       = aws_lambda_layer_version.lambda_layer.layer_arn
+  
 }
