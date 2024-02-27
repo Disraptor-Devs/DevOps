@@ -9,7 +9,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 2.70.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.25.0 |
 
 ## Modules
 
@@ -32,7 +32,6 @@ No modules.
 | <a name="input_kinesis_retention_period"></a> [kinesis\_retention\_period](#input\_kinesis\_retention\_period) | Specfies how long the data in the stream should be kept for | `number` | n/a | yes |
 | <a name="input_kinesis_shard_count"></a> [kinesis\_shard\_count](#input\_kinesis\_shard\_count) | Specfies the number of shards for the kinesis stream being created | `number` | n/a | yes |
 | <a name="input_enforce_consumer_deletion"></a> [enforce\_consumer\_deletion](#input\_enforce\_consumer\_deletion) | Specifies if registered consumers should be deregistered from the stream so that the stream can be destroyed. | `bool` | `false` | no |
-| <a name="input_is_kinesis_consumer"></a> [is\_kinesis\_consumer](#input\_is\_kinesis\_consumer) | Specifies whether we'll create a Kinesis Consumer | `bool` | `false` | no |
 | <a name="input_kinesis_consumer_name"></a> [kinesis\_consumer\_name](#input\_kinesis\_consumer\_name) | Specify the name of the Kinesis stream consumer | `string` | `null` | no |
 | <a name="input_kinesis_encryption_type"></a> [kinesis\_encryption\_type](#input\_kinesis\_encryption\_type) | Specify the type of encryption to apply to the stream | `string` | `"KMS"` | no |
 | <a name="input_kinesis_shard_level_metrics"></a> [kinesis\_shard\_level\_metrics](#input\_kinesis\_shard\_level\_metrics) | Specfies the shard level metrics for our shard | `set(string)` | <pre>[<br>  "IncomingBytes",<br>  "OutgoingBytes"<br>]</pre> | no |

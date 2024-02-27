@@ -16,17 +16,8 @@ resource "aws_iam_role" "iamrole" {
 }
 
 resource "aws_iam_role_policy_attachment" "glue_glueServiceRole_Attachement" {
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole"
-  role       = aws_iam_role.iamrole.name
-}
-
-resource "aws_iam_role_policy_attachment" "glue_kinesis_policy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonKinesisFullAccess"
-  role       = aws_iam_role.iamrole.name
-}
-
-resource "aws_iam_role_policy_attachment" "glue_s3_policy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+  for_each   = var.policy_arns
+  policy_arn = each.value
   role       = aws_iam_role.iamrole.name
 }
 

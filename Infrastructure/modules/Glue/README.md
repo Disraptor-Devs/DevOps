@@ -9,7 +9,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 2.70.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.25.0 |
 
 ## Modules
 
@@ -26,8 +26,6 @@ No modules.
 | [aws_glue_dev_endpoint.dev_endpoint](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/glue_dev_endpoint) | resource |
 | [aws_iam_role.iamrole](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role_policy_attachment.glue_glueServiceRole_Attachement](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
-| [aws_iam_role_policy_attachment.glue_kinesis_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
-| [aws_iam_role_policy_attachment.glue_s3_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_iam_policy_document.glue_iamrole](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 
 ## Inputs
@@ -57,6 +55,7 @@ No modules.
 | <a name="input_physical_conn_availability_zone"></a> [physical\_conn\_availability\_zone](#input\_physical\_conn\_availability\_zone) | Specify the physical connection requirements availability zone | `string` | `null` | no |
 | <a name="input_physical_conn_security_group_id"></a> [physical\_conn\_security\_group\_id](#input\_physical\_conn\_security\_group\_id) | Specify the physical connection requirements security group ids | `string` | `null` | no |
 | <a name="input_physical_conn_subnet_id"></a> [physical\_conn\_subnet\_id](#input\_physical\_conn\_subnet\_id) | Specify the physical connection requirements subnet id | `string` | `null` | no |
+| <a name="input_policy_arns"></a> [policy\_arns](#input\_policy\_arns) | Specify the policy arns to be attached to the lambda role | `set(string)` | `[]` | no |
 | <a name="input_recrawl_behavior"></a> [recrawl\_behavior](#input\_recrawl\_behavior) | Specify the recrawl behaviour for the glue crawler | `string` | `"CRAWL_EVERYTHING"` | no |
 | <a name="input_region"></a> [region](#input\_region) | Specfies the region in which this resouce will be created in | `string` | `"af-south-1"` | no |
 | <a name="input_s3_bucket_path"></a> [s3\_bucket\_path](#input\_s3\_bucket\_path) | Specifies the S3 bucket path of an S3 bucket | `string` | `null` | no |

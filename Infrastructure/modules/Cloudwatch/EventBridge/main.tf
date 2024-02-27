@@ -26,25 +26,13 @@ resource "aws_iam_role" "eventBridge_rule_role" {
   assume_role_policy = data.aws_iam_policy_document.event_bus_policy_doc.json
 }
 
-resource "aws_iam_role_policy_attachment" "eventBridge_kinesis_policy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonKinesisFullAccess"
+resource "aws_iam_role_policy_attachment" "eventBridge__policy" {
+  for_each   = var.policy_arns
+  policy_arn = each.value
   role       = aws_iam_role.eventBridge_rule_role.name
+  depends_on = [ aws_iam_role.eventBridge_rule_role ]
 }
 
-resource "aws_iam_role_policy_attachment" "eventBridge_s3_policy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
-  role       = aws_iam_role.eventBridge_rule_role.name
-}
-
-resource "aws_iam_role_policy_attachment" "eventBridge_sns_policy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonSNSFullAccess"
-  role       = aws_iam_role.eventBridge_rule_role.name
-}
-
-resource "aws_iam_role_policy_attachment" "eventBridge_Lambda_policy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonLambdaFullAccess"
-  role       = aws_iam_role.eventBridge_rule_role.name
-}
 
 resource "aws_cloudwatch_event_bus" "event_bridge_bus" {
   name = var.eventBridge_bus_name

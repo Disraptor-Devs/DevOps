@@ -16,14 +16,12 @@ resource "aws_iam_role" "cw_log_role" {
 }
 
 resource "aws_iam_role_policy_attachment" "cw_log_kinesis_policy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonKinesisFullAccess"
+  for_each = var.policy_arns
+  policy_arn = each.value
   role       = aws_iam_role.cw_log_role.name
+  depends_on = [ aws_iam_role.cw_log_role ]
 }
 
-resource "aws_iam_role_policy_attachment" "cw_log_s3_policy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
-  role       = aws_iam_role.cw_log_role.name
-}
 
 resource "aws_kms_key" "bucket_kms_key" {
   description         = "KMS key for ${var.log_group_name}"

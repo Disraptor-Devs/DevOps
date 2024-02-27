@@ -43,9 +43,7 @@ output "event_source_msk_state" {
   value       = var.is_msk_cluster_event_source ? aws_lambda_event_source_mapping.event_source_msk[0].state : null
 }
 
-
 output "lambda_layer_arn" {
   description = "Output the Lambda Layer arn"
-  value       = aws_lambda_layer_version.lambda_layer.layer_arn
-
+  value       = var.is_lambda_layer ? aws_lambda_layer_version.lambda_layer[0].arn : null
 }

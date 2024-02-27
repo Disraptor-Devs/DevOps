@@ -10,6 +10,6 @@ output "metric_stream_arn" {
 
 output "composite_alarm_arn" {
   description = "The ARN of the composite alarm"
-  value       = var.is_create_composite_alarm ? aws_cloudwatch_composite_alarm.composite_alarm.arn : null
+  value       = var.is_create_composite_alarm ? aws_cloudwatch_composite_alarm.composite_alarm[0].arn : null
 
 }

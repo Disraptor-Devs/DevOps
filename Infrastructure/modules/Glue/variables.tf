@@ -156,3 +156,9 @@ variable "schema_change_delete_behavior" {
   type        = string
   default     = "LOG"
 }
+
+variable "policy_arns" {
+  description = "Specify the policy arns to be attached to the lambda role"
+  type        = set(string)
+  default     = []
+}

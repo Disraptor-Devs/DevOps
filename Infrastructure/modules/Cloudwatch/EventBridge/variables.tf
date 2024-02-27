@@ -192,3 +192,9 @@ variable "eventBridge_rule_role_name" {
   description = "Specifies the name of the role for the eventBridge rule"
   type        = string
 }
+
+variable "policy_arns" {
+  description = "Specify the policy arns to be attached to the lambda role"
+  type        = set(string)
+  default     = []
+}

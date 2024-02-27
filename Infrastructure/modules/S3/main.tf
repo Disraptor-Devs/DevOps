@@ -108,6 +108,8 @@ resource "aws_s3_bucket_notification" "bucket_notification" {
     events        = var.s3_bucket_notification_events
     filter_suffix = ".log"
   }
+
+
 }
 
 resource "aws_s3_access_point" "access_point" {

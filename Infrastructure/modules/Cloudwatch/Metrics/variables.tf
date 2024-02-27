@@ -157,3 +157,9 @@ variable "is_action_suppresor" {
   type        = bool
   default     = false
 }
+
+variable "policy_arns" {
+  description = "Specify the policy arns to be attached to the lambda role"
+  type        = set(string)
+  default     = []
+}

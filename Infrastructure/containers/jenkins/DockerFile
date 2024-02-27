@@ -1,0 +1,48 @@
+FROM jenkins/jenkins:lts
+
+
+# Install Nodejs
+RUN apt-get update && \
+    apt-get install -y curl && \
+    curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
+    apt-get install -y nodejs
+
+# Install Terraform
+RUN apt-get update && \
+    apt-get install -y wget unzip && \
+    wget https://releases.hashicorp.com/terraform/1.7.0/terraform_1.7.0_linux_amd64.zip && \
+    unzip terraform_1.7.0_linux_amd64.zip && \
+    mv terraform /usr/local/bin && \
+    rm terraform_1.7.0_linux_amd64.zip
+
+
+# Install Terragrunt
+RUN wget -O /usr/local/bin/terragrunt https://github.com/gruntwork-io/terragrunt/releases/download/v0.34.1/terragrunt_linux_amd64 && \
+    chmod +x /usr/local/bin/terragrunt
+
+
+# Install Python and Boto3
+RUN apt-get install -y python3 && \
+    pip3 install boto3
+
+# Install AWS CLI
+RUN apt-get install -y python3-pip && \
+    pip3 install awscli
+
+# Install Kubernetes
+RUN apt-get update && \
+    apt-get install -y kubectl
+
+# Install Docker
+RUN apt-get update && \
+    apt-get install -y docker.io
+
+# Install Git
+RUN apt-get update && \
+    apt-get install -y git
+
+# Install CloudWatch agent
+RUN wget https://s3.amazonaws.com/amazoncloudwatch-agent/ubuntu/amd64/latest/amazon-cloudwatch-agent.deb && \
+    dpkg -i -E ./amazon-cloudwatch-agent.deb && \
+    rm amazon-cloudwatch-agent.deb
+

@@ -23,14 +23,11 @@ resource "aws_iam_role" "firehose_role" {
 }
 
 resource "aws_iam_role_policy_attachment" "firehose_policy_attachment" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonKinesisFullAccess"
+  for_each   = var.policy_arns
+  policy_arn = each.value
   role       = aws_iam_role.firehose_role.name
 }
 
-resource "aws_iam_role_policy_attachment" "firehose_creation" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
-  role       = aws_iam_role.firehose_role.name
-}
 
 resource "aws_kinesis_firehose_delivery_stream" "extended_s3_stream" {
   count       = local.is_s3_stream

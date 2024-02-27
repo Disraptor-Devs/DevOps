@@ -11,7 +11,7 @@ data "aws_iam_policy_document" "streams_assume_role" {
   }
 }
 
-resource "aws_iam_role" "metric_stream_to_firehose" {
+resource "aws_iam_role" "metric_stream_role" {
   name               = var.metric_stream_iam_role_name
   assume_role_policy = data.aws_iam_policy_document.streams_assume_role.json
 }
@@ -25,14 +25,22 @@ data "aws_iam_policy_document" "metric_stream_to_firehose" {
       "firehose:PutRecordBatch",
     ]
 
-    resources = [firehose_delivery_stream_arn]
+    resources = [var.firehose_delivery_stream_arn]
   }
 }
 
 resource "aws_iam_role_policy" "metric_stream_to_firehose_policy_attachment" {
-  role   = aws_iam_role.metric_stream_to_firehose.id
+  role   = aws_iam_role.metric_stream_role.id
   policy = data.aws_iam_policy_document.metric_stream_to_firehose.json
 }
+
+resource "aws_iam_role_policy_attachment" "eventBridge__policy" {
+  for_each   = var.policy_arns
+  policy_arn = each.value
+  role       = aws_iam_role.metric_stream_role.name
+  depends_on = [ aws_iam_role.metric_stream_role ]
+}
+
 
 resource "aws_cloudwatch_metric_alarm" "metric_alarm" {
   alarm_name                = var.metric_alarm_name
@@ -51,7 +59,7 @@ resource "aws_cloudwatch_metric_alarm" "metric_alarm" {
 
 resource "aws_cloudwatch_metric_stream" "metric_stream" {
   name          = var.metric_stream_name
-  role_arn      = aws_iam_role.metric_stream_to_firehose.arn
+  role_arn      = aws_iam_role.metric_stream_role.arn
   firehose_arn  = var.firehose_delivery_stream_arn
   output_format = var.metric_stream_output_format
 

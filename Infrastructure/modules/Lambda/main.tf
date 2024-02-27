@@ -23,24 +23,13 @@ resource "aws_iam_role" "iam_for_lambda" {
   tags = merge(var.lambda_tags)
 }
 
-resource "aws_iam_role_policy_attachment" "lambda_kinesis_policy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonKinesisFullAccess"
-  role       = aws_iam_role.iam_for_lambda.name
-}
 
-resource "aws_iam_role_policy_attachment" "lambda_s3_policy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
-  role       = aws_iam_role.iam_for_lambda.name
-}
 
-resource "aws_iam_role_policy_attachment" "lambda_codeCommit_policy" {
-  policy_arn = "arn:aws:iam::aws:policy/AWSCodeCommitFullAccess"
+resource "aws_iam_role_policy_attachment" "lambda_" {
+  for_each   = var.policy_arns
+  policy_arn = each.value
   role       = aws_iam_role.iam_for_lambda.name
-}
-
-resource "aws_iam_role_policy_attachment" "lambda_sns_policy" {
-  policy_arn = "arn:aws:iam::aws:policy/AWSCodeCommitFullAccess"
-  role       = aws_iam_role.iam_for_lambda.name
+  depends_on = [aws_iam_role.iam_for_lambda]
 }
 
 

@@ -1,0 +1,31 @@
+- debug:
+    msg: "BEGIN - Build {{ CONTAINER }} Container"
+
+- name: Build {{ CONTAINER }} Container
+  command: docker build -t {{ CONTAINER }}:latest .
+  args:
+    chdir: "{{ DOCKER_PATH }}"
+  register: jenkins_build_output
+
+- name: Display {{ CONTAINER }} Container Build Output
+  debug:
+    var: jenkins_build_output.stdout_lines
+
+- name: Authenticate Docker with AWS ECR
+  command: aws ecr get-login-password --region af-south-1 | docker login --username AWS --password-stdin {{ ECR_REPO}}
+  register: ecr_login_output
+
+- name: Display ECR Login Output
+  debug:
+    var: ecr_login_output.stdout_lines
+
+
+
+- name: Tag {{ CONTAINER }} Container
+  command: docker tag {{ CONTAINER }}:latest {{ ECR_REPO }}/{{ CONTAINER }}:latest
+  args:
+    chdir: "{{ DOCKER_PATH }}"
+
+
+- debug:
+    msg: "END - Successfully Built {{ CONTAINER }} Container"

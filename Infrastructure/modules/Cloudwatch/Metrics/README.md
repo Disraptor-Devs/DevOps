@@ -1,12 +1,15 @@
 ## Requirements
 
-No requirements.
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 2.70.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | n/a |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.25.0 |
 
 ## Modules
 
@@ -19,8 +22,9 @@ No modules.
 | [aws_cloudwatch_composite_alarm.composite_alarm](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_composite_alarm) | resource |
 | [aws_cloudwatch_metric_alarm.metric_alarm](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_metric_alarm) | resource |
 | [aws_cloudwatch_metric_stream.metric_stream](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_metric_stream) | resource |
-| [aws_iam_role.metric_stream_to_firehose](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
+| [aws_iam_role.metric_stream_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role_policy.metric_stream_to_firehose_policy_attachment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy) | resource |
+| [aws_iam_role_policy_attachment.eventBridge__policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_iam_policy_document.metric_stream_to_firehose](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_iam_policy_document.streams_assume_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 
@@ -35,7 +39,8 @@ No modules.
 | <a name="input_metric_alarm_name"></a> [metric\_alarm\_name](#input\_metric\_alarm\_name) | Specifies the name of the metric alarm | `string` | n/a | yes |
 | <a name="input_metric_alarm_namespace"></a> [metric\_alarm\_namespace](#input\_metric\_alarm\_namespace) | Specify the namespace for the alarm's associated metric | `string` | n/a | yes |
 | <a name="input_metric_alarm_tags"></a> [metric\_alarm\_tags](#input\_metric\_alarm\_tags) | Specify the tags (key, value pairs) to be associated with the metric alarm | `map(string)` | n/a | yes |
-| <a name="input_metric_stream_filters"></a> [metric\_stream\_filters](#input\_metric\_stream\_filters) | Specify the filters for the metric stream | `map(string, set(string))` | n/a | yes |
+| <a name="input_metric_stream_filters"></a> [metric\_stream\_filters](#input\_metric\_stream\_filters) | Specify the filters for the metric stream | `map(set(string))` | n/a | yes |
+| <a name="input_metric_stream_iam_role_name"></a> [metric\_stream\_iam\_role\_name](#input\_metric\_stream\_iam\_role\_name) | Specify the name for the Iam role that will be created for the metric stream | `string` | n/a | yes |
 | <a name="input_metric_stream_name"></a> [metric\_stream\_name](#input\_metric\_stream\_name) | Specify the name of the metric stream | `string` | n/a | yes |
 | <a name="input_actions_suppressor_alarm_name_or_arn"></a> [actions\_suppressor\_alarm\_name\_or\_arn](#input\_actions\_suppressor\_alarm\_name\_or\_arn) | Specify the name or arn of the alarm to which the suppression will be applied | `string` | `null` | no |
 | <a name="input_actions_suppressor_extension_period"></a> [actions\_suppressor\_extension\_period](#input\_actions\_suppressor\_extension\_period) | Specify the maximum time in seconds that the composite alarm waits after suppressor alarm goes out of the ALARM state. After this time, the composite alarm performs its actions. | `number` | `null` | no |
@@ -44,6 +49,7 @@ No modules.
 | <a name="input_composite_alarm_description"></a> [composite\_alarm\_description](#input\_composite\_alarm\_description) | Specify the description of the composite alarm | `string` | `null` | no |
 | <a name="input_composite_alarm_name"></a> [composite\_alarm\_name](#input\_composite\_alarm\_name) | Specify the name of the composite alarm | `string` | `null` | no |
 | <a name="input_composite_alarm_rule"></a> [composite\_alarm\_rule](#input\_composite\_alarm\_rule) | Specify the rule for the composite alarm | `string` | `null` | no |
+| <a name="input_is_action_suppresor"></a> [is\_action\_suppresor](#input\_is\_action\_suppresor) | Specify whether to create an action suppressor | `bool` | `false` | no |
 | <a name="input_is_actions_enabled"></a> [is\_actions\_enabled](#input\_is\_actions\_enabled) | Specify whether the actions for the composite alarm are enabled | `bool` | `false` | no |
 | <a name="input_is_create_composite_alarm"></a> [is\_create\_composite\_alarm](#input\_is\_create\_composite\_alarm) | Specify whether to create a composite alarm | `bool` | `false` | no |
 | <a name="input_metric_alarm_insufficient_data_actions"></a> [metric\_alarm\_insufficient\_data\_actions](#input\_metric\_alarm\_insufficient\_data\_actions) | Specify the list of actions to execute when this alarm transitions into an INSUFFICIENT\_DATA state from any other state. Each action is specified as an ARN | `list(string)` | `null` | no |
@@ -53,8 +59,13 @@ No modules.
 | <a name="input_metric_name"></a> [metric\_name](#input\_metric\_name) | Specify the name for the alarm's associated metric | `string` | `null` | no |
 | <a name="input_metric_stream_output_format"></a> [metric\_stream\_output\_format](#input\_metric\_stream\_output\_format) | Specify the output format for the metric stream | `string` | `"json"` | no |
 | <a name="input_ok_actions_arns"></a> [ok\_actions\_arns](#input\_ok\_actions\_arns) | Specify the list of actions to execute when this alarm transitions into an OK state from any other state. Each action is specified as an ARN. | `list(string)` | `null` | no |
+| <a name="input_policy_arns"></a> [policy\_arns](#input\_policy\_arns) | Specify the policy arns to be attached to the lambda role | `set(string)` | `[]` | no |
 | <a name="input_region"></a> [region](#input\_region) | Specfies the region in which this resouce will be created in | `string` | `"af-south-1"` | no |
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_composite_alarm_arn"></a> [composite\_alarm\_arn](#output\_composite\_alarm\_arn) | The ARN of the composite alarm |
+| <a name="output_metric_alarm_arn"></a> [metric\_alarm\_arn](#output\_metric\_alarm\_arn) | The ARN of the metric alarm |
+| <a name="output_metric_stream_arn"></a> [metric\_stream\_arn](#output\_metric\_stream\_arn) | The ARN of the metric stream |
