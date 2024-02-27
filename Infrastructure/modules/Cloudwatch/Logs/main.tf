@@ -16,10 +16,10 @@ resource "aws_iam_role" "cw_log_role" {
 }
 
 resource "aws_iam_role_policy_attachment" "cw_log_kinesis_policy" {
-  for_each = var.policy_arns
+  for_each   = var.policy_arns
   policy_arn = each.value
   role       = aws_iam_role.cw_log_role.name
-  depends_on = [ aws_iam_role.cw_log_role ]
+  depends_on = [aws_iam_role.cw_log_role]
 }
 
 

@@ -30,7 +30,7 @@ resource "aws_iam_role_policy_attachment" "eventBridge__policy" {
   for_each   = var.policy_arns
   policy_arn = each.value
   role       = aws_iam_role.eventBridge_rule_role.name
-  depends_on = [ aws_iam_role.eventBridge_rule_role ]
+  depends_on = [aws_iam_role.eventBridge_rule_role]
 }
 
 
