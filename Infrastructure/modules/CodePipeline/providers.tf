@@ -3,8 +3,8 @@ provider "aws" {
 
   default_tags {
     tags = {
-      "automation"  = "terraform",
-      "owner"       = "diraptor "
+      "automation" = "terraform",
+      "owner"      = "diraptor "
     }
   }
 

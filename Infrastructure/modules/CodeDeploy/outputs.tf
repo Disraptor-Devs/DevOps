@@ -7,7 +7,7 @@ output "code_deplo_app_id" {
   description = "Code deploy app id"
   value       = aws_codedeploy_app.code_deploy_app.id
 }
-  
+
 output "code_deploy_app_arn" {
   description = "Code deploy app arn"
   value       = aws_codedeploy_app.code_deploy_app.arn
@@ -26,5 +26,5 @@ output "deployment_group_id" {
 output "deployment_group_arn" {
   description = "Deployment group arn"
   value       = aws_codedeploy_deployment_group.deployment_group.arn
-  
+
 }

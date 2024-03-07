@@ -5,7 +5,7 @@ output "pipeline_name" {
 
 output "pipleine_arn" {
   description = "Code pipeline arn"
-  value       = aws_codepipeline.code_pipeline.arn 
+  value       = aws_codepipeline.code_pipeline.arn
 }
 
 output "pipeline_id" {

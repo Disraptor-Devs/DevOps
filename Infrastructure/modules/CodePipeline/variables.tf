@@ -42,7 +42,7 @@ variable "code_commit_repository_name" {
 variable "code_commit_branch_name" {
   description = "The name of the CodeCommit branch"
   type        = string
-  
+
 }
 
 variable "code_build_project_name" {

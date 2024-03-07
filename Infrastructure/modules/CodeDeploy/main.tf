@@ -50,13 +50,13 @@ resource "aws_codedeploy_deployment_config" "deployment_config" {
 }
 
 resource "aws_codedeploy_app" "code_deploy_app" {
-  compute_platform = "Lambda"  
+  compute_platform = "Lambda"
   name             = var.code_deploy_app_name
-  tags             = var.deployment_tags 
+  tags             = var.deployment_tags
 }
 
 data "aws_sns_topic" "sns_topic" {
-    name = var.sns_topic_name
+  name = var.sns_topic_name
 }
 
 resource "aws_codedeploy_deployment_group" "deployment_group" {
@@ -81,8 +81,8 @@ resource "aws_codedeploy_deployment_group" "deployment_group" {
   }
 
   trigger_configuration {
-    trigger_events = ["DeploymentFailure"]
-    trigger_name   = var.trigger_name
+    trigger_events     = ["DeploymentFailure"]
+    trigger_name       = var.trigger_name
     trigger_target_arn = data.aws_sns_topic.sns_topic.arn
   }
 
