@@ -38,17 +38,3 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "s3_bucket_encrypt
   }
 }
 
-data "aws_lambda_function" "docker_creator" {
-
-}
-
-resource "aws_s3_bucket_notification" "event_trigger" {
-  bucket = aws_s3_bucket.jenkins_bucket.id
-
-  lambda_function {
-    lambda_function_arn = var.lambda_function_arn
-    events              = ["s3:ObjectCreated:*"]
-    filter_prefix       = "uploads/"
-  }
-
-}
