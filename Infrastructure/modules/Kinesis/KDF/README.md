@@ -9,7 +9,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 2.70.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.25.0 |
 
 ## Modules
 
@@ -20,7 +20,6 @@ No modules.
 | Name | Type |
 |------|------|
 | [aws_iam_role.firehose_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
-| [aws_iam_role_policy_attachment.firehose_creation](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_iam_role_policy_attachment.firehose_policy_attachment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_kinesis_firehose_delivery_stream.extended_s3_stream](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kinesis_firehose_delivery_stream) | resource |
 | [aws_kinesis_firehose_delivery_stream.redshift_stream](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kinesis_firehose_delivery_stream) | resource |
@@ -52,6 +51,7 @@ No modules.
 | <a name="input_log_group_name"></a> [log\_group\_name](#input\_log\_group\_name) | Specify the log group name if cloudwatch logging has been enabled | `string` | `null` | no |
 | <a name="input_log_stream_name"></a> [log\_stream\_name](#input\_log\_stream\_name) | Specify the log stream name of the cloudwatch logging has been enabled | `string` | `null` | no |
 | <a name="input_passed_in_s3_bucket_arn"></a> [passed\_in\_s3\_bucket\_arn](#input\_passed\_in\_s3\_bucket\_arn) | Specifies the arn of an existing S3 bucket that will be used by this module | `string` | `null` | no |
+| <a name="input_policy_arns"></a> [policy\_arns](#input\_policy\_arns) | Specify the policy arns to be attached to the lambda role | `set(string)` | `[]` | no |
 | <a name="input_redhift_cluster_jdbc_url"></a> [redhift\_cluster\_jdbc\_url](#input\_redhift\_cluster\_jdbc\_url) | Specify the Redshift cluster jdbc url for the redshift firehose delivery stream | `string` | `null` | no |
 | <a name="input_redshift_data_table_columns"></a> [redshift\_data\_table\_columns](#input\_redshift\_data\_table\_columns) | Specify the redshift data table columns | `string` | `null` | no |
 | <a name="input_redshift_data_table_name"></a> [redshift\_data\_table\_name](#input\_redshift\_data\_table\_name) | Specify the redshift data table name | `string` | `null` | no |

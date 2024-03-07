@@ -110,3 +110,9 @@ variable "is_bucket_notification" {
   default     = false
 
 }
+
+variable "object_path" {
+  description = "Specify the path to the object"
+  type        = string
+  default     = null
+}

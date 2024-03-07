@@ -266,5 +266,40 @@ variable "is_function_variables" {
   description = "Specify whether we'll pass in environment variables for our lambda function"
   type        = bool
   default     = false
+}
 
+variable "lambda_layer_name" {
+  description = "Specify the name for the lambda layer"
+  type        = string
+}
+
+variable "lambda_layer_description" {
+  description = "Specify the description for the lambda layer"
+  type        = string
+  default     = null
+}
+
+variable "lambda_layer_compatible_runtimes" {
+  description = "Specify the compatible runtimes for the lambda layer"
+  type        = set(string)
+  default     = ["nodejs18.x"]
+}
+
+variable "lambda_layer_file" {
+  description = "Specify the path to the file/code for the lambda layer"
+  type        = string
+  default     = null
+}
+
+variable "is_lambda_layer" {
+  description = "Specify whether we'll create a lambda layer"
+  type        = bool
+  default     = false
+}
+
+
+variable "policy_arns" {
+  description = "Specify the policy arns to be attached to the lambda role"
+  type        = set(string)
+  default     = []
 }

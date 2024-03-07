@@ -25,7 +25,7 @@
 
 - name: Display terragrunt plan output
   debug:
-    var: terragrunt_plan_output.stdout_lines    
+    var: terragrunt_plan_output.stdout_lines
 
 - name: Run terragrunt apply for "{{ module_dependency }}"
   command: terragrunt apply --auto-approve
@@ -35,16 +35,20 @@
 - name: Get outputs from "{{ module_dependency }}"
   command: terragrunt output
   args:
-    chdir: "{{ module_dependency }}"      
+    chdir: "{{ module_dependency }}"
   register: terragrunt_outputs
 
 - name: Display terragrunt apply output
   debug:
-    var: terragrunt_outputs.stdout_lines 
+    var: terragrunt_outputs.stdout_lines
 
 - name: Wait for "{{ module_dependency }}" to be up
   pause:
     seconds: 60
+
+- name: validate resources
+  script: verify_resources.sh "{{ module_dependency }}"
+  retries: 3
 
 - debug:
     msg: "COMPLETED - Deployment of {{ module_dependency }} completed"

@@ -23,20 +23,15 @@ resource "aws_iam_role" "iam_for_lambda" {
   tags = merge(var.lambda_tags)
 }
 
-resource "aws_iam_role_policy_attachment" "lambda_kinesis_policy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonKinesisFullAccess"
+
+
+resource "aws_iam_role_policy_attachment" "lambda_" {
+  for_each   = var.policy_arns
+  policy_arn = each.value
   role       = aws_iam_role.iam_for_lambda.name
+  depends_on = [aws_iam_role.iam_for_lambda]
 }
 
-resource "aws_iam_role_policy_attachment" "laambda_s3_policy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
-  role       = aws_iam_role.iam_for_lambda.name
-}
-
-resource "aws_iam_role_policy_attachment" "laambda_sns_policy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonSNSFullAccess"
-  role       = aws_iam_role.iam_for_lambda.name
-}
 
 data "archive_file" "lambda" {
   count = var.is_deployment_package_local ? 1 : 0
@@ -188,4 +183,11 @@ resource "aws_lambda_function_url" "lambda_url" {
     expose_headers    = var.lambda_function_url_cors_expose_headers
     max_age           = var.lambda_function_url_cors_max_age
   }
+}
+
+resource "aws_lambda_layer_version" "lambda_layer" {
+  count               = var.is_lambda_layer ? 1 : 0
+  filename            = var.lambda_layer_file
+  layer_name          = var.lambda_layer_name
+  compatible_runtimes = var.lambda_layer_compatible_runtimes
 }

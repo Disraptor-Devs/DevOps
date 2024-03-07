@@ -1,0 +1,13 @@
+---
+- hosts: localhost
+  gather_facts: false
+
+  vars:
+    - CONTAINER: jenkins
+    - ECR_REPO: 143671530412.dkr.ecr.af-south-1.amazonaws.com/disraptor-jenkins
+    - DOCKER_PATH: ../build/
+  tasks:
+  - name: Include docker build role for the current module
+    include_role:
+      name: ../../../roles/docker_build_and_patch_management 
+    with_items: "{{ vars }}"
