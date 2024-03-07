@@ -45,16 +45,13 @@ resource "aws_cloudwatch_event_bus_policy" "event_bus_policy" {
 }
 
 resource "aws_cloudwatch_event_rule" "event_bridge" {
-  name           = var.eventBridge_rule_name
-  description    = var.eventBridge_rule_description
-  event_pattern  = var.eventBridge_rule_event_pattern
-  role_arn       = aws_iam_role.eventBridge_rule_role.arn
-  event_bus_name = aws_cloudwatch_event_bus.event_bridge_bus.name
-
+  name                = var.eventBridge_rule_name
+  description         = var.eventBridge_rule_description
+  event_pattern       = var.eventBridge_rule_event_pattern
+  role_arn            = aws_iam_role.eventBridge_rule_role.arn
+  event_bus_name      = aws_cloudwatch_event_bus.event_bridge_bus.name
   schedule_expression = var.eventBridge_rule_schedule_expression
-
-  is_enabled = var.is_eventBridge_rule_enabled
-  tags       = var.eventBridge_tags
+  tags                = var.eventBridge_tags
 }
 
 resource "aws_cloudwatch_event_target" "eventBridge_target" {

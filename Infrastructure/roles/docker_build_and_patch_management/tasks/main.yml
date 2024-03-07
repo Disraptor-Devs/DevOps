@@ -20,7 +20,6 @@
     var: ecr_login_output.stdout_lines
 
 
-
 - name: Tag {{ CONTAINER }} Container
   command: docker tag {{ CONTAINER }}:latest {{ ECR_REPO }}/{{ CONTAINER }}:latest
   args:
