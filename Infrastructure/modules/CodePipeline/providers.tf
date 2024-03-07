@@ -4,8 +4,7 @@ provider "aws" {
   default_tags {
     tags = {
       "automation"  = "terraform",
-      "environment" = "production",
-      "owner"       = "Shibule"
+      "owner"       = "diraptor "
     }
   }
 

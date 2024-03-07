@@ -11,9 +11,9 @@ terraform {
   # Partial configuration, intentionally left empty. The other settings (e.g., bucket, region) will be
   # passed in from the terragrunt.hcl file via -backend-config arguments to 'terraform init'
   backend "s3" {
-    bucket         = "disraptor-prod-terraform-state"
-    key            = "production/jenkins-EventBridge/terraform.tfstate"
-    region         = "af-south-1"
-    dynamodb_table = "terraform-prod-locks"
+    bucket         = var.backend_bucket
+    key            = "${var.terraform_state_key}/code-commit/terraform.tfstate"
+    region         = var.region
+    dynamodb_table = var.dynamodb_lock_table
   }
 }

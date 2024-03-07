@@ -1,9 +1,9 @@
 locals {
   S3_tags = {
     "project-name" : "disraptor-jenkins",
-    "owner"        : "shibule",
-    "application"  : "jenkins",
-    "environment"  : "prod"
+    "owner" : "shibule",
+    "application" : "jenkins",
+    "environment" : "prod"
   }
 }
 
@@ -43,12 +43,12 @@ data "aws_lambda_function" "docker_creator" {
 }
 
 resource "aws_s3_bucket_notification" "event_trigger" {
-    bucket = aws_s3_bucket.jenkins_bucket.id
-    
-    lambda_function {
-        lambda_function_arn = var.lambda_function_arn
-        events              = ["s3:ObjectCreated:*"]
-        filter_prefix       = "uploads/"
-    }
-  
+  bucket = aws_s3_bucket.jenkins_bucket.id
+
+  lambda_function {
+    lambda_function_arn = var.lambda_function_arn
+    events              = ["s3:ObjectCreated:*"]
+    filter_prefix       = "uploads/"
+  }
+
 }
