@@ -41,8 +41,3 @@ variable "code_build_artifact_type" {
   type        = string
   default     = "NO_ARTIFACTS"
 }
-
-variable "buildspec_path" {
-  description = "The path to the buildspec file"
-  type        = string
-}
