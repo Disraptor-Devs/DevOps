@@ -40,11 +40,11 @@ resource "aws_codedeploy_deployment_config" "deployment_config" {
   compute_platform       = "Lambda"
 
   traffic_routing_config {
-    type = "TimeBasedLinear"
+    type = "TimeBasedCanary"
 
-    time_based_linear {
-      interval   = 10
-      percentage = 50
+    time_based_canary {
+      interval   = 2
+      percentage = 20
     }
   }
 }
@@ -67,7 +67,7 @@ resource "aws_codedeploy_deployment_group" "deployment_group" {
 
   auto_rollback_configuration {
     enabled = true
-    events  = ["DEPLOYMENT_STOP_ON_ALARM"]
+    events  = ["DEPLOYMENT_FAILURE", "DEPLOYMENT_STOP_ON_ALARM"]
   }
 
   alarm_configuration {

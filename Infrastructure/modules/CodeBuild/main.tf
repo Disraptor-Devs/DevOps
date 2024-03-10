@@ -51,8 +51,7 @@ resource "aws_codebuild_project" "code_build" {
   }
 
   source {
-    type      = "NO_SOURCE"
-    buildspec = file(var.buildspec_path)
+    type = "NO_SOURCE"
   }
 
   logs_config {
