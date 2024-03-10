@@ -51,7 +51,7 @@ resource "aws_codebuild_project" "code_build" {
   }
 
   source {
-    type = "NO_SOURCE"
+    type = "CODEPIPELINE"
   }
 
   logs_config {
