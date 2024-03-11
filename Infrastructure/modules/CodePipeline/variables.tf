@@ -50,16 +50,6 @@ variable "code_build_project_name" {
   type        = string
 }
 
-variable "code_deploy_application_name" {
-  description = "The name of the CodeDeploy application"
-  type        = string
-}
-
-variable "code_deploy_deployment_group_name" {
-  description = "The name of the CodeDeploy deployment group"
-  type        = string
-}
-
 variable "code_pipeline_role_name" {
   description = "The name of the IAM role to create for the CodePipeline"
   type        = string
