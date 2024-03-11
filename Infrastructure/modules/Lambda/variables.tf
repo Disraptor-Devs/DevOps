@@ -303,3 +303,14 @@ variable "policy_arns" {
   type        = set(string)
   default     = []
 }
+
+
+variable "dynamodb_lock_table" {
+  description = "The name of the DynamoDB table to use for Terraform state locking"
+  type        = string
+}
+
+variable "terraform_state_key" {
+  description = "The path to the Terraform state file in the S3 bucket"
+  type        = string
+}
