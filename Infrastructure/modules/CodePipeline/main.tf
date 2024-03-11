@@ -104,7 +104,6 @@ resource "aws_codepipeline" "code_pipeline" {
 
 
       configuration = {
-        ApplicatioName      = var.code_deploy_application_name
         DeploymentGroupName = var.code_deploy_deployment_group_name
       }
     }
