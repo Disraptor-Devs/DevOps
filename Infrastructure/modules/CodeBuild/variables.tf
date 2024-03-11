@@ -50,5 +50,9 @@ variable "bucket_name" {
 variable "artifact_name" {
   description = "The name of the build artifact"
   type        = string
+}
 
+variable "environment" {
+  description = "The environment CodeBuild runs for "
+  type        = string 
 }

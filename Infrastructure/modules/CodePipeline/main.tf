@@ -11,36 +11,21 @@ data "aws_iam_policy_document" "assume_role" {
   }
 }
 
+
+
 resource "aws_iam_role" "codepipeline_role" {
   name               = var.code_pipeline_role_name
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
 }
 
 
-resource "aws_iam_role_policy_attachment" "s3_access" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+
+resource "aws_iam_role_policy_attachment" "lf_access" {
+  policy_arn = "arn:aws:iam::837188172098:policy/lf-pipeline-cicd-${var.environment}"
   role       = aws_iam_role.codepipeline_role.name
 }
 
-resource "aws_iam_role_policy_attachment" "logs_access" {
-  policy_arn = "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess"
-  role       = aws_iam_role.codepipeline_role.name
-}
 
-resource "aws_iam_role_policy_attachment" "lambda_access" {
-  policy_arn = "arn:aws:iam::aws:policy/AWSLambda_FullAccess"
-  role       = aws_iam_role.codepipeline_role.name
-}
-
-resource "aws_iam_role_policy_attachment" "sns_access" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonSNSFullAccess"
-  role       = aws_iam_role.codepipeline_role.name
-}
-
-resource "aws_iam_role_policy_attachment" "code_build_access" {
-  policy_arn = "arn:aws:iam::aws:policy/AWSCodeBuildAdminAccess"
-  role       = aws_iam_role.codepipeline_role.name
-}
 
 resource "aws_codepipeline" "code_pipeline" {
   name     = var.code_pipeline_name

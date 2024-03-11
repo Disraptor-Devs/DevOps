@@ -53,5 +53,9 @@ variable "code_build_project_name" {
 variable "code_pipeline_role_name" {
   description = "The name of the IAM role to create for the CodePipeline"
   type        = string
+}
 
+variable "environment" {
+  description = "The environment CodeBuild runs for "
+  type        = string 
 }

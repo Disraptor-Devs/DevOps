@@ -15,18 +15,8 @@ resource "aws_iam_role" "code_build_role" {
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
 }
 
-resource "aws_iam_role_policy_attachment" "s3_access" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
-  role       = aws_iam_role.code_build_role.name
-}
-
-resource "aws_iam_role_policy_attachment" "logs_access" {
-  policy_arn = "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess"
-  role       = aws_iam_role.code_build_role.name
-}
-
-resource "aws_iam_role_policy_attachment" "lambda_access" {
-  policy_arn = "arn:aws:iam::aws:policy/AWSLambda_FullAccess"
+resource "aws_iam_role_policy_attachment" "lf_access" {
+  policy_arn = "arn:aws:iam::837188172098:policy/lf-pipeline-cicd-${var.environment}"
   role       = aws_iam_role.code_build_role.name
 }
 
