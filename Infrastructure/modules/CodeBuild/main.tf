@@ -37,7 +37,10 @@ resource "aws_codebuild_project" "code_build" {
   service_role = aws_iam_role.code_build_role.arn
 
   artifacts {
-    type = var.code_build_artifact_type
+    type      = "S3"
+    location  = var.bucket_name
+    name      = var.artifact_name
+    packaging = "ZIP"
   }
 
   environment {
@@ -60,6 +63,8 @@ resource "aws_codebuild_project" "code_build" {
       stream_name = "build"
     }
   }
+
+
 
   tags = var.code_build_tags
 }
