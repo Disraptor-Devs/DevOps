@@ -39,7 +39,7 @@ resource "aws_codebuild_project" "code_build" {
   artifacts {
     type      = "S3"
     location  = var.bucket_name
-    name      = var.artifact_name 
+    name      = var.artifact_name
     packaging = "ZIP"
   }
 

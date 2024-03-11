@@ -63,5 +63,5 @@ variable "code_deploy_deployment_group_name" {
 variable "code_pipeline_role_name" {
   description = "The name of the IAM role to create for the CodePipeline"
   type        = string
-  
+
 }

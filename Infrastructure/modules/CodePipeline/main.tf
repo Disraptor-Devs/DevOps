@@ -75,13 +75,13 @@ resource "aws_codepipeline" "code_pipeline" {
     name = "Build"
 
     action {
-      name             = "Build"
-      category         = "Build"
-      owner            = "AWS"
-      provider         = "CodeBuild"
-      region           = var.region
-      input_artifacts  = ["source_output"]
-      version          = "1"
+      name            = "Build"
+      category        = "Build"
+      owner           = "AWS"
+      provider        = "CodeBuild"
+      region          = var.region
+      input_artifacts = ["source_output"]
+      version         = "1"
       configuration = {
         ProjectName = var.code_build_project_name
       }

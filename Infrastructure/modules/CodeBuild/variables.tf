@@ -50,5 +50,5 @@ variable "bucket_name" {
 variable "artifact_name" {
   description = "The name of the build artifact"
   type        = string
-  
+
 }
