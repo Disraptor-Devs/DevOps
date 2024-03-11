@@ -1,10 +1,10 @@
 provider "aws" {
-  region = "af-south-1"
+  region = var.region
 
   default_tags {
     tags = {
       "automation" = "terraform",
-      "owner"      = "diraptor "
+      "owner"      = "diraptor"
     }
   }
 
