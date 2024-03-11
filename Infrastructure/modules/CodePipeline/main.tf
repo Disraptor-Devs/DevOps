@@ -12,7 +12,7 @@ data "aws_iam_policy_document" "assume_role" {
 }
 
 resource "aws_iam_role" "codepipeline_role" {
-  name               = "test-role"
+  name               = var.code_pipeline_role_name
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
 }
 
@@ -81,7 +81,6 @@ resource "aws_codepipeline" "code_pipeline" {
       provider         = "CodeBuild"
       region           = var.region
       input_artifacts  = ["source_output"]
-      output_artifacts = ["build_output"]
       version          = "1"
       configuration = {
         ProjectName = var.code_build_project_name
@@ -90,24 +89,6 @@ resource "aws_codepipeline" "code_pipeline" {
 
   }
 
-  stage {
-    name = "Deploy"
-
-    action {
-      name            = "Deploy"
-      category        = "Deploy"
-      owner           = "AWS"
-      provider        = "CodeDeploy"
-      region          = var.region
-      input_artifacts = ["build_output"]
-      version         = "1"
-
-
-      configuration = {
-        DeploymentGroupName = var.code_deploy_deployment_group_name
-      }
-    }
-  }
 
   tags = var.code_pipeline_tags
 }
