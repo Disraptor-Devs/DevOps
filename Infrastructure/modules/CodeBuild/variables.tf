@@ -54,5 +54,5 @@ variable "artifact_name" {
 
 variable "environment" {
   description = "The environment CodeBuild runs for "
-  type        = string 
+  type        = string
 }
