@@ -42,10 +42,6 @@ variable "code_build_artifact_type" {
   default     = "NO_ARTIFACTS"
 }
 
-variable "bucket_name" {
-  description = "The name of the S3 bucket to store the build artifacts"
-  type        = string
-}
 
 variable "artifact_name" {
   description = "The name of the build artifact"

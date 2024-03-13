@@ -10,10 +10,4 @@ terraform {
 
   # Partial configuration, intentionally left empty. The other settings (e.g., bucket, region) will be
   # passed in from the terragrunt.hcl file via -backend-config arguments to 'terraform init'
-  backend "s3" {
-    bucket         = var.backend_bucket
-    key            = "${var.terraform_state_key}/code-build/terraform.tfstate"
-    region         = var.region
-    dynamodb_table = var.dynamodb_lock_table
-  }
 }
