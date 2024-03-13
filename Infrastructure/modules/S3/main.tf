@@ -46,45 +46,45 @@ resource "aws_s3_bucket_acl" "aws_s3_bucket_acl" {
   acl    = var.s3_bucket_acl
 }
 
-data "aws_iam_policy_document" "bucket_policy_doc" {
-  statement {
-    principals {
-      type        = "AWS"
-      identifiers = var.s3_identifiers
-    }
+# data "aws_iam_policy_document" "bucket_policy_doc" {
+#   statement {
+#     principals {
+#       type        = "AWS"
+#       identifiers = var.s3_identifiers
+#     }
 
-    actions = var.s3_policy_actions
+#     actions = var.s3_policy_actions
 
-    resources = [
-      aws_s3_bucket.s3_bucket.arn,
-      "${aws_s3_bucket.s3_bucket.arn}/*",
-    ]
-  }
-}
+#     resources = [
+#       aws_s3_bucket.s3_bucket.arn,
+#       "${aws_s3_bucket.s3_bucket.arn}/*",
+#     ]
+#   }
+# }
 
-resource "aws_s3_bucket_policy" "bucket_policy" {
-  bucket = aws_s3_bucket.s3_bucket.id
-  policy = data.aws_iam_policy_document.bucket_policy_doc.json
-}
+# resource "aws_s3_bucket_policy" "bucket_policy" {
+#   bucket = aws_s3_bucket.s3_bucket.id
+#   policy = data.aws_iam_policy_document.bucket_policy_doc.json
+# }
 
-resource "aws_kms_key" "bucket_kms_key" {
-  description         = "KMS key for ${var.s3_bucket_name}"
-  enable_key_rotation = true
-  # auto renewal 
+# resource "aws_kms_key" "bucket_kms_key" {
+#   description         = "KMS key for ${var.s3_bucket_name}"
+#   enable_key_rotation = true
+#   # auto renewal 
 
-  tags = merge(var.s3_tags)
-}
+#   tags = merge(var.s3_tags)
+# }
 
-resource "aws_s3_bucket_server_side_encryption_configuration" "s3_bucket_encryption" {
-  bucket = aws_s3_bucket.s3_bucket.id
+# resource "aws_s3_bucket_server_side_encryption_configuration" "s3_bucket_encryption" {
+#   bucket = aws_s3_bucket.s3_bucket.id
 
-  rule {
-    apply_server_side_encryption_by_default {
-      kms_master_key_id = aws_kms_key.bucket_kms_key.arn
-      sse_algorithm     = "aws:kms"
-    }
-  }
-}
+#   rule {
+#     apply_server_side_encryption_by_default {
+#       kms_master_key_id = aws_kms_key.bucket_kms_key.arn
+#       sse_algorithm     = "aws:kms"
+#     }
+#   }
+# }
 
 resource "aws_s3_bucket_acl" "log_bucket_acl" {
   count  = local.create_logging_bucket

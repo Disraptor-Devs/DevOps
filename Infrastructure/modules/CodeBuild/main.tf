@@ -23,14 +23,18 @@ resource "aws_iam_role_policy_attachment" "lf_access" {
 
 resource "aws_codebuild_project" "code_build" {
   name         = var.code_build_project_name
-  description  = "CodeBuild project for the Payments Service"
+  description  = "CodeBuild project for the ${var.code_build_project_name}"
   service_role = aws_iam_role.code_build_role.arn
 
+  # artifacts {
+  #   type      = "S3"
+  #   location  = var.bucket_name
+  #   name      = var.artifact_name
+  #   packaging = "ZIP"
+  # }
+
   artifacts {
-    type      = "S3"
-    location  = var.bucket_name
-    name      = var.artifact_name
-    packaging = "ZIP"
+    type = "CODEPIPELINE"
   }
 
   environment {
