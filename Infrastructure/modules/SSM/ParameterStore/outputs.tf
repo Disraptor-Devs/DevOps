@@ -8,14 +8,14 @@ output "ssm_paramater_arn" {
 
 output "ssm_paramater_username" {
   description = "Output the SSM Parameter username"
-  value = aws_ssm_parameter.secret["Username"].value
-  
+  value       = aws_ssm_parameter.secret["Username"].value
+
 }
 
 output "ssm_paramater_passw" {
   description = "Output the SSM parameter value for the sake of being imported by other modules"
   value       = aws_ssm_parameter.secret["Password"].value
-  
+
 }
 output "ssm_paramter_value" {
   description = "Output the SSM parameter value for the sake of being imported by other modules"
