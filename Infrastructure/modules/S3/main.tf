@@ -2,8 +2,6 @@ locals {
   create_logging_bucket = var.is_logging_bucket ? 1 : 0
 }
 
-data "aws_caller_identity" "current" {}
-
 resource "aws_s3_bucket" "s3_bucket" {
   bucket = var.s3_bucket_name
   tags   = merge(var.s3_tags)
@@ -29,14 +27,16 @@ resource "aws_s3_bucket_ownership_controls" "owner" {
   }
 }
 
-# resource "aws_s3_bucket_public_access_block" "s3_public_access" {
-#   bucket = aws_s3_bucket.bucket.id
+resource "aws_s3_bucket_public_access_block" "s3_public_access" {
+  count = var.is_public_access_block ? 1 : 0
 
-#   block_public_acls       = var.is_block_public_acls
-#   block_public_policy     = var.is_block_public_policy
-#   ignore_public_acls      = var.is_ignore_public_acls
-#   restrict_public_buckets = var.is_restrict_public_buckets
-# }
+  bucket = aws_s3_bucket.bucket.id
+
+  block_public_acls       = var.is_block_public_acls
+  block_public_policy     = var.is_block_public_policy
+  ignore_public_acls      = var.is_ignore_public_acls
+  restrict_public_buckets = var.is_restrict_public_buckets
+}
 
 
 resource "aws_s3_bucket_acl" "aws_s3_bucket_acl" {
@@ -46,45 +46,48 @@ resource "aws_s3_bucket_acl" "aws_s3_bucket_acl" {
   acl    = var.s3_bucket_acl
 }
 
-# data "aws_iam_policy_document" "bucket_policy_doc" {
-#   statement {
-#     principals {
-#       type        = "AWS"
-#       identifiers = var.s3_identifiers
-#     }
+data "aws_iam_policy_document" "bucket_policy_doc" {
+  statement {
+    principals {
+      type        = "AWS"
+      identifiers = var.s3_identifiers
+    }
 
-#     actions = var.s3_policy_actions
+    actions = var.s3_policy_actions
 
-#     resources = [
-#       aws_s3_bucket.s3_bucket.arn,
-#       "${aws_s3_bucket.s3_bucket.arn}/*",
-#     ]
-#   }
-# }
+    resources = [
+      aws_s3_bucket.s3_bucket.arn,
+      "${aws_s3_bucket.s3_bucket.arn}/*",
+    ]
+  }
+}
 
-# resource "aws_s3_bucket_policy" "bucket_policy" {
-#   bucket = aws_s3_bucket.s3_bucket.id
-#   policy = data.aws_iam_policy_document.bucket_policy_doc.json
-# }
+resource "aws_s3_bucket_policy" "bucket_policy" {
+  bucket = aws_s3_bucket.s3_bucket.id
+  policy = data.aws_iam_policy_document.bucket_policy_doc.json
+}
 
-# resource "aws_kms_key" "bucket_kms_key" {
-#   description         = "KMS key for ${var.s3_bucket_name}"
-#   enable_key_rotation = true
-#   # auto renewal 
+resource "aws_kms_key" "bucket_kms_key" {
+  count = var.is_kms_encryption ? 1 : 0
 
-#   tags = merge(var.s3_tags)
-# }
+  description         = "KMS key for ${var.s3_bucket_name}"
+  enable_key_rotation = true
+  # auto renewal 
 
-# resource "aws_s3_bucket_server_side_encryption_configuration" "s3_bucket_encryption" {
-#   bucket = aws_s3_bucket.s3_bucket.id
+  tags = merge(var.s3_tags)
+}
 
-#   rule {
-#     apply_server_side_encryption_by_default {
-#       kms_master_key_id = aws_kms_key.bucket_kms_key.arn
-#       sse_algorithm     = "aws:kms"
-#     }
-#   }
-# }
+resource "aws_s3_bucket_server_side_encryption_configuration" "s3_bucket_encryption" {
+  count  = var.is_kms_encryption ? 1 : 0
+  bucket = aws_s3_bucket.s3_bucket.id
+
+  rule {
+    apply_server_side_encryption_by_default {
+      kms_master_key_id = aws_kms_key.bucket_kms_key.arn
+      sse_algorithm     = "aws:kms"
+    }
+  }
+}
 
 resource "aws_s3_bucket_acl" "log_bucket_acl" {
   count  = local.create_logging_bucket

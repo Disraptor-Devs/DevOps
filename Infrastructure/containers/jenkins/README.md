@@ -9,7 +9,6 @@ Dependencies
 - Terragrunt
 - Git
 - Python
-- NodeJs
 - Docker
 - AWS CLI
 - Kubernetes
