@@ -117,12 +117,40 @@ variable "object_path" {
   default     = null
 }
 
-variable "dynamodb_lock_table" {
-  description = "The name of the DynamoDB table to use for Terraform state locking"
-  type        = string
+variable "is_kms_encryption" {
+  description = "Specify whether to enable KMS encryption for the S3 bucket"
+  type        = bool
+  default     = false
 }
 
-variable "terraform_state_key" {
-  description = "The path to the Terraform state file in the S3 bucket"
-  type        = string
+variable "is_block_public_acls" {
+  description = "Specifies whether to block public ACLs for the S3 bucket"
+  type        = bool
+  default     = false
+}
+
+variable "is_block_public_policy" {
+  description = "Specifies whether to block public policies for the S3 bucket"
+  type        = bool
+  default     = false
+  
+}
+
+variable "is_ignore_public_acls" {
+  description = "Specifies whether to ignore public ACLs for the S3 bucket"
+  type        = bool
+  default     = false
+}
+
+variable "is_restrict_public_buckets" {
+  description = "Specifies whether to restrict public buckets for the S3 bucket"
+  type        = bool
+  default     = false
+}
+
+variable "is_public_access_block" {
+  description = "Specifies whether to block public access for the S3 bucket"
+  type        = bool
+  default     = false
+  
 }

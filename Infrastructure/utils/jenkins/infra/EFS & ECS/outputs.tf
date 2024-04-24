@@ -8,9 +8,3 @@ output "efs_arn" {
   value       = aws_efs_file_system.jenkins_fs.arn
 }
 
-output "kms_key_id" {
-  description = "Value for the KMS key id"
-  value       = aws_kms_key.jenkins_fs_key.id
-  sensitive   = true
-}
-
