@@ -133,7 +133,7 @@ variable "is_block_public_policy" {
   description = "Specifies whether to block public policies for the S3 bucket"
   type        = bool
   default     = false
-  
+
 }
 
 variable "is_ignore_public_acls" {
@@ -152,5 +152,5 @@ variable "is_public_access_block" {
   description = "Specifies whether to block public access for the S3 bucket"
   type        = bool
   default     = false
-  
+
 }

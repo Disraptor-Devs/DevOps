@@ -68,7 +68,7 @@ resource "aws_s3_bucket_policy" "bucket_policy" {
 }
 
 resource "aws_kms_key" "bucket_kms_key" {
-  count = var.is_kms_encryption ? 1 : 0 
+  count = var.is_kms_encryption ? 1 : 0
 
   description         = "KMS key for ${var.s3_bucket_name}"
   enable_key_rotation = true
@@ -78,7 +78,7 @@ resource "aws_kms_key" "bucket_kms_key" {
 }
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "s3_bucket_encryption" {
-  count = var.is_kms_encryption ? 1 : 0 
+  count  = var.is_kms_encryption ? 1 : 0
   bucket = aws_s3_bucket.s3_bucket.id
 
   rule {
