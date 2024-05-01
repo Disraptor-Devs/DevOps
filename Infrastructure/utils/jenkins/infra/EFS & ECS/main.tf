@@ -128,7 +128,10 @@ data "aws_iam_policy_document" "policy" {
       "secretsmanager:*",
       "kms:*",
       "dynamodb:*",
-      "s3:*"
+      "s3:*",
+      "ecs:*",
+      "iam:PassRole"
+
     ]
 
     resources = [aws_efs_file_system.jenkins_fs.arn]
@@ -249,7 +252,8 @@ data "aws_iam_policy_document" "ecs_task_role_policy" {
       "elasticfilesystem:*",
       "ecs:*",
       "events:*",
-      "efs:*"
+      "efs:*",
+      "iam:PassRole"
     ]
 
     resources = ["*"]

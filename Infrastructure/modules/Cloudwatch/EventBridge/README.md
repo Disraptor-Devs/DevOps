@@ -10,7 +10,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 2.70.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.25.0 |
 
 ## Modules
 
@@ -27,10 +27,7 @@ No modules.
 | [aws_cloudwatch_event_rule.event_bridge](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_event_rule) | resource |
 | [aws_cloudwatch_event_target.eventBridge_target](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_event_target) | resource |
 | [aws_iam_role.eventBridge_rule_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
-| [aws_iam_role_policy_attachment.eventBridge_Lambda_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
-| [aws_iam_role_policy_attachment.eventBridge_kinesis_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
-| [aws_iam_role_policy_attachment.eventBridge_s3_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
-| [aws_iam_role_policy_attachment.eventBridge_sns_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_iam_role_policy_attachment.eventBridge__policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_iam_policy_document.event_bus_policy_doc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_iam_policy_document.event_rule_role_doc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 
@@ -70,6 +67,7 @@ No modules.
 | <a name="input_eventBridge_target_id"></a> [eventBridge\_target\_id](#input\_eventBridge\_target\_id) | Specifies the unique target assignment ID | `string` | n/a | yes |
 | <a name="input_is_eventBridge_api_destination"></a> [is\_eventBridge\_api\_destination](#input\_is\_eventBridge\_api\_destination) | Specifies whether to create an eventBridge api destination | `bool` | `false` | no |
 | <a name="input_is_eventBridge_rule_enabled"></a> [is\_eventBridge\_rule\_enabled](#input\_is\_eventBridge\_rule\_enabled) | Specifies whether the eventBridge rule is enabled | `bool` | `true` | no |
+| <a name="input_policy_arns"></a> [policy\_arns](#input\_policy\_arns) | Specify the policy arns to be attached to the lambda role | `set(string)` | `[]` | no |
 | <a name="input_region"></a> [region](#input\_region) | Specfies the region in which this resouce will be created in | `string` | `"af-south-1"` | no |
 | <a name="input_run_command_targets"></a> [run\_command\_targets](#input\_run\_command\_targets) | Specifies the targets for the run command | `map(list(string))` | n/a | yes |
 

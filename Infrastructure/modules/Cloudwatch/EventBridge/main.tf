@@ -23,7 +23,7 @@ data "aws_iam_policy_document" "event_rule_role_doc" {
 
 resource "aws_iam_role" "eventBridge_rule_role" {
   name               = var.eventBridge_rule_role_name
-  assume_role_policy = data.aws_iam_policy_document.event_bus_policy_doc.json
+  assume_role_policy = data.aws_iam_policy_document.event_rule_role_doc.json
 }
 
 resource "aws_iam_role_policy_attachment" "eventBridge__policy" {

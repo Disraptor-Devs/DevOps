@@ -1,7 +1,7 @@
 [
     {
         "name": "jenkins",
-        "image": "143671530412.dkr.ecr.af-south-1.amazonaws.com/disraptor-jenkins:latest",
+        "image": "143671530412.dkr.ecr.af-south-1.amazonaws.com/disraptor-jenkins:v1",
         "memory": 4096,
         "cpu": 2048,
         "essential": true,

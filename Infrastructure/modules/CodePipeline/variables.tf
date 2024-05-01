@@ -4,22 +4,6 @@ variable "region" {
   default     = "eu-central-1"
 }
 
-variable "backend_bucket" {
-  description = "The name of the S3 bucket to store the Terraform state file"
-  type        = string
-  default     = "disraptor-terraform-state"
-}
-
-variable "terraform_state_key" {
-  description = "The path to the Terraform state file in the S3 bucket"
-  type        = string
-}
-
-variable "dynamodb_lock_table" {
-  description = "The name of the DynamoDB table to use for Terraform state locking"
-  type        = string
-}
-
 variable "code_pipeline_tags" {
   description = "The tags to apply to the CodeBuild project"
   type        = map(string)
@@ -58,4 +42,17 @@ variable "code_pipeline_role_name" {
 variable "environment" {
   description = "The environment CodeBuild runs for "
   type        = string
+}
+
+variable "code_pipeline_actions" {
+  description = "The actions to be performed by the CodePipeline"
+  type        = set(string)
+  
+}
+
+variable "code_pipeline_artifact_store" {
+  description = "The type of artifact store to use"
+  type        = string
+  default     = "S3"
+  
 }

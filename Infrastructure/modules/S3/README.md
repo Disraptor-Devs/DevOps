@@ -117,6 +117,7 @@ No modules.
 | <a name="input_is_kms_encryption"></a> [is\_kms\_encryption](#input\_is\_kms\_encryption) | Specify whether to enable KMS encryption for the S3 bucket | `bool` | `false` | no |
 | <a name="input_is_lifecycle_policy"></a> [is\_lifecycle\_policy](#input\_is\_lifecycle\_policy) | Specify whether to create and attach a lifecycle policy to the S3 bucket | `bool` | `false` | no |
 | <a name="input_is_logging_bucket"></a> [is\_logging\_bucket](#input\_is\_logging\_bucket) | Specifies whether we need to create a logging bucket for the main bucket being created | `bool` | `false` | no |
+| <a name="input_is_public_access_block"></a> [is\_public\_access\_block](#input\_is\_public\_access\_block) | Specifies whether to block public access for the S3 bucket | `bool` | `false` | no |
 | <a name="input_is_restrict_public_buckets"></a> [is\_restrict\_public\_buckets](#input\_is\_restrict\_public\_buckets) | Specifies whether to restrict public buckets for the S3 bucket | `bool` | `false` | no |
 | <a name="input_lifecycle_name"></a> [lifecycle\_name](#input\_lifecycle\_name) | Specify name for the lifecycle config for the S3 bucket | `string` | `null` | no |
 | <a name="input_lifecycle_storage_class"></a> [lifecycle\_storage\_class](#input\_lifecycle\_storage\_class) | Specify the storage class to transition to | `map(string)` | `{}` | no |

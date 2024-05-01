@@ -304,13 +304,9 @@ variable "policy_arns" {
   default     = []
 }
 
-
-variable "dynamodb_lock_table" {
-  description = "The name of the DynamoDB table to use for Terraform state locking"
-  type        = string
+variable "is_lambda_alias" {
+  description = "Specify whether we'll create a lambda alias"
+  type        = bool
+  default     = false
 }
 
-variable "terraform_state_key" {
-  description = "The path to the Terraform state file in the S3 bucket"
-  type        = string
-}
