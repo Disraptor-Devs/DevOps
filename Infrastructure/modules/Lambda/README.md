@@ -21,7 +21,7 @@ No modules.
 | Name | Type |
 |------|------|
 | [aws_iam_role.iam_for_lambda](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
-| [aws_iam_role_policy_attachment.lambda_](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_iam_role_policy_attachment.lambda_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_lambda_alias.lambda_alias](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_alias) | resource |
 | [aws_lambda_event_source_mapping.event_source_kinesis](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_event_source_mapping) | resource |
 | [aws_lambda_event_source_mapping.event_source_msk](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_event_source_mapping) | resource |
@@ -41,12 +41,9 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_function_description"></a> [function\_description](#input\_function\_description) | Specify the description for the lambda function | `string` | n/a | yes |
 | <a name="input_function_name"></a> [function\_name](#input\_function\_name) | Specify the name of the lambda function being created | `string` | n/a | yes |
-| <a name="input_lambda_alias_description"></a> [lambda\_alias\_description](#input\_lambda\_alias\_description) | Specify the description for the lambda alias. | `string` | n/a | yes |
-| <a name="input_lambda_alias_function_version"></a> [lambda\_alias\_function\_version](#input\_lambda\_alias\_function\_version) | Specify the version for the lambda function being associated to the alias. | `string` | n/a | yes |
-| <a name="input_lambda_alias_name"></a> [lambda\_alias\_name](#input\_lambda\_alias\_name) | Specify the name to use for the lambda alias being created. | `string` | n/a | yes |
 | <a name="input_lambda_function_runtime"></a> [lambda\_function\_runtime](#input\_lambda\_function\_runtime) | Specify the runtime for the lambda function | `string` | n/a | yes |
+| <a name="input_lambda_handler"></a> [lambda\_handler](#input\_lambda\_handler) | Specify entry point of your function | `string` | n/a | yes |
 | <a name="input_lambda_iam_role_name"></a> [lambda\_iam\_role\_name](#input\_lambda\_iam\_role\_name) | Specify the name for the Iam role that will be created for the lambda function | `string` | n/a | yes |
-| <a name="input_lambda_layer_name"></a> [lambda\_layer\_name](#input\_lambda\_layer\_name) | Specify the name for the lambda layer | `string` | n/a | yes |
 | <a name="input_lambda_tags"></a> [lambda\_tags](#input\_lambda\_tags) | Specifies the tags (Key, Value pairs) to be associated to the lambda resources | `map(string)` | n/a | yes |
 | <a name="input_archive_type"></a> [archive\_type](#input\_archive\_type) | Specify the Archive type to be used for the file/code you're referencing | `string` | `"zip"` | no |
 | <a name="input_cloudwatch_arn"></a> [cloudwatch\_arn](#input\_cloudwatch\_arn) | Specify the Cloudwatch arn you want to give permission to perform an action on the lambda function | `string` | `null` | no |
@@ -59,11 +56,15 @@ No modules.
 | <a name="input_is_function_variables"></a> [is\_function\_variables](#input\_is\_function\_variables) | Specify whether we'll pass in environment variables for our lambda function | `bool` | `false` | no |
 | <a name="input_is_kafka_event_source_config"></a> [is\_kafka\_event\_source\_config](#input\_is\_kafka\_event\_source\_config) | Specify whether to add in the kafka event source config block for the msk event source mapping | `bool` | `false` | no |
 | <a name="input_is_kinesis_event_source"></a> [is\_kinesis\_event\_source](#input\_is\_kinesis\_event\_source) | Specify whether to create the event source mapping for a kinesis stream | `bool` | `false` | no |
+| <a name="input_is_lambda_alias"></a> [is\_lambda\_alias](#input\_is\_lambda\_alias) | Specify whether we'll create a lambda alias | `bool` | `false` | no |
 | <a name="input_is_lambda_function_url"></a> [is\_lambda\_function\_url](#input\_is\_lambda\_function\_url) | Specify whether we'll create a url for our lambda function | `bool` | `false` | no |
 | <a name="input_is_lambda_layer"></a> [is\_lambda\_layer](#input\_is\_lambda\_layer) | Specify whether we'll create a lambda layer | `bool` | `false` | no |
 | <a name="input_is_lambda_provisioned_concurrency"></a> [is\_lambda\_provisioned\_concurrency](#input\_is\_lambda\_provisioned\_concurrency) | Specify whether we provision concurrency or our lambda function | `bool` | `false` | no |
 | <a name="input_is_msk_cluster_event_source"></a> [is\_msk\_cluster\_event\_source](#input\_is\_msk\_cluster\_event\_source) | Specify whether to create the event source mapping for msk | `bool` | `false` | no |
 | <a name="input_kinesis_stream_arn"></a> [kinesis\_stream\_arn](#input\_kinesis\_stream\_arn) | Specify the kinesis stream arn to be used in the event source mapping | `string` | `null` | no |
+| <a name="input_lambda_alias_description"></a> [lambda\_alias\_description](#input\_lambda\_alias\_description) | Specify the description for the lambda alias. | `string` | `null` | no |
+| <a name="input_lambda_alias_function_version"></a> [lambda\_alias\_function\_version](#input\_lambda\_alias\_function\_version) | Specify the version for the lambda function being associated to the alias. | `string` | `null` | no |
+| <a name="input_lambda_alias_name"></a> [lambda\_alias\_name](#input\_lambda\_alias\_name) | Specify the name to use for the lambda alias being created. | `string` | `null` | no |
 | <a name="input_lambda_function_url_auth_type"></a> [lambda\_function\_url\_auth\_type](#input\_lambda\_function\_url\_auth\_type) | The type of authentication that the function URL uses. | `string` | `"AWS_IAM"` | no |
 | <a name="input_lambda_function_url_cors_allow_credentials"></a> [lambda\_function\_url\_cors\_allow\_credentials](#input\_lambda\_function\_url\_cors\_allow\_credentials) | Whether to allow cookies or other credentials in requests to the function URL. | `bool` | `false` | no |
 | <a name="input_lambda_function_url_cors_allow_headers"></a> [lambda\_function\_url\_cors\_allow\_headers](#input\_lambda\_function\_url\_cors\_allow\_headers) | The HTTP headers that origins can include in requests to the function URL. For example: [date, keep-alive, x-custom-header]. | `set(string)` | <pre>[<br>  "date",<br>  "keep-alive"<br>]</pre> | no |
@@ -71,10 +72,10 @@ No modules.
 | <a name="input_lambda_function_url_cors_allow_origins"></a> [lambda\_function\_url\_cors\_allow\_origins](#input\_lambda\_function\_url\_cors\_allow\_origins) | The origins that can access the function URL. | `set(string)` | <pre>[<br>  "*"<br>]</pre> | no |
 | <a name="input_lambda_function_url_cors_expose_headers"></a> [lambda\_function\_url\_cors\_expose\_headers](#input\_lambda\_function\_url\_cors\_expose\_headers) | The HTTP headers in your function response that you want to expose to origins that call the function URL. | `set(string)` | <pre>[<br>  "keep-alive",<br>  "date"<br>]</pre> | no |
 | <a name="input_lambda_function_url_cors_max_age"></a> [lambda\_function\_url\_cors\_max\_age](#input\_lambda\_function\_url\_cors\_max\_age) | The maximum amount of time, in seconds, that web browsers can cache results of a preflight request. | `number` | `0` | no |
-| <a name="input_lambda_handler"></a> [lambda\_handler](#input\_lambda\_handler) | Specify entry point of your function | `string` | `null` | no |
 | <a name="input_lambda_layer_compatible_runtimes"></a> [lambda\_layer\_compatible\_runtimes](#input\_lambda\_layer\_compatible\_runtimes) | Specify the compatible runtimes for the lambda layer | `set(string)` | <pre>[<br>  "nodejs18.x"<br>]</pre> | no |
 | <a name="input_lambda_layer_description"></a> [lambda\_layer\_description](#input\_lambda\_layer\_description) | Specify the description for the lambda layer | `string` | `null` | no |
 | <a name="input_lambda_layer_file"></a> [lambda\_layer\_file](#input\_lambda\_layer\_file) | Specify the path to the file/code for the lambda layer | `string` | `null` | no |
+| <a name="input_lambda_layer_name"></a> [lambda\_layer\_name](#input\_lambda\_layer\_name) | Specify the name for the lambda layer | `string` | `null` | no |
 | <a name="input_lambda_permission_action"></a> [lambda\_permission\_action](#input\_lambda\_permission\_action) | Specify the action that will be allowed on the lambda function (to be used in aws lambda permission) | `string` | `"lambda:InvokeFunction"` | no |
 | <a name="input_lambda_permission_statement_id"></a> [lambda\_permission\_statement\_id](#input\_lambda\_permission\_statement\_id) | Specify the statement id for the aws lambda permission | `string` | `null` | no |
 | <a name="input_lambda_variables"></a> [lambda\_variables](#input\_lambda\_variables) | Specify variables for our lambda function | `map(string)` | `{}` | no |
