@@ -10,5 +10,10 @@ terraform {
 
   # Partial configuration, intentionally left empty. The other settings (e.g., bucket, region) will be
   # passed in from the terragrunt.hcl file via -backend-config arguments to 'terraform init'
-  # backend "s3" {}
+  backend "s3" {
+    bucket         = "disraptor-prod-terraform-state"
+    key            = "production/jenkins-ECR/terraform.tfstate"
+    region         = "af-south-1"
+    dynamodb_table = "terraform-prod-locks"
+  }
 }

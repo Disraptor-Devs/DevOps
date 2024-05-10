@@ -144,3 +144,10 @@ variable "subscription_iam_name" {
   default     = "value"
 
 }
+
+variable "is_kms_encryption" {
+  description = "Specify whether to create a kms key for the sns topic"
+  type        = bool
+  default     = false
+  
+}

@@ -16,15 +16,29 @@ data "aws_iam_policy_document" "assume_role" {
 resource "aws_iam_role" "codepipeline_role" {
   name               = var.code_pipeline_role_name
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
+
+  inline_policy {
+    name = "code_pipeline_policy"
+    policy = data.aws_iam_policy_document.code_pipeline_doc.json
+  }
 }
 
 
+data "aws_iam_policy_document" "code_pipeline_doc" {
+  statement {
+    principals {
+      type        = "AWS"
+      identifiers = ["*"]
+    }
 
-resource "aws_iam_role_policy_attachment" "lf_access" {
-  policy_arn = "arn:aws:iam::837188172098:policy/lf-pipeline-cicd-${var.environment}"
-  role       = aws_iam_role.codepipeline_role.name
+    actions = var.code_pipeline_actions
+
+    resources = [
+      aws_s3_bucket.s3_bucket.arn,
+      "${aws_s3_bucket.s3_bucket.arn}/*",
+    ]
+  }
 }
-
 
 
 resource "aws_codepipeline" "code_pipeline" {
@@ -33,7 +47,7 @@ resource "aws_codepipeline" "code_pipeline" {
 
   artifact_store {
     location = var.code_pipeline_artifact_store_bucket
-    type     = "S3"
+    type     = var.code_pipeline_artifact_store
   }
 
   stage {

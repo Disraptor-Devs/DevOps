@@ -52,16 +52,19 @@ variable "lambda_variables" {
 variable "lambda_alias_name" {
   description = "Specify the name to use for the lambda alias being created."
   type        = string
+  default     = null
 }
 
 variable "lambda_alias_description" {
   description = "Specify the description for the lambda alias."
   type        = string
+  default     = null
 }
 
 variable "lambda_alias_function_version" {
   description = "Specify the version for the lambda function being associated to the alias."
   type        = string
+  default     = null
 }
 
 variable "is_deployment_package_local" {
@@ -90,7 +93,6 @@ variable "lambda_function_runtime" {
 variable "lambda_handler" {
   description = "Specify entry point of your function"
   type        = string
-  default     = null
 }
 
 variable "kinesis_stream_arn" {
@@ -271,6 +273,7 @@ variable "is_function_variables" {
 variable "lambda_layer_name" {
   description = "Specify the name for the lambda layer"
   type        = string
+  default     = null 
 }
 
 variable "lambda_layer_description" {
@@ -304,13 +307,9 @@ variable "policy_arns" {
   default     = []
 }
 
-
-variable "dynamodb_lock_table" {
-  description = "The name of the DynamoDB table to use for Terraform state locking"
-  type        = string
+variable "is_lambda_alias" {
+  description = "Specify whether we'll create a lambda alias"
+  type        = bool
+  default     = false
 }
 
-variable "terraform_state_key" {
-  description = "The path to the Terraform state file in the S3 bucket"
-  type        = string
-}

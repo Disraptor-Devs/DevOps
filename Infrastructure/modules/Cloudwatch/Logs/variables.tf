@@ -112,3 +112,9 @@ variable "policy_arns" {
   type        = set(string)
   default     = []
 }
+
+variable "is_kms_key" {
+  description = "Specifies whether to create a kms key"
+  type        = bool
+  default     = false
+}

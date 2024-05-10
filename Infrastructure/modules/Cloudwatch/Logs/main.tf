@@ -24,6 +24,7 @@ resource "aws_iam_role_policy_attachment" "cw_log_kinesis_policy" {
 
 
 resource "aws_kms_key" "bucket_kms_key" {
+  count               = var.is_kms_key ? 1 : 0
   description         = "KMS key for ${var.log_group_name}"
   enable_key_rotation = true
   # auto renewal 
@@ -34,7 +35,7 @@ resource "aws_kms_key" "bucket_kms_key" {
 resource "aws_cloudwatch_log_group" "log_group" {
   name              = var.log_group_name
   retention_in_days = var.log_group_retention_in_days
-  kms_key_id        = aws_kms_key.bucket_kms_key.arn
+  kms_key_id        = var.is_kms_key ? aws_kms_key.bucket_kms_key[0].arn : null
   tags              = var.log_tags
 }
 

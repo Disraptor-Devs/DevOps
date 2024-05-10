@@ -121,6 +121,35 @@ resource "aws_s3_access_point" "access_point" {
   name   = "${var.s3_bucket_name}-ap"
 }
 
+resource "aws_s3_bucket_website_configuration" "s3_hosted_site" {
+  count = var.is_s3_site_hosting ? 1 : 0
+
+  bucket = aws_s3_bucket.s3_bucket.id
+
+  index_document {
+    suffix = var.s3_index_document
+  }
+
+  error_document {
+    key = var.s3_error_document
+  }
+  dynamic "routing_rule" {
+    for_each = var.is_s3_routing_rules ? [1] : [0]
+    content {
+      condition {
+        key_prefix_equals               = var.s3_routing_key_prefix_condition
+      }
+      redirect {
+        host_name               = var.s3_site_hostname
+        protocol                = var.s3_site_protocol
+        replace_key_prefix_with = var.s3_routing_replace_key_prefix_with
+      }
+    }
+    
+  }
+}
+
+
 resource "aws_s3_bucket_lifecycle_configuration" "s3_lifecycle" {
   count = var.is_lifecycle_policy ? 1 : 0
 
