@@ -20,6 +20,13 @@ resource "aws_security_group" "efs_security_group" {
   }
 
   ingress {
+    from_port   = 2049
+    to_port     = 2049
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
@@ -34,15 +41,8 @@ resource "aws_security_group" "efs_security_group" {
   }
 
   ingress {
-    from_port   = 5432
-    to_port     = 5432
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 3306
-    to_port     = 3306
+    from_port   = 8080
+    to_port     = 8080
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -108,7 +108,7 @@ resource "aws_efs_access_point" "efs_access_point" {
 
 
 data "aws_iam_policy_document" "policy" {
-  statement {
+    statement {
     sid    = "efs_policy_document"
     effect = "Allow"
 
@@ -128,10 +128,7 @@ data "aws_iam_policy_document" "policy" {
       "secretsmanager:*",
       "kms:*",
       "dynamodb:*",
-      "s3:*",
-      "ecs:*",
-      "iam:PassRole"
-
+      "s3:*"
     ]
 
     resources = [aws_efs_file_system.jenkins_fs.arn]
@@ -186,7 +183,7 @@ resource "aws_ecs_cluster" "ecs_cluster" {
 }
 
 resource "aws_ecs_task_definition" "ecs_task" {
-  family                   = "service"
+  family                   = "ecs-jenkins-task"
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
   cpu                      = "2048"
@@ -212,6 +209,7 @@ resource "aws_ecs_task_definition" "ecs_task" {
 
   runtime_platform {
     operating_system_family = "LINUX"
+    cpu_architecture = "ARM64"
   }
 
   task_role_arn      = aws_iam_role.ecs_task_role.arn
@@ -253,7 +251,7 @@ data "aws_iam_policy_document" "ecs_task_role_policy" {
       "ecs:*",
       "events:*",
       "efs:*",
-      "iam:PassRole"
+      "ec2:*"
     ]
 
     resources = ["*"]
@@ -281,7 +279,7 @@ resource "aws_iam_role" "ecs_task_role" {
 }
 
 resource "aws_ecs_service" "ecs_service" {
-    name             = "jenkins-service"
+    name             = "disraptor-jenkins-service"
     cluster          = aws_ecs_cluster.ecs_cluster.arn
     task_definition  = aws_ecs_task_definition.ecs_task.arn
     desired_count    = 1

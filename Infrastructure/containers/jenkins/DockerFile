@@ -1,9 +1,6 @@
-FROM jenkins/jenkins:lts-jdk11
+FROM jenkins/jenkins:latest
 
 USER root
-
-# Add Jenkins user to sudoers list
-RUN echo "jenkins ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 RUN apt-get update && \
     apt-get install -y \
@@ -17,28 +14,17 @@ RUN apt-get update && \
         binutils \
         build-essential \
         nfs-common \
-        dnf
-
-        
-# Install wget
-RUN apt-get install -y wget
-
-RUN apt-get install -y ca-certificates \
+        ca-certificates \
         groff \
         less \
         unzip \
-        jq \
-        && apt-get clean
+        jq
 
-RUN apt-get uodate && \
-    apt-get -y install git binutils rustc cargo pkg-config libssl-dev
+# Install wget
+RUN apt-get install -y wget
 
-RUN dnf install dnf-plugins-core -y        
-
-RUN dnf config-manager --add-repo=https://cdn.amazonlinux.com/2/core/latest/x86_64/extras
-
-RUN dnf install -y amazon-efs-utils
-
+RUN apt-get update && \
+    apt-get -y install  pkg-config libssl-dev
 
 
 # Install Terraform
@@ -47,18 +33,21 @@ RUN wget https://releases.hashicorp.com/terraform/1.7.0/terraform_1.7.0_linux_am
     mv terraform /usr/local/bin && \
     rm terraform_1.7.0_linux_amd64.zip
 
-# Install botocore
-RUN apt-get install -y python3-botocore
+# Install botocore (dependency for EFS utils)
+RUN apt-get update && \
+    apt-get install -y python3-venv && \
+    python3 -m venv /opt/venv && \
+    /opt/venv/bin/pip install botocore
+
 
 # Optional: Install additional plugins using the Jenkins Plugin Manager
 RUN wget -q -O - https://updates.jenkins.io/current/update-center.json
-
 
 # Set time and region to Africa/Johannesburg
 RUN ln -sf /usr/share/zoneinfo/Africa/Johannesburg /etc/localtime && \
     echo "Africa/Johannesburg" > /etc/timezone
 
-
+# Remove secrets placeholder (assuming you'll set it elsewhere)
 RUN echo /var/jenkins_home/secrets/initialAdminPassword  
 
 EXPOSE 8080

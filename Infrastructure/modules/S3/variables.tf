@@ -154,3 +154,51 @@ variable "is_public_access_block" {
   default     = false
 
 }
+
+variable "is_s3_site_hosting" {
+  description = "Specifies whether to enable S3 static website hosting"
+  type        = bool
+  default     = false
+}
+
+variable "s3_index_document" {
+  description = "Specifies the index document for the S3 static website hosting"
+  type        = string
+  default     = "index.html"
+}
+
+variable "s3_error_document" {
+  description = "Specifies the error document for the S3 static website hosting"
+  type        = string
+  default     = "error.html"
+}
+
+variable "is_s3_routing_rules" {
+  description = "Specifies whether to enable routing rules for the S3 static website hosting"
+  type        = bool
+  default     = false
+}
+
+variable "s3_routing_key_prefix_condition" {
+  description = "Specifies the key prefix condition for the routing rule"
+  type        = string
+  default     = null
+}
+
+variable "s3_routing_replace_key_prefix_with" {
+  description = "Specifies the key prefix to replace with"
+  type        = string
+  default     = null
+}
+
+variable "s3_site_protocol" {
+  description = "Specifies the protocol for the S3 static website hosting"
+  type        = string
+  default     = "https"
+}
+
+variable "s3_site_hostname" {
+  description = "Specifies the hostname for the S3 static website hosting"
+  type        = string
+  default     = null
+}
