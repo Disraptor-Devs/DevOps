@@ -82,3 +82,4 @@ No modules.
 | <a name="output_s3_bucket_arn"></a> [s3\_bucket\_arn](#output\_s3\_bucket\_arn) | Output of the S3 bucket arn to be used in other modules (if extended) |
 | <a name="output_s3_bucket_id"></a> [s3\_bucket\_id](#output\_s3\_bucket\_id) | Output of the s3 bucket id to be used in other modules (if extended) |
 | <a name="output_s3_bucket_path"></a> [s3\_bucket\_path](#output\_s3\_bucket\_path) | Output of the S3 bucket path to be used in other modules (if extended) |
+| <a name="output_s3_bucket_url"></a> [s3\_bucket\_url](#output\_s3\_bucket\_url) | Output of the S3 bucket region-specific URL |
