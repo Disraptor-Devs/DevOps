@@ -30,7 +30,7 @@ resource "aws_s3_bucket_ownership_controls" "owner" {
 resource "aws_s3_bucket_public_access_block" "s3_public_access" {
   count = var.is_public_access_block ? 1 : 0
 
-  bucket = aws_s3_bucket.bucket.id
+  bucket = aws_s3_bucket.s3_bucket.id
 
   block_public_acls       = var.is_block_public_acls
   block_public_policy     = var.is_block_public_policy
@@ -83,7 +83,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "s3_bucket_encrypt
 
   rule {
     apply_server_side_encryption_by_default {
-      kms_master_key_id = aws_kms_key.bucket_kms_key.arn
+      kms_master_key_id = aws_kms_key.bucket_kms_key.0.arn
       sse_algorithm     = "aws:kms"
     }
   }
