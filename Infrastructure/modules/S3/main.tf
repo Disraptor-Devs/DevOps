@@ -130,9 +130,15 @@ resource "aws_s3_bucket_website_configuration" "s3_hosted_site" {
     suffix = var.s3_index_document
   }
 
-  error_document {
-    key = var.s3_error_document
+  dynamic "error_document" {
+    for_each = var.s3_error_document != null ? [1] : [0]
+    content {
+      key = var.s3_error_document
+    }
+    
   }
+
+
   dynamic "routing_rule" {
     for_each = var.is_s3_routing_rules ? [1] : [0]
     content {
