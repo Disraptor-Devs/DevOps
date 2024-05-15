@@ -65,7 +65,7 @@ No modules.
 | <a name="input_s3_bucket_acl"></a> [s3\_bucket\_acl](#input\_s3\_bucket\_acl) | Specifies whether the s3 bucket will be private or public-facing | `string` | `"private"` | no |
 | <a name="input_s3_bucket_notification_events"></a> [s3\_bucket\_notification\_events](#input\_s3\_bucket\_notification\_events) | Specifies the events we want to be notified off on the created S3 bucket | `set(string)` | `[]` | no |
 | <a name="input_s3_bucket_versioning"></a> [s3\_bucket\_versioning](#input\_s3\_bucket\_versioning) | Specifies whether bucket versioning will be enabled or not | `string` | `"Enabled"` | no |
-| <a name="input_s3_error_document"></a> [s3\_error\_document](#input\_s3\_error\_document) | Specifies the error document for the S3 static website hosting | `string` | `"error.html"` | no |
+| <a name="input_s3_error_document"></a> [s3\_error\_document](#input\_s3\_error\_document) | Specifies the error document for the S3 static website hosting | `string` | `null` | no |
 | <a name="input_s3_identifiers"></a> [s3\_identifiers](#input\_s3\_identifiers) | Specifies the identifiers for the S3 bucket being created | `set(string)` | <pre>[<br>  "*"<br>]</pre> | no |
 | <a name="input_s3_index_document"></a> [s3\_index\_document](#input\_s3\_index\_document) | Specifies the index document for the S3 static website hosting | `string` | `"index.html"` | no |
 | <a name="input_s3_routing_key_prefix_condition"></a> [s3\_routing\_key\_prefix\_condition](#input\_s3\_routing\_key\_prefix\_condition) | Specifies the key prefix condition for the routing rule | `string` | `null` | no |
