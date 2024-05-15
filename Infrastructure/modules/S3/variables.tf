@@ -167,11 +167,11 @@ variable "s3_index_document" {
   default     = "index.html"
 }
 
-variable "s3_error_document" {
-  description = "Specifies the error document for the S3 static website hosting"
-  type        = string
-  default     = null
-}
+# variable "s3_error_document" {
+#   description = "Specifies the error document for the S3 static website hosting"
+#   type        = string
+#   default     = null
+# }
 
 variable "is_s3_routing_rules" {
   description = "Specifies whether to enable routing rules for the S3 static website hosting"
