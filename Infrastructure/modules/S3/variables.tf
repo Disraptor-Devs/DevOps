@@ -170,7 +170,7 @@ variable "s3_index_document" {
 variable "s3_error_document" {
   description = "Specifies the error document for the S3 static website hosting"
   type        = string
-  default     = "error.html"
+  default     = null
 }
 
 variable "is_s3_routing_rules" {
