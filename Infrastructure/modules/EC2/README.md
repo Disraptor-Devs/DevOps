@@ -44,6 +44,7 @@ No modules.
 | <a name="input_ec2_volume_type"></a> [ec2\_volume\_type](#input\_ec2\_volume\_type) | Specifies the type of the volume to be attached to the EC2 instance | `string` | `"gp2"` | no |
 | <a name="input_instance_type"></a> [instance\_type](#input\_instance\_type) | Specifies the type of the EC2 instance | `string` | `"t3.nano"` | no |
 | <a name="input_is_existing_vpc"></a> [is\_existing\_vpc](#input\_is\_existing\_vpc) | Specifies whether the VPC is existing or not | `bool` | `false` | no |
+| <a name="input_monitoring_enabled"></a> [monitoring\_enabled](#input\_monitoring\_enabled) | Specifies whether detailed monitoring is enabled for the EC2 instance | `bool` | `true` | no |
 | <a name="input_region"></a> [region](#input\_region) | Specfies the region in which this resouce will be created in | `string` | `"af-south-1"` | no |
 
 ## Outputs

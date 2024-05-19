@@ -39,6 +39,8 @@ data "aws_iam_policy_document" "assume_role" {
   }
 }
 
+
+
 data "aws_iam_policy_document" "inline_policy" {
   statement {
     actions = [
@@ -48,9 +50,8 @@ data "aws_iam_policy_document" "inline_policy" {
       "logs:*",
       "ssm:*"
     ]
-    resources = [
-      aws_instance.ec2_instance.arn
-    ]
+    resources = ["*"]
+    
     principals {
       type        = "AWS"
       identifiers = ["*"]
