@@ -61,6 +61,11 @@ data "aws_iam_policy_document" "inline_policy" {
 resource "aws_iam_role" "ec2_role" {
   name               = var.ec2_role_name
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
+  inline_policy {
+    name   = "inline_policy_sftp_ec2"
+    policy = data.aws_iam_policy_document.inline_policy.json
+  
+  }
 }
 
 
