@@ -14,7 +14,7 @@ variable "is_existing_vpc" {
   description = "Specifies whether the VPC is existing or not"
   type        = bool
   default     = false
-  
+
 }
 
 variable "ami_owners" {
@@ -40,9 +40,9 @@ variable "ec2_instance_name" {
 }
 
 variable "ec2_root_volume_size" {
-    description = "Specifies the size of the root volume of the EC2 instance"
-    type        = number
-    default     = 8
+  description = "Specifies the size of the root volume of the EC2 instance"
+  type        = number
+  default     = 8
 }
 
 variable "instance_type" {
@@ -52,8 +52,8 @@ variable "instance_type" {
 }
 
 variable "user_data_base64" {
-    description = "Specifies the user data to be executed on the EC2 instance"
-    type        = string
+  description = "Specifies the user data to be executed on the EC2 instance"
+  type        = string
 }
 
 variable "ec2_role_name" {
@@ -75,5 +75,5 @@ variable "ec2_volume_type" {
   description = "Specifies the type of the volume to be attached to the EC2 instance"
   type        = string
   default     = "gp2"
-  
+
 }
