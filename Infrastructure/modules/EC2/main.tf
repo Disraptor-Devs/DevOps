@@ -84,6 +84,8 @@ resource "aws_instance" "ec2_instance" {
   ebs_optimized    = true
   user_data_base64 = var.user_data_base64
 
+  monitoring = var.monitoring_enabled
+
   tags        = merge(var.ec2_tags)
   volume_tags = merge(var.ec2_tags)
 }

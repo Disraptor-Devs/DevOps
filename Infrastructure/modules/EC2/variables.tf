@@ -75,5 +75,11 @@ variable "ec2_volume_type" {
   description = "Specifies the type of the volume to be attached to the EC2 instance"
   type        = string
   default     = "gp2"
+}
 
+variable "monitoring_enabled" {
+  description = "Specifies whether detailed monitoring is enabled for the EC2 instance"
+  type        = bool
+  default     = true
+  
 }
