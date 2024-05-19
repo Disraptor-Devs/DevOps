@@ -1,7 +1,13 @@
 data "aws_vpc" "existing_vpc" {
   count = var.is_existing_vpc ? 1 : 0
-  tags = {
-    Name = var.vpc_id
+  id    = var.vpc_id
+}
+
+data "aws_subnets" "existing_subnets" {
+  count = var.is_existing_vpc ? 1 : 0
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.existing_vpc[0].id]
   }
 }
 
@@ -34,22 +40,22 @@ data "aws_iam_policy_document" "assume_role" {
 }
 
 data "aws_iam_policy_document" "inline_policy" {
-    statement {
-        actions = [
-            "ec2:*",
-            "s3:*",
-            "cloudwatch:*",
-            "logs:*",
-            "ssm:*"
-        ]
-        resources = [
-            aws_instance.ec2_instance.arn
-        ]
-        principals {
-            type        = "AWS"
-            identifiers = ["*"]
-        }
+  statement {
+    actions = [
+      "ec2:*",
+      "s3:*",
+      "cloudwatch:*",
+      "logs:*",
+      "ssm:*"
+    ]
+    resources = [
+      aws_instance.ec2_instance.arn
+    ]
+    principals {
+      type        = "AWS"
+      identifiers = ["*"]
     }
+  }
 }
 
 resource "aws_iam_role" "ec2_role" {
@@ -60,7 +66,7 @@ resource "aws_iam_role" "ec2_role" {
 
 resource "aws_instance" "ec2_instance" {
   ami                    = data.aws_ami.found_ami.id
-  subnet_id              = aws_vpc.existing_vpc[0].subnets[0]
+  subnet_id              = data.aws_subnets.existing_subnets[0].id
   vpc_security_group_ids = var.security_group_ids
   instance_type          = var.instance_type
   key_name               = var.key_pair_name
@@ -70,7 +76,7 @@ resource "aws_instance" "ec2_instance" {
     volume_size = var.ec2_root_volume_size
     volume_type = var.ec2_volume_type
   }
-  ebs_optimized = true
+  ebs_optimized    = true
   user_data_base64 = var.user_data_base64
 
   tags        = merge(var.ec2_tags)

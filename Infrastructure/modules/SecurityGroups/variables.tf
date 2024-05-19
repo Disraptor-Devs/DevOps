@@ -1,24 +1,24 @@
 variable "ingress_rules" {
   description = "Specifies the ingress rules for the security group"
-  type        = map(object({
+  type = map(object({
     from_port   = number
     to_port     = number
     protocol    = string
     cidr_blocks = list(string)
     description = string
-    }))
+  }))
   default = null
 }
 
 variable "egress_rules" {
   description = "Specifies the egress rules for the security group"
-  type        = map(object({
+  type = map(object({
     from_port   = number
     to_port     = number
     protocol    = string
     cidr_blocks = list(string)
     description = string
-    }))
+  }))
   default = null
 }
 
@@ -40,5 +40,5 @@ variable "vpc_id" {
 variable "sg_tags" {
   description = "Specifies the tags (key, value pairs) to be associated with the security group"
   type        = map(string)
-  
+
 }
