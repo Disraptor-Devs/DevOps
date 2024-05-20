@@ -202,3 +202,9 @@ variable "s3_site_hostname" {
   type        = string
   default     = null
 }
+
+variable "is_bucket_policy" {
+  description = "Specifies whether to attach a bucket policy to the S3 bucket"
+  type        = bool
+  default     = true
+}
