@@ -25,7 +25,7 @@ variable "ami_owners" {
 
 variable "ami_filters" {
   description = "Specifies the filters to be applied to the AMI search"
-  type        = map(string)
+  type        = map(set(string))
   default     = {}
 }
 
