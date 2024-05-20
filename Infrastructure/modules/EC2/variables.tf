@@ -20,7 +20,7 @@ variable "is_existing_vpc" {
 variable "ami_owners" {
   description = "Specifies the owners of the AMI"
   type        = list(string)
-  default     = ["AWS"]
+  default     = ["amazon"]
 }
 
 variable "ami_filters" {
