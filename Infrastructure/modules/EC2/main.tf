@@ -68,7 +68,6 @@ resource "aws_iam_role" "ec2_role" {
 
 resource "aws_instance" "ec2_instance" {
   ami                    = data.aws_ami.found_ami.id
-  subnet_id              = data.aws_subnets.existing_subnets[0].id
   vpc_security_group_ids = var.security_group_ids
   instance_type          = var.instance_type
   key_name               = var.key_pair_name
