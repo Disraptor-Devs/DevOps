@@ -90,7 +90,17 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "s3_bucket_encrypt
   }
 }
 
+resource "aws_s3_bucket_ownership_controls" "log_owner" {
+  count  = local.create_logging_bucket
+  bucket = aws_s3_bucket.logging_bucket[0].id
+  rule {
+    object_ownership = var.object_ownership
+  }
+}
+
 resource "aws_s3_bucket_acl" "log_bucket_acl" {
+  depends_on = [aws_s3_bucket_ownership_controls.log_owner]
+
   count  = local.create_logging_bucket
   bucket = aws_s3_bucket.logging_bucket[0].id
   acl    = "log-delivery-write"
