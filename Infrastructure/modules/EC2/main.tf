@@ -52,10 +52,6 @@ data "aws_iam_policy_document" "inline_policy" {
     ]
     resources = ["*"]
     
-    principals {
-      type        = "AWS"
-      identifiers = ["*"]
-    }
   }
 }
 
