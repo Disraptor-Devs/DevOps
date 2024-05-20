@@ -65,6 +65,10 @@ resource "aws_iam_role" "ec2_role" {
   }
 }
 
+resource "aws_iam_instance_profile" "ec2_profile" {
+  name = "${aws_iam_role.ec2_role.name}-profile"
+  role = aws_iam_role.role.name
+}
 
 resource "aws_instance" "ec2_instance" {
   ami                    = data.aws_ami.found_ami.id
@@ -72,7 +76,7 @@ resource "aws_instance" "ec2_instance" {
   vpc_security_group_ids = var.security_group_ids
   instance_type          = var.instance_type
   key_name               = var.key_pair_name
-  iam_instance_profile   = aws_iam_role.ec2_role.name
+  iam_instance_profile   = aws_iam_instance_profile.ec2_profile.name
   root_block_device {
     encrypted   = true
     volume_size = var.ec2_root_volume_size
