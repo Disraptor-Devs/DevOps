@@ -17,6 +17,11 @@ variable "is_existing_vpc" {
 
 }
 
+variable "subnet_id" {
+  description = "Specifies the subnet ID in which the EC2 instance will be created"
+  type        = string
+}
+
 variable "ami_owners" {
   description = "Specifies the owners of the AMI"
   type        = list(string)
