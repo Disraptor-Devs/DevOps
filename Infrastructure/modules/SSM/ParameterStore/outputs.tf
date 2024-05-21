@@ -24,5 +24,5 @@ output "ssm_paramter_value" {
 
 output "ssm_paramter_value_by_path" {
   description = "Output the SSM parameter value by path provided"
-  value       = var.is_get_value_by_path ? data.aws_ssm_parameters_by_path.getSecretByPath.values : null
+  value       = var.is_get_value_by_path ? data.aws_ssm_parameters_by_path[0].getSecretByPath.values : null
 }
