@@ -49,8 +49,8 @@ resource "aws_cloudwatch_log_group" "backup_logs" {
 
 // S3 CloudWatch Log Group
 resource "aws_s3_bucket" "example" {
-  count   = var.create_s3_logs ? 1 : 0
-  bucket  = var.create_s3_logs ? "example-bucket" : null
+  count  = var.create_s3_logs ? 1 : 0
+  bucket = var.create_s3_logs ? "example-bucket" : null
   // Other bucket properties...
 }
 

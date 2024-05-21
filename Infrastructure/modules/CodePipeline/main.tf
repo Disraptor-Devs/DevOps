@@ -18,7 +18,7 @@ resource "aws_iam_role" "codepipeline_role" {
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
 
   inline_policy {
-    name = "code_pipeline_policy"
+    name   = "code_pipeline_policy"
     policy = data.aws_iam_policy_document.code_pipeline_doc.json
   }
 }

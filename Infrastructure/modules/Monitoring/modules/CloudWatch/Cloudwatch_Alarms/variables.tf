@@ -18,12 +18,12 @@ variable "create_lambda_function2_alarm" {
 }
 
 variable "create_example" {
-  type = string
+  type        = string
   description = "s3 bucket alarm"
 }
 
 variable "example_name" {
-  type = string
+  type        = string
   description = "s3 alarm bucket name"
 }
 

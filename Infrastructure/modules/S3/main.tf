@@ -123,7 +123,7 @@ resource "aws_s3_access_point" "access_point" {
 }
 
 resource "aws_s3_bucket_website_configuration" "s3_hosted_site" {
-  count = var.is_s3_site_hosting ? 1 : 0
+  count  = var.is_s3_site_hosting ? 1 : 0
   bucket = aws_s3_bucket.s3_bucket.id
 
   index_document {
@@ -134,7 +134,7 @@ resource "aws_s3_bucket_website_configuration" "s3_hosted_site" {
     for_each = var.is_s3_routing_rules ? [1] : [0]
     content {
       condition {
-        key_prefix_equals               = var.s3_routing_key_prefix_condition
+        key_prefix_equals = var.s3_routing_key_prefix_condition
       }
       redirect {
         host_name               = var.s3_site_hostname
@@ -142,7 +142,7 @@ resource "aws_s3_bucket_website_configuration" "s3_hosted_site" {
         replace_key_prefix_with = var.s3_routing_replace_key_prefix_with
       }
     }
-    
+
   }
 }
 

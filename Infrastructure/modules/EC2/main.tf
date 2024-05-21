@@ -51,7 +51,7 @@ data "aws_iam_policy_document" "inline_policy" {
       "ssm:*"
     ]
     resources = ["*"]
-    
+
   }
 }
 
@@ -61,7 +61,7 @@ resource "aws_iam_role" "ec2_role" {
   inline_policy {
     name   = "inline_policy_sftp_ec2"
     policy = data.aws_iam_policy_document.inline_policy.json
-  
+
   }
 }
 

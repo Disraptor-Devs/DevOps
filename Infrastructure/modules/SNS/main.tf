@@ -34,7 +34,7 @@ resource "aws_sns_topic" "sns_topic" {
   name                        = var.sns_topic_name
   fifo_topic                  = var.is_fifo_topic
   content_based_deduplication = var.is_content_based_deduplication
-  kms_master_key_id           = var.is_kms_encryption ?  aws_kms_key.sns_kms_key.id : null
+  kms_master_key_id           = var.is_kms_encryption ? aws_kms_key.sns_kms_key.id : null
   delivery_policy             = var.delivery_policy
 
   tags = merge(var.sns_tags)
