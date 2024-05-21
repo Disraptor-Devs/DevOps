@@ -86,5 +86,5 @@ variable "monitoring_enabled" {
   description = "Specifies whether detailed monitoring is enabled for the EC2 instance"
   type        = bool
   default     = true
-  
+
 }

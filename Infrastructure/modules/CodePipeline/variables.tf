@@ -47,12 +47,12 @@ variable "environment" {
 variable "code_pipeline_actions" {
   description = "The actions to be performed by the CodePipeline"
   type        = set(string)
-  
+
 }
 
 variable "code_pipeline_artifact_store" {
   description = "The type of artifact store to use"
   type        = string
   default     = "S3"
-  
+
 }

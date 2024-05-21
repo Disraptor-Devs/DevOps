@@ -16,7 +16,7 @@ resource "aws_cloudwatch_metric_alarm" "lambda_function1_alarm" {
   evaluation_periods  = 1
   metric_name         = "Errors"
   namespace           = "AWS/Lambda"
-  period              = 300  // 5 minutes
+  period              = 300 // 5 minutes
   statistic           = "Sum"
   threshold           = 1
   alarm_description   = "Alarm when the number of errors in Lambda function 1 exceeds 1"
@@ -32,7 +32,7 @@ resource "aws_cloudwatch_metric_alarm" "lambda_function2_alarm" {
   evaluation_periods  = 1
   metric_name         = "Errors"
   namespace           = "AWS/Lambda"
-  period              = 300  // 5 minutes
+  period              = 300 // 5 minutes
   statistic           = "Sum"
   threshold           = 1
   alarm_description   = "Alarm when the number of errors in Lambda function 2 exceeds 1"
@@ -49,17 +49,17 @@ resource "aws_cloudwatch_metric_alarm" "documentdb_alarm" {
   evaluation_periods  = 1
   metric_name         = "FreeStorageSpace"
   namespace           = "AWS/DocumentDB"
-  period              = 3600  // 1 hour
+  period              = 3600 // 1 hour
   statistic           = "Minimum"
-  threshold           = 1000000000  // 1GB
+  threshold           = 1000000000 // 1GB
   alarm_description   = "Alarm when free storage space in DocumentDB drops below 1GB"
   alarm_actions       = var.create_documentdb_alarm ? ["ARN_of_SNS_Topic_to_notify_admin_and_dev"] : []
 }
 
 resource "aws_s3_bucket" "example" {
-  count = var.create_example ? 1 : 0
+  count  = var.create_example ? 1 : 0
   bucket = var.example_name
-  
+
 }
 // API Gateway CloudWatch Alarm
 resource "aws_cloudwatch_metric_alarm" "api_gateway_alarm" {
@@ -69,7 +69,7 @@ resource "aws_cloudwatch_metric_alarm" "api_gateway_alarm" {
   evaluation_periods  = 1
   metric_name         = "5XXError"
   namespace           = "AWS/ApiGateway"
-  period              = 300  // 5 minutes
+  period              = 300 // 5 minutes
   statistic           = "Sum"
   threshold           = 1
   alarm_description   = "Alarm when the number of 5XX errors in API Gateway exceeds 1"
@@ -84,7 +84,7 @@ resource "aws_cloudwatch_metric_alarm" "backup_alarm" {
   evaluation_periods  = 1
   metric_name         = "BackupJobErrors"
   namespace           = "AWS/Backup"
-  period              = 3600  // 1 hour
+  period              = 3600 // 1 hour
   statistic           = "Sum"
   threshold           = 1
   alarm_description   = "Alarm when the number of backup job errors in AWS Backup exceeds 1"
@@ -99,9 +99,9 @@ resource "aws_cloudwatch_metric_alarm" "s3_alarm" {
   evaluation_periods  = 1
   metric_name         = "BucketSizeBytes"
   namespace           = "AWS/S3"
-  period              = 3600  // 1 hour
+  period              = 3600 // 1 hour
   statistic           = "Average"
-  threshold           = 1073741824  // 1GB
+  threshold           = 1073741824 // 1GB
   alarm_description   = "Alarm when the size of the S3 bucket exceeds 1GB"
   alarm_actions       = var.create_s3_alarm ? ["ARN_of_SNS_Topic_to_notify_admin_and_dev"] : []
   dimensions          = var.create_s3_alarm ? { BucketName = aws_s3_bucket.example[0].bucket } : null

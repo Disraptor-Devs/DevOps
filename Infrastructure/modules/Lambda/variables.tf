@@ -273,7 +273,7 @@ variable "is_function_variables" {
 variable "lambda_layer_name" {
   description = "Specify the name for the lambda layer"
   type        = string
-  default     = null 
+  default     = null
 }
 
 variable "lambda_layer_description" {

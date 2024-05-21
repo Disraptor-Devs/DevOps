@@ -15,9 +15,9 @@ resource "aws_cloudtrail" "default" {
 }
 
 resource "aws_s3_bucket" "s3_bucket_logging" {
-  count = var.create_s3_bucket_logging ? 1 : 0
+  count  = var.create_s3_bucket_logging ? 1 : 0
   bucket = var.s3_bucket_logging_name
-  
+
 }
 
 resource "aws_cloudtrail" "s3_bucket_logging" {

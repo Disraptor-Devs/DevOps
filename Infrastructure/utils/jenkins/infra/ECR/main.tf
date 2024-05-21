@@ -3,10 +3,10 @@ resource "aws_ecr_repository" "my_ecr_repository" {
   image_tag_mutability = "MUTABLE"
 
   tags = {
-    Name           = "jenkins-repo",
-    "purpose"      = "Jenkins Image repo"
-    "owner"        = "Shibule"
-    "automation"   = "terraform"
+    Name         = "jenkins-repo",
+    "purpose"    = "Jenkins Image repo"
+    "owner"      = "Shibule"
+    "automation" = "terraform"
   }
 
 }

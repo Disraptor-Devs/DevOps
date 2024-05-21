@@ -68,7 +68,7 @@ resource "aws_lambda_function" "lambda_function" {
 }
 
 resource "aws_lambda_alias" "lambda_alias" {
-  count           = var.is_lambda_alias ? 1 : 0
+  count            = var.is_lambda_alias ? 1 : 0
   name             = var.lambda_alias_name
   description      = var.lambda_alias_description
   function_name    = aws_lambda_function.lambda_function.arn
