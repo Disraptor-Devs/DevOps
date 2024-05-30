@@ -1,16 +1,16 @@
 output "lambda_alias_arn" {
   description = "Output the Lambda Alias arn"
-  value       = aws_lambda_alias.lambda_alias.arn
+  value       = var.is_lambda_alias ? aws_lambda_alias.lambda_alias[0].arn : null
 }
 
 output "lambda_alias_id" {
   description = "Output the Lambda Alias id"
-  value       = aws_lambda_alias.lambda_alias.id
+  value       = var.is_lambda_alias ? aws_lambda_alias.lambda_alias[0].id : null
 }
 
 output "lambda_alias_name" {
   description = "Output the Lambda Alias qualifying name"
-  value       = aws_lambda_alias.lambda_alias.name
+  value       = var.is_lambda_alias ? aws_lambda_alias.lambda_alias[0].name : null
 }
 
 output "lambda_function_arn" {

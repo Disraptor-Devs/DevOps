@@ -54,6 +54,11 @@ variable "subnet_tags" {
   type        = map(string)
 }
 
+variable "igw_tags" {
+  description = "Specifies the tags (key, value pairs) to be associated with the Internet Gateway"
+  type        = map(string)
+}
+
 
 # route table variable
 variable "rt_name" {
@@ -73,4 +78,10 @@ variable "routes" {
 variable "routes_tags" {
   description = "Specifies the tags (key, value pairs) to be associated with the eventBridge rule"
   type        = map(string)
+}
+
+variable "create_igw_attachment" {
+  description = "Boolean flag to determine whether to create the Internet Gateway attachment"
+  type        = bool
+  default     = false
 }
