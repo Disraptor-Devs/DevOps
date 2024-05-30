@@ -137,7 +137,7 @@ resource "aws_lambda_permission" "allow_s3" {
   function_name = aws_lambda_function.lambda_function.function_name
   principal     = "s3.amazonaws.com"
   source_arn    = var.s3_bucket_arn
-  qualifier     = aws_lambda_alias.lambda_alias.name
+  qualifier     = aws_lambda_alias.lambda_alias[0].name
 }
 
 resource "aws_lambda_permission" "allow_cloudwatch" {
@@ -148,7 +148,7 @@ resource "aws_lambda_permission" "allow_cloudwatch" {
   function_name = aws_lambda_function.lambda_function.function_name
   principal     = "events.amazonaws.com"
   source_arn    = var.cloudwatch_arn
-  qualifier     = aws_lambda_alias.lambda_alias.name
+  qualifier     = aws_lambda_alias.lambda_alias[0].name
 }
 
 resource "aws_lambda_permission" "allow_sns" {
@@ -159,16 +159,18 @@ resource "aws_lambda_permission" "allow_sns" {
   function_name = aws_lambda_function.lambda_function.function_name
   principal     = "sns.amazonaws.com"
   source_arn    = var.sns_arn
-  qualifier     = aws_lambda_alias.lambda_alias.name
+  qualifier     = aws_lambda_alias.lambda_alias[0].name
 }
+
 
 resource "aws_lambda_provisioned_concurrency_config" "concurrency_allocation" {
   count = var.is_lambda_provisioned_concurrency ? 1 : 0
 
-  function_name                     = aws_lambda_alias.lambda_alias.function_name
+  function_name                     = aws_lambda_alias.lambda_alias[0].function_name
   provisioned_concurrent_executions = var.concurrent_excutions
-  qualifier                         = aws_lambda_alias.lambda_alias.name
+  qualifier                         = aws_lambda_alias.lambda_alias[0].name
 }
+
 
 resource "aws_lambda_function_url" "lambda_url" {
   count = var.is_lambda_function_url ? 1 : 0
