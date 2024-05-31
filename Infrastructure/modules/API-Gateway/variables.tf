@@ -111,3 +111,21 @@ variable "api_gw_method_response_status_code" {
   type        = string
   default     = "200"
 }
+
+variable "is_create_api_gateway" {
+  description = "Specifies if the API Gateway should be created"
+  type        = bool
+  default     = true
+}
+
+variable "is_existing_api_gateway" {
+  description = "Specifies if the existing API Gateway should be used"
+  type        = bool
+  default     = false
+}
+
+variable "existing_api_gateway_name" {
+  description = "Name of the existing API Gateway"
+  type        = string
+  default     = null
+}
