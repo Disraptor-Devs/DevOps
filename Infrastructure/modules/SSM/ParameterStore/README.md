@@ -9,7 +9,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 2.70.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.25.0 |
 
 ## Modules
 
@@ -27,7 +27,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_parameter_configs"></a> [parameter\_configs](#input\_parameter\_configs) | Specify the values that will be used to define the SSM parameter | <pre>map(object({<br>    name        = string<br>    description = string<br>    type        = string<br>    value       = string<br>  }))</pre> | n/a | yes |
+| <a name="input_parameter_configs"></a> [parameter\_configs](#input\_parameter\_configs) | Specify the values that will be used to define the SSM parameter | <pre>map(object({<br>    description = string<br>    type        = string<br>    value       = string<br>  }))</pre> | n/a | yes |
 | <a name="input_ssm_parameter_tags"></a> [ssm\_parameter\_tags](#input\_ssm\_parameter\_tags) | Specify the tags for the SSM Parameter being created | `map(string)` | n/a | yes |
 | <a name="input_is_get_value"></a> [is\_get\_value](#input\_is\_get\_value) | Specify if we're dealing with an existing parameter and we just need to get the value | `bool` | `false` | no |
 | <a name="input_is_get_value_by_path"></a> [is\_get\_value\_by\_path](#input\_is\_get\_value\_by\_path) | Specify if we're dealing with an existing parameter and we just need to get the value by path | `bool` | `false` | no |

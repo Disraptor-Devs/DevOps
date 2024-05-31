@@ -35,9 +35,15 @@ No modules.
 | <a name="input_lambda_tags"></a> [lambda\_tags](#input\_lambda\_tags) | Specifies the tags (Key, Value pairs) to be associated to the lambda resources | `map(string)` | n/a | yes |
 | <a name="input_api_gateway_method_auth"></a> [api\_gateway\_method\_auth](#input\_api\_gateway\_method\_auth) | Authorization for the API Gateway | `string` | `"NONE"` | no |
 | <a name="input_api_gateway_method_http_method"></a> [api\_gateway\_method\_http\_method](#input\_api\_gateway\_method\_http\_method) | HTTP method for the API Gateway | `string` | `"ANY"` | no |
+| <a name="input_api_gw_method_response_status_code"></a> [api\_gw\_method\_response\_status\_code](#input\_api\_gw\_method\_response\_status\_code) | Status code for the API Gateway method response | `string` | `"200"` | no |
+| <a name="input_api_gw_path_part"></a> [api\_gw\_path\_part](#input\_api\_gw\_path\_part) | Path part for the API Gateway resource | `string` | `null` | no |
 | <a name="input_integration_http_method"></a> [integration\_http\_method](#input\_integration\_http\_method) | HTTP method for the API Gateway | `string` | `"ANY"` | no |
 | <a name="input_integration_request_parameters"></a> [integration\_request\_parameters](#input\_integration\_request\_parameters) | Request parameters for the API Gateway | `map(string)` | `null` | no |
 | <a name="input_integration_type"></a> [integration\_type](#input\_integration\_type) | Type of integration for the API Gateway | `string` | `"AWS_PROXY"` | no |
+| <a name="input_is_api_gw_integration"></a> [is\_api\_gw\_integration](#input\_is\_api\_gw\_integration) | Specifies if the API Gateway integration should be created | `bool` | `false` | no |
+| <a name="input_is_api_gw_method"></a> [is\_api\_gw\_method](#input\_is\_api\_gw\_method) | Specifies if the API Gateway method should be created | `bool` | `false` | no |
+| <a name="input_is_api_gw_method_response"></a> [is\_api\_gw\_method\_response](#input\_is\_api\_gw\_method\_response) | Specifies if the API Gateway method response should be created | `bool` | `false` | no |
+| <a name="input_is_api_gw_resource"></a> [is\_api\_gw\_resource](#input\_is\_api\_gw\_resource) | Specifies if the API Gateway resource should be created | `bool` | `false` | no |
 | <a name="input_lambda_function_name"></a> [lambda\_function\_name](#input\_lambda\_function\_name) | Name of the Lambda function | `string` | `null` | no |
 | <a name="input_lambda_invoke_arn"></a> [lambda\_invoke\_arn](#input\_lambda\_invoke\_arn) | ARN of the Lambda function | `string` | `null` | no |
 | <a name="input_method_request_parameters"></a> [method\_request\_parameters](#input\_method\_request\_parameters) | Request parameters for the API Gateway | `map(string)` | `null` | no |
