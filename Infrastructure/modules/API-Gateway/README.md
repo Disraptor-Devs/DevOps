@@ -24,6 +24,7 @@ No modules.
 | [aws_api_gateway_method_response.api_gateway_method_response](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_method_response) | resource |
 | [aws_api_gateway_resource.api_gateway_resource](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_resource) | resource |
 | [aws_api_gateway_rest_api.api_gateway](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_rest_api) | resource |
+| [aws_api_gateway_rest_api.existing_api_gateway](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/api_gateway_rest_api) | data source |
 
 ## Inputs
 
@@ -37,6 +38,7 @@ No modules.
 | <a name="input_api_gateway_method_http_method"></a> [api\_gateway\_method\_http\_method](#input\_api\_gateway\_method\_http\_method) | HTTP method for the API Gateway | `string` | `"ANY"` | no |
 | <a name="input_api_gw_method_response_status_code"></a> [api\_gw\_method\_response\_status\_code](#input\_api\_gw\_method\_response\_status\_code) | Status code for the API Gateway method response | `string` | `"200"` | no |
 | <a name="input_api_gw_path_part"></a> [api\_gw\_path\_part](#input\_api\_gw\_path\_part) | Path part for the API Gateway resource | `string` | `null` | no |
+| <a name="input_existing_api_gateway_name"></a> [existing\_api\_gateway\_name](#input\_existing\_api\_gateway\_name) | Name of the existing API Gateway | `string` | `null` | no |
 | <a name="input_integration_http_method"></a> [integration\_http\_method](#input\_integration\_http\_method) | HTTP method for the API Gateway | `string` | `"ANY"` | no |
 | <a name="input_integration_request_parameters"></a> [integration\_request\_parameters](#input\_integration\_request\_parameters) | Request parameters for the API Gateway | `map(string)` | `null` | no |
 | <a name="input_integration_type"></a> [integration\_type](#input\_integration\_type) | Type of integration for the API Gateway | `string` | `"AWS_PROXY"` | no |
@@ -44,6 +46,8 @@ No modules.
 | <a name="input_is_api_gw_method"></a> [is\_api\_gw\_method](#input\_is\_api\_gw\_method) | Specifies if the API Gateway method should be created | `bool` | `false` | no |
 | <a name="input_is_api_gw_method_response"></a> [is\_api\_gw\_method\_response](#input\_is\_api\_gw\_method\_response) | Specifies if the API Gateway method response should be created | `bool` | `false` | no |
 | <a name="input_is_api_gw_resource"></a> [is\_api\_gw\_resource](#input\_is\_api\_gw\_resource) | Specifies if the API Gateway resource should be created | `bool` | `false` | no |
+| <a name="input_is_create_api_gateway"></a> [is\_create\_api\_gateway](#input\_is\_create\_api\_gateway) | Specifies if the API Gateway should be created | `bool` | `true` | no |
+| <a name="input_is_existing_api_gateway"></a> [is\_existing\_api\_gateway](#input\_is\_existing\_api\_gateway) | Specifies if the existing API Gateway should be used | `bool` | `false` | no |
 | <a name="input_lambda_function_name"></a> [lambda\_function\_name](#input\_lambda\_function\_name) | Name of the Lambda function | `string` | `null` | no |
 | <a name="input_lambda_invoke_arn"></a> [lambda\_invoke\_arn](#input\_lambda\_invoke\_arn) | ARN of the Lambda function | `string` | `null` | no |
 | <a name="input_method_request_parameters"></a> [method\_request\_parameters](#input\_method\_request\_parameters) | Request parameters for the API Gateway | `map(string)` | `null` | no |
@@ -55,3 +59,5 @@ No modules.
 |------|-------------|
 | <a name="output_api_gateway_id"></a> [api\_gateway\_id](#output\_api\_gateway\_id) | Output the API Gateway id |
 | <a name="output_api_gateway_root_resource_id"></a> [api\_gateway\_root\_resource\_id](#output\_api\_gateway\_root\_resource\_id) | Output the API Gateway root resource id |
+| <a name="output_api_gw_integration_id"></a> [api\_gw\_integration\_id](#output\_api\_gw\_integration\_id) | Output the API Gateway integration |
+| <a name="output_aws_api_gw_resource_id"></a> [aws\_api\_gw\_resource\_id](#output\_aws\_api\_gw\_resource\_id) | Output the API Gateway resource id |
