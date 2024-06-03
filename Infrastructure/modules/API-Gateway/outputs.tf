@@ -1,10 +1,22 @@
 output "api_gateway_id" {
   description = "Output the API Gateway id"
-  value       = aws_api_gateway_rest_api.api_gateway.id
+  value       = aws_api_gateway_rest_api.api_gateway[0].id
 }
 
 output "api_gateway_root_resource_id" {
   description = "Output the API Gateway root resource id"
-  value       = aws_api_gateway_rest_api.api_gateway.root_resource_id
+  value       = aws_api_gateway_rest_api.api_gateway[0].root_resource_id
+}
 
+
+output "api_gw_integration_id" {
+  description = "Output the API Gateway integration"
+  value       = aws_api_gateway_integration.api_gateway_integration[0].id
+  
+}
+
+output "aws_api_gw_resource_id" {
+  description = "Output the API Gateway resource id"
+  value       = aws_api_gateway_resource.api_gateway_resource[0].id
+  
 }
