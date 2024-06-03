@@ -33,7 +33,6 @@ No modules.
 | <a name="input_api_gateway_description"></a> [api\_gateway\_description](#input\_api\_gateway\_description) | Description of the API Gateway | `string` | n/a | yes |
 | <a name="input_api_gateway_name"></a> [api\_gateway\_name](#input\_api\_gateway\_name) | Name of the API Gateway | `string` | n/a | yes |
 | <a name="input_api_gateway_tags"></a> [api\_gateway\_tags](#input\_api\_gateway\_tags) | Specifies the tags (Key, Value pairs) to be associated to the API Gateway resources | `map(string)` | n/a | yes |
-| <a name="input_lambda_tags"></a> [lambda\_tags](#input\_lambda\_tags) | Specifies the tags (Key, Value pairs) to be associated to the lambda resources | `map(string)` | n/a | yes |
 | <a name="input_api_gateway_method_auth"></a> [api\_gateway\_method\_auth](#input\_api\_gateway\_method\_auth) | Authorization for the API Gateway | `string` | `"NONE"` | no |
 | <a name="input_api_gateway_method_http_method"></a> [api\_gateway\_method\_http\_method](#input\_api\_gateway\_method\_http\_method) | HTTP method for the API Gateway | `string` | `"ANY"` | no |
 | <a name="input_api_gw_method_response_status_code"></a> [api\_gw\_method\_response\_status\_code](#input\_api\_gw\_method\_response\_status\_code) | Status code for the API Gateway method response | `string` | `"200"` | no |

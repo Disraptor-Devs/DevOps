@@ -46,10 +46,6 @@ variable "integration_request_parameters" {
 
 }
 
-variable "lambda_tags" {
-  description = "Specifies the tags (Key, Value pairs) to be associated to the lambda resources"
-  type        = map(string)
-}
 
 variable "lambda_invoke_arn" {
   description = "ARN of the Lambda function"
