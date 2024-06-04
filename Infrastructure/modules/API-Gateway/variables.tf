@@ -14,11 +14,13 @@ variable "lambda_function_name" {
 variable "api_gateway_name" {
   description = "Name of the API Gateway"
   type        = string
+  default     = null
 }
 
 variable "api_gateway_description" {
   description = "Description of the API Gateway"
   type        = string
+  default     = null
 }
 
 variable "api_gateway_method_http_method" {
