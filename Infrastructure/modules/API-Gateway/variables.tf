@@ -127,3 +127,46 @@ variable "existing_api_gateway_name" {
   type        = string
   default     = null
 }
+
+variable "api_stage_name" {
+  description = "This is the name of the stage that api gateway deploys to."
+  type        = string
+  default     = "lms-prod"
+}
+
+variable "method_path" {
+  description = "The method path for the API Gateway"
+  type        = string
+  default     = "*/*"
+}
+
+variable "metrics_enabled" {
+  description = "Flag to enable or disable metrics"
+  type        = bool
+  default     = true
+}
+
+variable "logging_level" {
+  description = "The logging level for the API Gateway"
+  type        = string
+  default     = "INFO"
+}
+
+variable "is_api_gateway_deployment" {
+  description = "Specifies if the API Gateway Deployment should be created"
+  type        = bool
+  default     = false
+}
+
+variable "new_api_gateway_stage" {
+  description = "Specifies if the API Gateway Stage should be created"
+  type        = bool
+  default     = false
+}
+
+
+variable "does_api_gateway_stage_exist" {
+  description = "Specifies if the API Gateway Stage exists"
+  type        = bool
+  default     = false
+}
