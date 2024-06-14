@@ -1,95 +1,117 @@
+locals {
+  tags = {
+    Name        = "jenkins-eventbridge",
+    Environment = "Production"
+    Owner       = "Shibule"
+    Automation  = "Terraform"
+    Purpose     = "DevOps"
+  }
+}
+
 # Create EventBridge bus
 resource "aws_cloudwatch_event_bus" "eventbridge_bus" {
   name = "jenkins-bus"
+  tags = merge({
+    Name = "jenkins-eventbridge"
+  }, local.tags)
 }
 
 # Create EventBridge rule
 resource "aws_cloudwatch_event_rule" "eventbridge_rule" {
   name        = "jenkins-eventbridge-rule"
-  description = "Trigger ECS Fargate task on S3 object create"
+  description = "Trigger ECS Fargate task on ECR image push"
 
-  event_pattern = <<PATTERN
-{
-  "source": ["aws.s3"],
-  "detail-type": ["AWS API Call via CloudTrail"],
-  "detail": {
-    "eventSource": ["s3.amazonaws.com"],
-    "eventName": ["PutObject"]
+  event_pattern = <<EOF
+  {
+    "source": ["aws.ecr"],
+    "detail-type": ["ECR Image Action"],
+    "detail": {
+      "action-type": ["PUSH"],
+      "result": ["SUCCESS"],
+      "repository-name": ["jenkins-repo"],
+      "image-tag": ["v1"]
+    }
   }
-}
-PATTERN
+EOF
 
   event_bus_name = aws_cloudwatch_event_bus.eventbridge_bus.name
+
+  tags = merge({
+    Name = "jenkins-eventbridge-rule"
+  }, local.tags)
 }
 
-# Create ECS Fargate task definition
-resource "aws_ecs_task_definition" "fargate_task" {
-  family                   = "my-fargate-task"
-  execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
-  task_role_arn            = aws_iam_role.ecs_task_role.arn
-  network_mode             = "awsvpc"
-  requires_compatibilities = ["FARGATE"]
+# Create EventBridge target
+resource "aws_cloudwatch_event_target" "eventbridge_target" {
+  rule      = aws_cloudwatch_event_rule.eventbridge_rule.name
+  arn       = aws_lambda_function.lambda_function.arn
+  target_id = "jenkins-eventbridge-target"
+}
 
-  container_definitions = <<DEFINITION
-[
-  {
-    "name": "my-container",
-    "image": "my-container-image",
-    "cpu": 256,
-    "memory": 512,
-    "portMappings": [
-      {
-        "containerPort": 80,
-        "protocol": "tcp"
-      }
-    ],
-    "environment": [
-      {
-        "name": "ENV_VAR_NAME",
-        "value": "ENV_VAR_VALUE"
-      }
-    ]
+# Create IAM policy document for STS AssumeRole
+data "aws_iam_policy_document" "sts_assume_role_policy" {
+  statement {
+    actions = ["sts:AssumeRole"]
+    effect  = "Allow"
+    principals {
+      type        = "Service"
+      identifiers = ["lambda.amazonaws.com"]
+    }
   }
-]
-DEFINITION
 }
 
-# Create IAM role for ECS task execution
-resource "aws_iam_role" "ecs_task_execution_role" {
-  name = "my-ecs-task-execution-role"
+data "aws_iam_policy_document" "lambda_execution_role_policy" {
+  statement {
+    actions = [
+      "logs:CreateLogGroup",
+      "logs:CreateLogStream",
+      "logs:PutLogEvents",
+      "ecr:*",
+      "ecs:*",
+      "events:*",
+      "iam:PassRole",
+    ]
+    effect = "Allow"
+    resources = ["*"]
+  }
+}
 
-  assume_role_policy = <<POLICY
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "ecs-tasks.amazonaws.com"
-      },
-      "Action": "sts:AssumeRole"
+resource "aws_iam_role" "lambda_role" {
+  name               = "lambda-jenkins-role"
+  assume_role_policy = data.aws_iam_policy_document.sts_assume_role_policy.json
+  inline_policy {
+    name   = "lambda-execution-role-policy"
+    policy = data.aws_iam_policy_document.lambda_execution_role_policy.json
+  }
+
+  tags = merge({
+    Name = "lambda-jenkins-role"
+  }, local.tags)
+  
+}
+
+# Create Lambda function
+resource "aws_lambda_function" "lambda_function" {
+  function_name    = "jenkins-lambda"
+  role             = aws_iam_role.lambda_role.arn
+  handler          = "lambda_function.lambda_handler"
+  runtime          = "python3.8"
+  filename         = "./redeploy-ecs/lambda_function.zip"
+  source_code_hash = filebase64sha256("./redeploy-ecs/redeploy.zip")
+  environment {
+    variables = {
+      ECS_CLUSTER = "jenkins-cluster"
+      ECS_TASK_DEFINITION = "disraptor-jenkins-service"
     }
-  ]
-}
-POLICY
+  }
+
+  tags = merge({
+    Name = "jenkins-lambda"
+  }, local.tags)
 }
 
-# Create IAM role for ECS task
-resource "aws_iam_role" "ecs_task_role" {
-  name = "my-ecs-task-role"
-
-  assume_role_policy = <<POLICY
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "ecs-tasks.amazonaws.com"
-      },
-      "Action": "sts:AssumeRole"
-    }
-  ]
-}
-POLICY
+resource "aws_lambda_alias" "jenkins_alias" {
+  name             = "jenkins-alias-prod"
+  function_name    = aws_lambda_function.lambda_function.function_name
+  function_version = "$LATEST"
 }
