@@ -26,8 +26,8 @@ resource "aws_iam_role" "iam_for_lambda" {
 
 
 resource "aws_iam_role_policy_attachment" "lambda_policy" {
-  for_each   = var.policy_arns
-  policy_arn = each.value
+  count      = length(var.policy_arns)
+  policy_arn = var.policy_arns[count.index]
   role       = aws_iam_role.iam_for_lambda.name
   depends_on = [aws_iam_role.iam_for_lambda]
 }
