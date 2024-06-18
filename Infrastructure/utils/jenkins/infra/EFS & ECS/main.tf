@@ -279,10 +279,10 @@ resource "aws_iam_role" "ecs_task_role" {
 }
 
 resource "aws_ecs_service" "ecs_service" {
-    name             = "disraptor-jenkins-service"
+    name             = "jenkins-service"
     cluster          = aws_ecs_cluster.ecs_cluster.arn
     task_definition  = aws_ecs_task_definition.ecs_task.arn
-    desired_count    = 1
+    desired_count    = 2
     launch_type      = "FARGATE"
     platform_version = "LATEST"
     
@@ -291,6 +291,13 @@ resource "aws_ecs_service" "ecs_service" {
         security_groups  = [aws_security_group.efs_security_group.id]
         assign_public_ip = true
     }
+
+    # load_balancer {
+    #     target_group_arn = data.aws_lb_target_group.tg.arn
+    #     container_name   = "jenkins"
+    #     container_port   = 8080
+      
+    # }
 
     
     
@@ -302,3 +309,11 @@ resource "aws_ecs_service" "ecs_service" {
     "environment"  = "prod"})
   
 }
+
+  # data "aws_lb" "alb" {
+  #   name = "disraptor-jenkins-alb"
+  # }
+
+  # data "aws_lb_target_group" "tg" {
+  #   name = "disraptor-jenkins-alb-tg"
+  # }

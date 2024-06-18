@@ -28,10 +28,10 @@ RUN apt-get update && \
 
 
 # Install Terraform
-RUN wget https://releases.hashicorp.com/terraform/1.7.0/terraform_1.7.0_linux_amd64.zip && \
-    unzip terraform_1.7.0_linux_amd64.zip && \
-    mv terraform /usr/local/bin && \
-    rm terraform_1.7.0_linux_amd64.zip
+# RUN wget https://releases.hashicorp.com/terraform/1.7.0/terraform_1.7.0_linux_amd64.zip && \
+#     unzip terraform_1.7.0_linux_amd64.zip && \
+#     mv terraform /usr/local/bin && \
+#     rm terraform_1.7.0_linux_amd64.zip
 
 # Install botocore (dependency for EFS utils)
 RUN apt-get update && \
@@ -39,9 +39,6 @@ RUN apt-get update && \
     python3 -m venv /opt/venv && \
     /opt/venv/bin/pip install botocore
 
-
-# Optional: Install additional plugins using the Jenkins Plugin Manager
-RUN wget -q -O - https://updates.jenkins.io/current/update-center.json
 
 # Set time and region to Africa/Johannesburg
 RUN ln -sf /usr/share/zoneinfo/Africa/Johannesburg /etc/localtime && \
