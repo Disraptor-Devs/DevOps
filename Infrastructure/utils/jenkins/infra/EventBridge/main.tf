@@ -1,12 +1,24 @@
 locals {
   tags = {
-    Name        = "jenkins-eventbridge",
     Environment = "Production"
     Owner       = "Shibule"
     Automation  = "Terraform"
     Purpose     = "DevOps"
   }
 }
+
+
+data "aws_iam_policy_document" "event_assume" {
+  statement {
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["events.amazonaws.com"]
+    }
+  }
+}
+
 
 # Create EventBridge bus
 resource "aws_cloudwatch_event_bus" "eventbridge_bus" {
@@ -43,9 +55,9 @@ EOF
 
 # Create EventBridge target
 resource "aws_cloudwatch_event_target" "eventbridge_target" {
-  rule      = aws_cloudwatch_event_rule.eventbridge_rule.name
-  arn       = aws_lambda_function.lambda_function.arn
-  target_id = "jenkins-eventbridge-target"
+  rule           = aws_cloudwatch_event_rule.eventbridge_rule.name
+  arn            = aws_lambda_function.lambda_function.arn
+  event_bus_name = aws_cloudwatch_event_bus.eventbridge_bus.arn
 }
 
 # Create IAM policy document for STS AssumeRole
@@ -71,7 +83,7 @@ data "aws_iam_policy_document" "lambda_execution_role_policy" {
       "events:*",
       "iam:PassRole",
     ]
-    effect = "Allow"
+    effect    = "Allow"
     resources = ["*"]
   }
 }
@@ -83,10 +95,16 @@ resource "aws_iam_role" "lambda_role" {
     name   = "lambda-execution-role-policy"
     policy = data.aws_iam_policy_document.lambda_execution_role_policy.json
   }
+}
 
-  tags = merge({
-    Name = "lambda-jenkins-role"
-  }, local.tags)
+resource "aws_iam_role" "event_bridge_role" {
+  name               = "eventbridge-role"
+  assume_role_policy = data.aws_iam_policy_document.event_assume.json
+
+  inline_policy {
+    name   = "eventbridge-policy"
+    policy = data.aws_iam_policy_document.lambda_execution_role_policy.json
+  }
   
 }
 
@@ -94,20 +112,18 @@ resource "aws_iam_role" "lambda_role" {
 resource "aws_lambda_function" "lambda_function" {
   function_name    = "jenkins-lambda"
   role             = aws_iam_role.lambda_role.arn
-  handler          = "lambda_function.lambda_handler"
+  handler          = "lambda_handler"
   runtime          = "python3.8"
-  filename         = "./redeploy-ecs/lambda_function.zip"
+  filename         = "./redeploy-ecs/redeploy.zip"
   source_code_hash = filebase64sha256("./redeploy-ecs/redeploy.zip")
   environment {
     variables = {
-      ECS_CLUSTER = "jenkins-cluster"
-      ECS_TASK_DEFINITION = "disraptor-jenkins-service"
+      ECS_CLUSTER         = "disraptor-jenkins"
+      ECS_TASK_DEFINITION = "jenkins-service"
     }
   }
 
-  tags = merge({
-    Name = "jenkins-lambda"
-  }, local.tags)
+  tags = merge(local.tags)
 }
 
 resource "aws_lambda_alias" "jenkins_alias" {
