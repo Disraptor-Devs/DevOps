@@ -112,14 +112,14 @@ resource "aws_iam_role" "event_bridge_role" {
 resource "aws_lambda_function" "lambda_function" {
   function_name    = "jenkins-lambda"
   role             = aws_iam_role.lambda_role.arn
-  handler          = "lambda_function.lambda_handler"
+  handler          = "lambda_handler"
   runtime          = "python3.8"
   filename         = "./redeploy-ecs/redeploy.zip"
   source_code_hash = filebase64sha256("./redeploy-ecs/redeploy.zip")
   environment {
     variables = {
-      ECS_CLUSTER         = "jenkins-cluster"
-      ECS_TASK_DEFINITION = "disraptor-jenkins-service"
+      ECS_CLUSTER         = "disraptor-jenkins"
+      ECS_TASK_DEFINITION = "jenkins-service"
     }
   }
 

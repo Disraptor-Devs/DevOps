@@ -66,7 +66,8 @@ resource "aws_security_group" "alb_security_group" {
 
 resource "aws_lb" "app_lb" {
   name            = "disraptor-jenkins-alb"
-  internal        = true # Set to true if you want an internal ALB
+  internal        = false
+  load_balancer_type = "application"
   security_groups = [aws_security_group.alb_security_group.id]
 
   subnets = data.aws_subnets.disraptor_subnets.ids
@@ -87,13 +88,7 @@ resource "aws_lb_target_group" "app_lb_target_group" {
   vpc_id      = data.aws_vpc.vpc.id
 
   health_check {
-    enabled             = true
-    interval            = 180
-    timeout             = 120
-    unhealthy_threshold = 2
-    path                = "/"
-    matcher             = "200"
-
+    path                = "/login"
   }
 
   tags = merge(
@@ -103,16 +98,6 @@ resource "aws_lb_target_group" "app_lb_target_group" {
       "application"  = "jenkins"
   "environment" = "prod" })
 }
-
-data "aws_ecs_cluster" "ecs_cluster" {
-  cluster_name = "disraptor-jenkins"
-}
-
-data "aws_ecs_service" "ecs_service" {
-  service_name = "disraptor-jenkins-service"
-  cluster_arn  = data.aws_ecs_cluster.ecs_cluster.arn
-}
-
 
 resource "aws_lb_listener" "app_lb_listener" {
   load_balancer_arn = aws_lb.app_lb.arn
