@@ -66,6 +66,8 @@ resource "aws_security_group" "efs_security_group" {
 resource "aws_efs_file_system" "jenkins_fs" {
   creation_token   = "jenkins-efs"
   performance_mode = "generalPurpose"
+  encrypted = true
+  throughput_mode = "bursting"
 
   tags = {
     Name           = "jenkins-fs",
@@ -96,6 +98,22 @@ resource "aws_efs_mount_target" "efs_mount_3" {
 
 resource "aws_efs_access_point" "efs_access_point" {
   file_system_id = aws_efs_file_system.jenkins_fs.id
+
+  posix_user {
+    gid = 1000
+    uid = 1000
+  }
+
+  root_directory {
+    path = "/home"
+
+    creation_info {
+      owner_gid   = 1000
+      owner_uid   = 1000
+      permissions = 755
+    }
+  }
+
   tags = {
     Name           = "jenkins-efs-ap",
     "project-name" = "disraptor-jenkins"
@@ -113,22 +131,13 @@ data "aws_iam_policy_document" "policy" {
     effect = "Allow"
 
     principals {
-      type        = "AWS"
-      identifiers = ["*"]
+      type        = "Service"
+      identifiers = ["ecs-tasks.amazonaws.com"]
     }
 
     actions = [
-      "elasticfilesystem:*",
-      "efs:*",
-      "ecr:*",
-      "ec2:*",
-      "cloudwatch:*",
-      "logs:*",
-      "ssm:*",
-      "secretsmanager:*",
-      "kms:*",
-      "dynamodb:*",
-      "s3:*"
+      "elasticfilesystem:ClientMount",
+      "elasticfilesystem:ClientWrite",
     ]
 
     resources = [aws_efs_file_system.jenkins_fs.arn]
@@ -147,10 +156,10 @@ resource "aws_cloudwatch_log_group" "ecs_cluster_logs" {
 
   tags = merge(
     { Name = "disraptor-jenkins-cw-log-group" },
-    {"project-name" = "disraptor-jenkins"
-    "owner"        = "shibule"
-    "application"  = "jenkins"
-    "environment"  = "prod"})
+    {"Project-name" = "disraptor-jenkins"
+    "Owner"        = "Shibule"
+    "Application"  = "Jenkins"
+    "Environment"  = "Prod"})
 }
 
 resource "aws_ecs_cluster" "ecs_cluster" {
@@ -166,8 +175,6 @@ resource "aws_ecs_cluster" "ecs_cluster" {
     }
   }
 
-
-
   setting {
     name  = "containerInsights"
     value = "enabled"
@@ -175,23 +182,23 @@ resource "aws_ecs_cluster" "ecs_cluster" {
 
   tags = {
     Name           = "disraptor-jenkins-ecs-cluster",
-    "project-name" = "disraptor-jenkins"
-    "owner"        = "shibule"
-    "application"  = "jenkins"
-    "environment"  = "prod"
+    "Project-name" = "disraptor-jenkins"
+    "Owner"        = "Shibule"
+    "Application"  = "Jenkins"
+    "Environment"  = "Prod"
   }
 }
 
-resource "aws_ecs_task_definition" "ecs_task" {
-  family                   = "ecs-jenkins-task"
+resource "aws_ecs_task_definition" "ecs_task_jenkins" {
+  family                   = "jenkins-task"
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
   cpu                      = "2048"
-  memory                   = "4096" 
+  memory                   = "8192" 
   container_definitions    = file("container-definition.json")
 
   volume {
-    name = "Jenkins"
+    name = "home"
 
     efs_volume_configuration {
       file_system_id = aws_efs_file_system.jenkins_fs.id
@@ -205,7 +212,6 @@ resource "aws_ecs_task_definition" "ecs_task" {
     
 
   }
-
 
   runtime_platform {
     operating_system_family = "LINUX"
@@ -244,14 +250,13 @@ data "aws_iam_policy_document" "ecs_task_role_policy" {
       "logs:*",
       "cloudwatch:*",
       "ssm:*",
-      "secretsmanager:*",
-      "kms:*",
-      "dynamodb:*",
-      "elasticfilesystem:*",
+      "elasticfilesystem:ClientMount",
+      "elasticfilesystem:ClientWrite",
       "ecs:*",
       "events:*",
-      "efs:*",
-      "ec2:*"
+      "ec2:*",
+      "iam:GetRole",
+      "iam:PassRoles",
     ]
 
     resources = ["*"]
@@ -278,11 +283,16 @@ resource "aws_iam_role" "ecs_task_role" {
 
 }
 
+resource "aws_iam_role_policy_attachment" "basic_execution_role" {
+  role       = aws_iam_role.ecs_task_role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+}
+
 resource "aws_ecs_service" "ecs_service" {
     name             = "jenkins-service"
     cluster          = aws_ecs_cluster.ecs_cluster.arn
-    task_definition  = aws_ecs_task_definition.ecs_task.arn
-    desired_count    = 2
+    task_definition  = aws_ecs_task_definition.ecs_task_jenkins.arn
+    desired_count    = 1
     launch_type      = "FARGATE"
     platform_version = "LATEST"
     
@@ -292,12 +302,12 @@ resource "aws_ecs_service" "ecs_service" {
         assign_public_ip = true
     }
 
-    # load_balancer {
-    #     target_group_arn = data.aws_lb_target_group.tg.arn
-    #     container_name   = "jenkins"
-    #     container_port   = 8080
+    load_balancer {
+        target_group_arn = data.aws_lb_target_group.tg.arn
+        container_name   = "jenkins"
+        container_port   = 8080
       
-    # }
+    }
 
     
     
@@ -310,10 +320,10 @@ resource "aws_ecs_service" "ecs_service" {
   
 }
 
-  # data "aws_lb" "alb" {
-  #   name = "disraptor-jenkins-alb"
-  # }
+  data "aws_lb" "alb" {
+    name = "disraptor-jenkins-alb"
+  }
 
-  # data "aws_lb_target_group" "tg" {
-  #   name = "disraptor-jenkins-alb-tg"
-  # }
+  data "aws_lb_target_group" "tg" {
+    name = "disraptor-jenkins-alb-tg"
+  }

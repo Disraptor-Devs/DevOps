@@ -2,7 +2,7 @@
     {
         "name": "jenkins",
         "image": "143671530412.dkr.ecr.af-south-1.amazonaws.com/jenkins-repo:v1",
-        "memory": 4096,
+        "memory": 8192,
         "cpu": 2048,
         "essential": true,
 
@@ -16,38 +16,26 @@
         },
         "mountPoints": [
             {
-                "sourceVolume": "Jenkins",
-                "containerPath": "/efs/jenkins",
+                "sourceVolume": "home",
+                "containerPath": "/var/jenkins_home",
                 "readOnly": false
             }
         ],
-        "environment": [
-            {
-                "name": "JENKINS_HOME",
-                "value": "/efs/jenkins"
-            }
-
-        ],
         "portMappings": [
             {
-                "containerPort": 80,
-                "hostPort": 80
+                "containerPort": 80
             },
             {
-                "containerPort": 5432,
-                "hostPort": 5432
+                "containerPort": 5432
             },
             {
-                "containerPort": 443,
-                "hostPort": 443
+                "containerPort": 443
             },
             {
-                "containerPort": 22,
-                "hostPort": 22
+                "containerPort": 22
             },
             {
                 "containerPort": 8080,
-                "hostPort": 8080,
                 "name" : "jenkins-access"
             }
         ]
